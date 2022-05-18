@@ -22,7 +22,7 @@ section.navigation {
 nav.menu {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     flex-direction: column;
     text-align: center;
 }
@@ -33,17 +33,89 @@ nav.menu a {
     color: white;
 }
 
-div.bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-
+div.mainContainer {
+    margin: auto;
+    width: 1367px;
+    height: 647px;
+    /*background-color: red;*/
 }
 
-button {
+div.main-screen {
+    margin: auto;
+    margin-top: 10px;
+    width: 1219px;
+    height: 647px;
+    float: right;
+    /*background-color: blue;*/
+}
+
+select.fields {
+    margin: auto;
+    margin-top: 10px;
+    float: left;
+}
+
+select.indexs {
+    font-size: 120%;
+    width: 140px;
+    height: 50px;
+}
+
+select.box {
+    position: relative;
+    width: 20px;
+    height: 100px;
+    font-size: 120%;
+}
+
+select.metrics {
+    position: relative;
+    margin-top: 10px;
+    font-size: 120%;
+    width: 160px;
+    height: 50px;
+}
+
+select.functions {
+    position: relative;
+    margin-top: 10px;
+    font-size: 120%;
+    width: 160px;
+    height: 50px;
+}
+label {
+    font-size: 140%;
+}
+
+input.edit-name-query {
+    position: relative;
+    margin-top: 25px;
+    font-size: 120%;
+    width: 200px;
+    height: 30px;
+}
+
+button.run-button {
+    float: right;
     background-color: limegreen;
     font: bold 150% "Comic Sans MS";
     border-radius: 20px;
-    align-self: self-end;
+}
+
+button.add-query-button {
+    position: relative;
+    margin-top: 25px;
+    font-size: 120%;
+    width: 140px;
+    height: 50px;
+}
+
+button.add-metric-button {
+    position: relative;
+    margin-top: 10px;
+    margin-left: 25px;
+    font-size: 120%;
+    width: 210px;
+    height: 40px;
+    float: right;
 }

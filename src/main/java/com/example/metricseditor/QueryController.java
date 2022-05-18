@@ -14,8 +14,14 @@ public class QueryController {
         Query query = new Query();
         model.addAttribute("query", query);
 
-        List<String> listDashboard = Arrays.asList("GitHub Index, Taiga Index");
-        model.addAttribute("listDashboard", listDashboard);
+        List<String> listDashboard = Arrays.asList("GitHub Index", "Taiga Index");
+        model.addAttribute("dashboard", listDashboard);
+
+        List<String> listMetric = Arrays.asList("Select Metric");
+        model.addAttribute("metric", listMetric);
+
+        List<String> listFunction = Arrays.asList("Select Function");
+        model.addAttribute("function", listFunction);
 
         return "editor";
     }
