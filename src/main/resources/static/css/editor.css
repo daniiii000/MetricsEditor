@@ -119,3 +119,19 @@ button.add-metric-button {
     height: 40px;
     float: right;
 }
+
+button.trash-button {
+    position: relative;
+    margin-left: 10px;
+    margin-top: 10px;
+    font-size: 120%;
+    width: 30px;
+    height: 30px;
+    float: right;
+
+}
+
+div.panel {
+    margin-bottom: 20px;
+    overflow: visible;
+}

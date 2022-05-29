@@ -16,9 +16,11 @@
             </select>
         </form>
         <br/>
+        <div id="panel">
         <form class="box" action="#" th:action="@{/editor}" method="post" th:object="${query}">
             <label>Query name:</label>
-            <input type="text" class="edit-name-query" th:field="*{queryname}" /><br/>
+            <input type="text" class="edit-name-query" th:field="*{queryname}">
+            <button id="trash-button" type="button" onclick="delete_query();" class="trash-button"> <i class="fa fa-trash"></i> </button><br/>
             <select class="metrics" th:field="*{metric}">
                 <option th:each="p : ${metric}" th:value="${p}" th:text="${p}" />
             </select>
@@ -28,10 +30,12 @@
             <select class="functions" th:field="*{function}">
                 <option th:each="p : ${function}" th:value="${p}" th:text="${p}" />
             </select>
-            <input type="text" class="funtion-text"> <br>
+            <input type="text" class="function-text"> <br>
         </form>
+        </div>
         <div class="add-query">
-            <button type="button" class="add-query-button"> &nbsp; <i class="fa fa-plus"></i><span> Add Query &nbsp; </span> </button>
+            <button id="add-query-button" type="button" onclick="add_query();" class="add-query-button"> &nbsp; <i class="fa fa-plus"></i><span> Add Query &nbsp; </span> </button>
+
         </div>
     </div>
     <div class="lateral-menu">
@@ -47,4 +51,5 @@
 
 </div>
 </body>
+<script src="js/editor.js"></script>
 </html>

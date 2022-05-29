@@ -34,3 +34,4 @@ public class QueryController {
     @GetMapping("/search")
     public String showSearchPage() { return "search";}
 }
+
