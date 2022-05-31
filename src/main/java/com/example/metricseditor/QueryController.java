@@ -24,7 +24,7 @@ public class QueryController {
         List<String> listMetric = Arrays.asList("Select Metric");
         model.addAttribute("metric", listMetric);
 
-        List<String> listFunction = Arrays.asList("Select Function");
+        List<String> listFunction = Arrays.asList("Select Function","SUM", "AVERAGE", "COUNT");
         model.addAttribute("function", listFunction);
 
         return "editor";

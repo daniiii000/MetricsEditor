@@ -1,37 +1,16 @@
-const query_template= `
- <div className="panel">
-    <form className="box" action="#" th:action="@{/editor}" method="post" th:object="${query}">
-        <label>Query name:</label>
-        <input type="text" className="edit-name-query" th:field="*{queryname}"/><br/>
-        <select className="metrics" th:field="*{metric}">
-            <option th:each="p : ${metric}" th:value="${p}" th:text="${p}"/>
-        </select>
-        <textarea type="text" className="write-new-metric"> </textarea>
-        <button type="button" className="add-metric-button"> &nbsp; <span> Create New Metric &nbsp; <i
-            className="fa fa-pencil"></i>&nbsp; </span></button>
-        <br>
-          
-            <input type="text" className="function-text"> <br>
-    </form>
-</div> `
+var clicked = false;
 
 function delete_query(){
     document.getElementById("panel").remove();
-}
+    clicked = false;
 
+}
 function add_query() {
-    /*var new_query = document.createElement("panel2");
-    var form = document.createElement(form);
-    var label = document.createElement(label);
-    label.innerHTML = "Query name";
-
-    form.append(label);
-    new_query.append(form);
-    document.getElementById("panel").append(new_query);*/
+    var temp = document.getElementsByTagName("template")[0];
+    var clon = temp.content.cloneNode(true);
+    document.getElementById("content").appendChild(clon);
 
 }
-
-var clicked = false;
 
 function add_new_metric() {
     if (!clicked) {

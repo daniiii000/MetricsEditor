@@ -37,7 +37,6 @@ div.mainContainer {
     margin: auto;
     width: 1367px;
     height: 647px;
-    /*background-color: red;*/
 }
 
 div.main-screen {
@@ -46,7 +45,6 @@ div.main-screen {
     width: 1219px;
     height: 647px;
     float: right;
-    /*background-color: blue;*/
 }
 
 select.fields {
@@ -128,10 +126,11 @@ button.trash-button {
     width: 30px;
     height: 30px;
     float: right;
-
 }
 
 div.panel {
     margin-bottom: 20px;
-    overflow: visible;
+    border-color: #2D2D2D;
+    border-style: solid;
+    border-width: 5px;
 }

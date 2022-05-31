@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/editor.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body onload="add_query();">
 <div class="mainContainer">
     <div class="main-screen">
         <button type="button" class="run-button"> &nbsp; <i class="fa fa-play-circle-o"></i><span>  Run Query &nbsp; </span></button>
@@ -16,6 +16,8 @@
             </select>
         </form>
         <br/>
+        <div id="content">
+        <template>
         <div id="panel">
         <form class="box" action="#" th:action="@{/editor}" method="post" th:object="${query}">
             <label onclick="hide_and_appear();">Query name:</label>
@@ -37,6 +39,8 @@
             <input type="text" class="function-text"> <br>
            </div>
         </form>
+        </div>
+        </template>
         </div>
         <div class="add-query">
             <button id="add-query-button" type="button" onclick="add_query();" class="add-query-button"> &nbsp; <i class="fa fa-plus"></i><span> Add Query &nbsp; </span> </button>
