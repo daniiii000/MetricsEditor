@@ -11,26 +11,31 @@
     <div class="main-screen">
         <button type="button" class="run-button"> &nbsp; <i class="fa fa-play-circle-o"></i><span>  Run Query &nbsp; </span></button>
         <form class="fields" action="#" th:action="@{/editor}" method="post" th:object="${query}">
-            <select class="indexs" th:field="*{dashboard}">
-                <option th:each="p : ${dashboard}" th:value="${p}" th:text="${p}" />
+            <select class="indexs" th:field="*{index}">
+                <option th:each="p : ${index}" th:value="${p}" th:text="${p}" />
             </select>
         </form>
         <br/>
         <div id="panel">
         <form class="box" action="#" th:action="@{/editor}" method="post" th:object="${query}">
-            <label>Query name:</label>
-            <input type="text" class="edit-name-query" th:field="*{queryname}">
-            <button id="trash-button" type="button" onclick="delete_query();" class="trash-button"> <i class="fa fa-trash"></i> </button><br/>
+            <label onclick="hide_and_appear();">Query name:</label>
+            <input type="text" class="edit-name-query">
+           <div id="hidden-content">
+               <button id="trash-button" type="button" onclick="delete_query();" class="trash-button"> <i class="fa fa-trash"></i> </button><br/>
+           <div id="metrics">
             <select class="metrics" th:field="*{metric}">
                 <option th:each="p : ${metric}" th:value="${p}" th:text="${p}" />
             </select>
-            <textarea type="text" class="write-new-metric"> </textarea>
-            <button type="button" class="add-metric-button"> &nbsp; <span> Create New Metric &nbsp; <i class="fa fa-pencil"></i>&nbsp; </span> </button>
+
+           <!-- <textarea type="text" class="write-new-metric"> </textarea> -->
+            <button type="button" id="metric_button" class="add-metric-button" onclick="add_new_metric();"> &nbsp; <span> Create New Metric &nbsp; <i class="fa fa-pencil"></i>&nbsp; </span> </button>
+           </div>
             <br>
             <select class="functions" th:field="*{function}">
                 <option th:each="p : ${function}" th:value="${p}" th:text="${p}" />
             </select>
             <input type="text" class="function-text"> <br>
+           </div>
         </form>
         </div>
         <div class="add-query">

@@ -1,21 +1,25 @@
 package com.example.metricseditor;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @Controller
 public class QueryController {
 
+
     @GetMapping("/editor")
     public String showQuery(Model model) {
-        Query query = new Query();
+        Query query = new Query(1L, "GitHub Index", "Big Commits", "Maximum");
         model.addAttribute("query", query);
 
-        List<String> listDashboard = Arrays.asList("GitHub Index", "Taiga Index");
-        model.addAttribute("dashboard", listDashboard);
+        List<String> listIndex = Arrays.asList("GitHub Index", "Taiga Index");
+        model.addAttribute("index", listIndex);
 
         List<String> listMetric = Arrays.asList("Select Metric");
         model.addAttribute("metric", listMetric);
