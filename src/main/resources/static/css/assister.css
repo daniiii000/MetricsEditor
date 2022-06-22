@@ -1,0 +1,27 @@
+button.cancel-button {
+    position: relative;
+    border-bottom: 10px;
+    border-left: 10px;
+    float: bottom;
+    float: left;
+}
+
+button.next-button {
+    position: relative;
+    border-bottom: 10px;
+    float: bottom;
+}
+
+button.back-button{
+    position: relative;
+    border-bottom: 10px;
+    float: bottom;
+}
+
+button.accept-button {
+    position: relative;
+    border-bottom: 10px;
+    border-right: 10px;
+    float: bottom;
+    float: right;
+}

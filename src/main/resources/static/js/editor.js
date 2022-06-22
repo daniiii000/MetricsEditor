@@ -13,26 +13,18 @@ function add_query() {
 }
 
 function add_new_metric() {
-    if (!clicked) {
-        clicked = true;
-        var new_metric = document.createElement("div");
-
-        var textarea = document.createElement("textarea")
-        textarea.style.marginTop = "10px";
-        textarea.style.width = "1000px";
-        textarea.style.height = "80px";
-
-        new_metric.appendChild(textarea);
-        document.getElementById("metrics").appendChild(new_metric);
-    }
+    window.open("http://localhost:8080/assister", "Metric Assister", "width=1200,height=600,scrollbars=NO");
 }
 
 function hide_and_appear() {
     var toggle = document.getElementById("hidden-content");
+    //var button = document.getElementById("hide_button");
     if (toggle.style.display !== "none") {
         toggle.style.display = "none";
+        //button.classList.toggle("fa-play");
     }
     else {
         toggle.style.display = "block";
+        //button.classList.toggle('');
     }
 }
