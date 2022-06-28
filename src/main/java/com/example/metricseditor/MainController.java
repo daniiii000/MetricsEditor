@@ -1,20 +1,26 @@
 package com.example.metricseditor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/")
 public class MainController {
 
-    @GetMapping("/editor")
-    public String showQuery(Model model) {
-        Metric metric = new Metric(1L, "Percentage of closed tasks", "Percentage","Individual","Informative","Overall","Tasks",null, null, "state", "closed", null, null, null, null);
-        model.addAttribute("metric", metric);
+    @Autowired
+    private MetricRepository metricRepository;
 
-        return "/editor";
+    @GetMapping("/editor")
+    public List<Metric> showMetrics(Model model) {
+        List<Metric> metrics = metricRepository.findAll();
+        model.addAttribute("metrics", metrics);
+
+        return metrics;
     }
 
     @GetMapping("/index")

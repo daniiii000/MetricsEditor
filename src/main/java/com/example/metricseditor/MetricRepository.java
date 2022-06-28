@@ -7,4 +7,7 @@ import com.example.metricseditor.Metric;
 
 @Repository
 public interface MetricRepository extends JpaRepository<Metric,Long> {
+
+    public Metric findByName(String name);
+
 }

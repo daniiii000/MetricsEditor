@@ -47,65 +47,10 @@ div.main-screen {
     float: right;
 }
 
-select.fields {
-    margin: auto;
-    margin-top: 10px;
-    float: left;
-}
-
-select.indexs {
-    font-size: 120%;
-    width: 140px;
-    height: 50px;
-}
-
-select.box {
-    position: relative;
-    width: 20px;
-    height: 100px;
-    font-size: 120%;
-}
-
-select.metrics {
-    position: relative;
-    margin-top: 10px;
-    font-size: 120%;
-    width: 160px;
-    height: 50px;
-}
-
-select.functions {
-    position: relative;
-    margin-top: 10px;
-    font-size: 120%;
-    width: 160px;
-    height: 50px;
-}
 label {
-    font-size: 140%;
-}
-
-input.edit-name-query {
     position: relative;
-    margin-top: 25px;
-    font-size: 120%;
-    width: 200px;
-    height: 30px;
-}
-
-button.run-button {
-    float: right;
-    background-color: limegreen;
-    font: bold 150% "Comic Sans MS";
-    border-radius: 20px;
-}
-
-button.add-query-button {
-    position: relative;
-    margin-top: 25px;
-    font-size: 120%;
-    width: 140px;
-    height: 50px;
+    margin-top: 20px;
+    font-size: 20px;
 }
 
 button.add-metric-button {
@@ -118,27 +63,75 @@ button.add-metric-button {
     float: right;
 }
 
-button.trash-button {
-    position: relative;
-    margin-left: 10px;
-    margin-top: 30px;
-    font-size: 120%;
-    width: 30px;
-    height: 30px;
-    float: right;
+table, td, th {
+    border: 1px solid;
 }
 
-div.panel {
-    margin-bottom: 20px;
-    border-color: #2D2D2D;
-    border-style: solid;
-    border-width: 5px;
+table {
+    position: relative;
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 18px;
 }
 
-button.hide_button {
-    position: relative;
-    margin-top: 30px;
-    width: 20px;
-    height: 20px;
-    float: left;
+.button {
+    background-color: #f4511e;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    font-size: 18px;
+    margin: 4px 2px;
+    opacity: 0.6;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button.button-delete {
+    background-color: white;
+    color: black;
+    border: 2px solid #f83939;
+}
+
+button.button-delete:hover {
+    background-color: #f83939;
+    color: white;
+}
+
+button.button-consult {
+    background-color: white;
+    color: black;
+    border: 2px solid #58d97c;
+}
+
+button.button-consult:hover {
+    background-color: #58d97c;
+    color: white;
+}
+
+button.button-edit {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+}
+
+button.button-edit:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+    background-color: white;
+}
+.table-striped>tbody>tr:nth-child(even)>td,
+.table-striped>tbody>tr:nth-child(even)>th {
+    background-color: #ccc;
+}
+.table-striped>thead>tr>th {
+    background-color: #eee;
 }

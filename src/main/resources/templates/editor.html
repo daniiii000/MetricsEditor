@@ -11,8 +11,29 @@
     <div class="main-screen">
         <div id="content">
             <label>METRICS CREATED</label>
-            <button type="button" id="metric_button" class="add-metric-button" onclick="add_new_metric();"> <i class="fa fa-plus"></i> <span> Create New Metric </span> </button>
-        </div>
+            <button type="button" id="metric_button" class="add-metric-button" onclick="add_new_metric();"> <i class="fa fa-plus"></i> <span> Create New Metric </span> </button> <br>
+        </div> <br> <br>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <th scope="row"> Name </th>
+                <th scope="row"> Pattern </th>
+                <th scope="row"> Subject </th>
+                <th scope="row"> Object </th>
+                <th scope="row"> Actions </th>
+            </thead>
+            <tbody>
+                <tr th:each="metric : ${metrics}">
+                    <td th:text="${metric.name}"> &nbsp;</td>
+                    <td th:text="${metric.pattern}"> &nbsp;</td>
+                    <td th:text="${metric.subject}"> &nbsp;</td>
+                    <td th:text="${metric.object}"> &nbsp;</td>
+                    <td>
+                        <a th:href="@{'/consult/' + ${metric.id}}"> <button class="button-consult">&nbsp;Consult&nbsp;</button></a> &nbsp; &nbsp;
+                        <a th:href="@{'/edit/' + ${metric.id}}"> <button class="button-edit">&nbsp;Edit&nbsp;</button></a> &nbsp; &nbsp;
+                        <a th:href="@{'/editor/' + ${metric.id}}"> <button class="button-delete">&nbsp;Delete&nbsp;</button></a> </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="lateral-menu">
         <section class="navigation">

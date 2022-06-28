@@ -17,8 +17,10 @@ public class MetricController {
 
     //get metrics
     @GetMapping("metrics")
-    public List<Metric> getAllMetrics() {
-        return this.metricRepository.findAll();
+    public List<Metric> getAllMetrics(Model model) {
+        List<Metric> metrics = metricRepository.findAll();
+        model.addAttribute("metrics", metrics);
+        return metrics;
     }
 
     //get metric by id
@@ -60,7 +62,14 @@ public class MetricController {
 
     //delete metric
     @DeleteMapping("metrics/{id}")
-    public Map<String, Boolean> deleteMetric(@PathVariable(value = "id") Long metricId) throws ResourceNotFoundException {
+    public ResponseEntity<Metric> deleteMetric(@PathVariable(value = "id") Long metricId) throws ResourceNotFoundException {
+        ResponseEntity<Metric> metric = getMetricById(metricId);
+        metricRepository.deleteById(metricId);
+
+        return metric;
+
+    }
+    /*public Map<String, Boolean> deleteMetric(@PathVariable(value = "id") Long metricId) throws ResourceNotFoundException {
         Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
         this.metricRepository.delete(metric);
 
@@ -68,5 +77,6 @@ public class MetricController {
         response.put("deleted", Boolean.TRUE);
 
         return response;
-    }
+    }*/
+
 }
