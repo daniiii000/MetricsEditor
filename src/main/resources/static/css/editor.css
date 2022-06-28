@@ -76,52 +76,8 @@ table {
     font-size: 18px;
 }
 
-.button {
-    background-color: #f4511e;
-    border: none;
-    color: white;
-    padding: 16px 32px;
+thead {
     text-align: center;
-    font-size: 18px;
-    margin: 4px 2px;
-    opacity: 0.6;
-    transition: 0.3s;
-    display: inline-block;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-button.button-delete {
-    background-color: white;
-    color: black;
-    border: 2px solid #f83939;
-}
-
-button.button-delete:hover {
-    background-color: #f83939;
-    color: white;
-}
-
-button.button-consult {
-    background-color: white;
-    color: black;
-    border: 2px solid #58d97c;
-}
-
-button.button-consult:hover {
-    background-color: #58d97c;
-    color: white;
-}
-
-button.button-edit {
-    background-color: white;
-    color: black;
-    border: 2px solid #008CBA;
-}
-
-button.button-edit:hover {
-    background-color: #008CBA;
-    color: white;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td,

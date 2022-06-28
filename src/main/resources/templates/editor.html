@@ -4,6 +4,7 @@
     <meta charset="ISO-8859-1">
     <title>Metrics Editor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="css/editor.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -13,7 +14,7 @@
             <label>METRICS CREATED</label>
             <button type="button" id="metric_button" class="add-metric-button" onclick="add_new_metric();"> <i class="fa fa-plus"></i> <span> Create New Metric </span> </button> <br>
         </div> <br> <br>
-        <table class="table table-striped">
+        <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <th scope="row"> Name </th>
                 <th scope="row"> Pattern </th>
@@ -28,9 +29,9 @@
                     <td th:text="${metric.subject}"> &nbsp;</td>
                     <td th:text="${metric.object}"> &nbsp;</td>
                     <td>
-                        <a th:href="@{'/consult/' + ${metric.id}}"> <button class="button-consult">&nbsp;Consult&nbsp;</button></a> &nbsp; &nbsp;
-                        <a th:href="@{'/edit/' + ${metric.id}}"> <button class="button-edit">&nbsp;Edit&nbsp;</button></a> &nbsp; &nbsp;
-                        <a th:href="@{'/editor/' + ${metric.id}}"> <button class="button-delete">&nbsp;Delete&nbsp;</button></a> </td>
+                        <a th:href="@{'/consult/' + ${metric.id}}"> <button class="btn btn-success">Consult</button></a> &nbsp;
+                        <a th:href="@{'/edit/' + ${metric.id}}"> <button class="btn btn-info">Edit</button></a> &nbsp;
+                        <a th:href="@{'/metrics/' + ${metric.id}}"> <button class="btn btn-danger">Delete</button></a> </td>
                 </tr>
             </tbody>
         </table>
