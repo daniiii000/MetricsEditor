@@ -1,17 +1,3 @@
-//var clicked = false;
-
-/*function delete_query(){
-    document.getElementById("panel").remove();
-    clicked = false;
-
-}*/
-
-/*function add_query() {
-    var temp = document.getElementsByTagName("template")[0];
-    var clon = temp.content.cloneNode(true);
-    document.getElementById("content").appendChild(clon);
-
-}*/
 
 function add_new_metric() {
     window.open("http://localhost:8080/assister", "Metric Assister", "width=1200,height=600,scrollbars=NO");
@@ -20,6 +6,7 @@ function add_new_metric() {
 function buildData() {
     const database = new DataStore('database.db');
 }
+
 
 /*function hide_and_appear() {
     var toggle = document.getElementById("hidden-content");

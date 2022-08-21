@@ -1,10 +1,10 @@
 package com.example.metricseditor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +23,13 @@ public class MainController {
         return metrics;
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteMetric(@PathVariable(value = "id") Long metricId) {
+        metricRepository.deleteById(metricId);
+
+        return "redirect:/editor";
+    }
+
     @GetMapping("/index")
     public String showHomePage() {
         return "/index";
@@ -34,5 +41,12 @@ public class MainController {
     }
 
     @GetMapping("/assister")
-    public String showAssisterPage() { return "/assister";}
+    public String showAssisterPage() {
+        return "/assister";
+    }
+
+    @GetMapping("/show")
+    public String showshowPage() {
+        return "/show";
+    }
 }

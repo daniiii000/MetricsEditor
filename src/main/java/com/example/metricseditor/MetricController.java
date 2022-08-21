@@ -1,14 +1,19 @@
 package com.example.metricseditor;
 
+import ch.qos.logback.classic.html.HTMLLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.swing.text.html.HTML;
+import javax.swing.text.html.HTMLDocument;
 import javax.validation.Valid;
 import java.util.*;
 
-@RestController 
+@RestController
 @RequestMapping("/")
 public class MetricController {
 
@@ -61,22 +66,12 @@ public class MetricController {
 
 
     //delete metric
-    @DeleteMapping("metrics/{id}")
+    /*@DeleteMapping("/delete/{id}")
     public ResponseEntity<Metric> deleteMetric(@PathVariable(value = "id") Long metricId) throws ResourceNotFoundException {
-        ResponseEntity<Metric> metric = getMetricById(metricId);
+        Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
         metricRepository.deleteById(metricId);
 
-        return metric;
+        return ResponseEntity.ok().body(metric);
 
-    }
-    /*public Map<String, Boolean> deleteMetric(@PathVariable(value = "id") Long metricId) throws ResourceNotFoundException {
-        Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
-        this.metricRepository.delete(metric);
-
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-
-        return response;
     }*/
-
 }
