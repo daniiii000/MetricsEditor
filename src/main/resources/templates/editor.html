@@ -33,7 +33,7 @@
                         <a th:href="@{'/metrics/' + ${metric.id}}"> <button type="submit" class="btn btn-success">Show</button></a> &nbsp;
                         <a th:href="@{'/metrics/' + ${metric.id}}"> <button class="btn btn-info">Edit</button></a> &nbsp;
                         <!--<form th:action="@{/delete/id}" method="post">-->
-                        <a th:href="@{'/delete/' + ${metric.id}}"> <button type="submit" class="btn btn-danger"> Delete</button></a>
+                        <a th:href="@{'/delete/' + ${metric.id}}"> <button type="button" onclick="return confirm('Are you sure to delete this metric?');" class="btn btn-danger"> Delete</button> </a>
                     </td>
                 </tr>
             </tbody>
