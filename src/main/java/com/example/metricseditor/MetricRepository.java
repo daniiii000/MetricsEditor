@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.metricseditor.Metric;
 
-@Repository
+@Repository("metricrepository")
 public interface MetricRepository extends JpaRepository<Metric,Long> {
-
-    public Metric findByName(String name);
 
 }

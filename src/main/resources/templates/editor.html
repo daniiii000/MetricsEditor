@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="css/editor.css" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="mainContainer">
@@ -31,10 +30,10 @@
                     <td th:text="${metric.subject}"> &nbsp;</td>
                     <td th:text="${metric.object}"> &nbsp;</td>
                     <td>
-                        <a th:href="@{'/show'}"> <button class="btn btn-success">Show</button></a> &nbsp;
-                        <a th:href="@{'/edit/' + ${metric.id}}"> <button class="btn btn-info">Edit</button></a> &nbsp;
+                        <a th:href="@{'/metrics/' + ${metric.id}}"> <button type="submit" class="btn btn-success">Show</button></a> &nbsp;
+                        <a th:href="@{'/metrics/' + ${metric.id}}"> <button class="btn btn-info">Edit</button></a> &nbsp;
                         <!--<form th:action="@{/delete/id}" method="post">-->
-                        <a th:href="@{'/delete/' + ${metric.id}}"> <button type="submit" class="btn btn-danger"> Delete </button></a>
+                        <a th:href="@{'/delete/' + ${metric.id}}"> <button type="submit" class="btn btn-danger"> Delete</button></a>
                     </td>
                 </tr>
             </tbody>

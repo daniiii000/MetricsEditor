@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detailed information</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="css/show.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<!-- FALTA AÑADIR LA CABECERA A LA PÁGINA -->
+
+<a href="/metrics"> <i class="fa fa-arrow-circle-left fa-3x"></i> </a>
+<br>
+<table class="table table-bordered table-striped">
+    <tr class="title">
+        <th colspan="2"> Detailed metric information </th>
+    </tr>
+
+    <tr> <td> Name </td>
+        <td th:text="${metric.name}"> </td></tr>
+
+    <tr> <td> Pattern </td>
+        <td th:text="${metric.pattern}"> </td></tr>
+
+    <tr> <td> Subject </td>
+        <td th:text="${metric.subject}"> &nbsp;</td> </tr>
+
+    <tr> <td> Type </td>
+        <td th:text="${metric.type}"> &nbsp;</td></tr>
+
+    <tr> <td> Team Extension </td>
+        <td th:text="${metric.teamextension}"> &nbsp;</td></tr>
+
+    <tr> <td> Object </td>
+        <td th:text="${metric.object}"> &nbsp;</td></tr>
+
+    <tr> <td> Modifier </td>
+        <td th:text="${metric.modifier}"> &nbsp;</td></tr>
+
+    <tr> <td> Modifier Attribute </td>
+        <td th:text="${metric.modifier_attribute}"> </td></tr>
+
+    <tr> <td> Condition </td>
+        <td th:text="${metric.condition}"> &nbsp;</td></tr>
+
+    <tr> <td> Condition Attribute </td>
+        <td th:text="${metric.condition_attribute}"> &nbsp;</td></tr>
+
+    <tr> <td th:if="${metric.value != null}" th:text="${Value}"> </td>
+        <td th:if="${metric.value != null}" th:text="${metric.value}"> &nbsp;</td></tr>
+
+    <tr> <td th:if="${metric.value_attribute != null}" th:text="${Value Attribute}"> </td>
+        <td th:if="${metric.value_attribute != null}" th:text="${metric.value_attribute}"> &nbsp;</td></tr>
+
+    <tr> <td th:if="${metric.count != null}" th:text="${Count}"> </td>
+        <td th:if="${metric.count != null}" th:text="${metric.count}"> &nbsp;</td></tr>
+
+    <tr> <td th:if="${metric.count_attribute != null}" th:text="${Count Attribute}"> </td>
+        <td th:if="${metric.count_attribute != null}" th:text="${metric.count_attribute}"> </td></tr>
+    </tr>
+
+</table>
+
+</body>
+<script src="js/show.js"></script>
+</html>
