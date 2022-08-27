@@ -1,8 +1,4 @@
 
-function add_new_metric() {
-    window.open("http://localhost:8080/assister", "Metric Assister", "width=1200,height=600,scrollbars=NO");
-}
-
 function buildData() {
     const database = new DataStore('database.db');
 }

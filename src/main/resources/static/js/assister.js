@@ -1,16 +1,15 @@
 function cancel() {
-    window.close();
+
 }
 
 function next() {
 
 }
 
-/*function back() {
-  volver a la sección de configuración anterior.
-}*/
+function back() {
+//  volver a la sección de configuración anterior.
+}
 
-/* function accept() {
-    guardar la configuración y añadirla a la lista de métricas.
-    window.close();
- */
+ function generate_metric() {
+//    guardar la configuración, añadirla a la lista de métricas y generar los ficheros correspondientes*/
+ }

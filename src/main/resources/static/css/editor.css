@@ -61,6 +61,7 @@ button.add-metric-button {
     width: 210px;
     height: 40px;
     float: right;
+    color: black;
 }
 
 table, td, th {

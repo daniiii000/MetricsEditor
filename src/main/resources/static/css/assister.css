@@ -1,27 +1,83 @@
-button.cancel-button {
-    position: relative;
-    border-bottom: 10px;
-    border-left: 10px;
-    float: bottom;
-    float: left;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-button.next-button {
-    position: relative;
-    border-bottom: 10px;
-    float: bottom;
+body {
+    background-color: lightgrey;
 }
 
-button.back-button{
-    position: relative;
-    border-bottom: 10px;
-    float: bottom;
+section.navigation {
+    background: blue;
+    width: 120px;
+    padding: 10px;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
 }
 
-button.accept-button {
-    position: relative;
-    border-bottom: 10px;
-    border-right: 10px;
-    float: bottom;
+nav.menu {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    text-align: center;
+}
+
+nav.menu a {
+    display: block;
+    padding: 20px;
+    color: white;
+}
+
+div.mainContainer {
+    margin: auto;
+    width: 1367px;
+    height: 647px;
+}
+
+div.main-screen {
+    margin: auto;
+    margin-top: 10px;
+    width: 1219px;
+    height: 647px;
     float: right;
+}
+
+title {
+    position: relative;
+    margin-top: 20px;
+    font-size: 20px;
+
+}
+
+label {
+    position: relative;
+    margin-left: 20px;
+    font-size: 16px;
+
+}
+
+.resizable {
+    resize: both;
+    scale: inherit;
+}
+
+select {
+    width: 150px;
+    height: 30px;
+    font-size: 25px;
+    margin: 20px;
+    margin-left: 15px;
+}
+
+.bottom-bar {
+    position: relative;
+    float: bottom;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }

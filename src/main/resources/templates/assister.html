@@ -3,16 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Metrics Assister</title>
-    <link href="css/assister.css" rel="stylesheet" type="text/css">
+    <link href="/css/assister.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <body>
-   <div>
-       <button type="button" class="cancel-button" onclick="cancel();"> <span> Cancel </span> </button>
-       <button type="button" class="back-button"> <i class="fa fa-angle-left"> </i><span> Back </span> </button>
-       <button type="button" class="next-button" onclick="next();"> <span> Next </span> <i class="fa fa-angle-left"> </i> </button>
-       <button type="button" class="accept-button"> <span> Accept </span></button>
-   </div>
+<div class="mainContainer">
+    <div class="main-screen">
+
+        <div>
+            <label id="title">CREATE YOUR METRIC</label>
+        </div> <br>
+
+        <label> Select Pattern: &nbsp;</label> <select name="pattern" id="pattern">
+            <option value="percentage">Percentage</option>
+            <option value="standard_deviation">Standard Deviation</option>
+            <option value="frequency">Frequency</option>
+        </select>
+        <br> <br>
+
+        <label> Select Type: &nbsp;</label><select name="type" id="type">
+            <option value="evaluative">Evaluative</option>
+            <option value="informative">Informative</option>
+        </select>
+        <br> <br>
+
+        <label> Select Subject: &nbsp;</label><select name="subject" id="subject">
+            <option value="individual">Individual</option>
+            <option value="team">Team</option>
+        </select>
+        <br> <br>
+
+        <label> Select Team Extension: &nbsp;</label><select name="teamextension" id="teamextension">
+            <option value="overall">Overall</option>
+            <option value="standard_deviation">Standard Deviation</option>
+        </select>
+        <br> <br>
+
+        <div class="assister">
+
+        </div>
+
+       <div class="bottom-bar">
+           <button type="button" class="cancel-button" onclick="cancel();"> <span> Cancel </span> </button>
+           <button type="button" class="back-button" onclick="back();"> <i class="fa fa-angle-left"> </i><span> Back </span> </button>
+           <button type="button" class="next-button" onclick="next();"> <span> Next </span> <i class="fa fa-angle-right"> </i> </button>
+           <button type="button" class="accept-button" onclick="generate_metric();"> <span> Generate </span></button>
+       </div>
+    </div>
+
+    <div class="lateral-menu">
+        <section class="navigation">
+            <nav class="menu">
+                <a href="/index"><i class="fa fa-fw fa-home fa-2x"></i><span>Homepage</span></a><br>
+                <a href="/search"><i class="fa-fw fa fa-search fa-2x"></i><span>Search Dashboard</span></a><br>
+                <a href="/metrics"><i class="fa-fw fa fa-edit fa-2x"></i><span>Metrics Editor</span></a><br>
+                <a href="#"><i class="fa-fw fa fa-question-circle-o fa-2x"></i><span>Help</span></a><br>
+            </nav>
+        </section>
+    </div>
+</div>
+
 </body>
 <script src="js/assister.js"></script>
 </html>
