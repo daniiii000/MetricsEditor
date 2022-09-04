@@ -38,22 +38,13 @@
             <td th:text="${metric.object}"> &nbsp;</td></tr>
 
         <tr> <td> Modifier </td>
-            <td th:text="${metric.modifier}"> &nbsp;</td></tr>
-
-        <tr> <td> Modifier Attribute </td>
-            <td th:text="${metric.modifier_attribute}"> </td></tr>
+            <td th:text="${metric.modifiers}"> &nbsp;</td></tr>
 
         <tr> <td> Condition </td>
-            <td th:text="${metric.condition}"> &nbsp;</td></tr>
-
-        <tr> <td> Condition Attribute </td>
-            <td th:text="${metric.condition_attribute}"> &nbsp;</td></tr>
+            <td th:text="${metric.conditions}"> &nbsp;</td></tr>
 
         <tr> <td th:if="${metric.value != null}">  Value  </td>
             <td  th:if="${metric.value != null}" th:text="${metric.value}"> </td></tr>
-
-        <tr> <td th:if="${metric.value_attribute != null}"> Value Attribute  </td>
-            <td th:if="${metric.value_attribute != null}" th:text="${metric.value_attribute}"> </td></tr>
 
         <tr> <td th:if="${metric.count != null}"> Count </td>
             <td th:if="${metric.count != null}" th:text="${metric.count}"> &nbsp;</td></tr>
