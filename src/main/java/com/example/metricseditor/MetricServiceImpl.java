@@ -48,12 +48,9 @@ public class MetricServiceImpl implements MetricService {
         metric.setType(metricDetails.getType());
         metric.setTeamextension(metricDetails.getTeamextension());
         metric.setObject(metricDetails.getObject());
-        metric.setModifier(metricDetails.getModifier());
-        metric.setModifier_attribute(metricDetails.getModifier_attribute());
-        metric.setCondition(metricDetails.getCondition());
-        metric.setCondition_attribute(metricDetails.getCondition_attribute());
+        metric.setModifiers(metricDetails.getModifiers());
+        metric.setConditions(metricDetails.getConditions());
         metric.setValue(metricDetails.getValue());
-        metric.setValue_attribute(metricDetails.getValue_attribute());
         metric.setCount(metricDetails.getCount());
         metric.setCount_attribute(metricDetails.getCount_attribute());
 

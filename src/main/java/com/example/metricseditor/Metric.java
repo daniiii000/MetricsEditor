@@ -1,10 +1,12 @@
 package com.example.metricseditor;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.*;
 
 @Entity
 @Table(name = "metrics")
-public class Metric {
+public class Metric implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,23 +29,14 @@ public class Metric {
     @Column (name = "object")
     private String object;
 
-    @Column (name = "modifier")
-    private String modifier;
+    @OneToMany(mappedBy = "metric", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Modifier> modifiers;
 
-    @Column (name = "modifier_attribute")
-    private String modifier_attribute;
-
-    @Column (name = "condition")
-    private String condition;
-
-    @Column (name = "condition_attribute")
-    private String condition_attribute;
+    @OneToMany(mappedBy = "metric", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Condition> conditions;
 
     @Column (name = "value")
     private String value;
-
-    @Column (name = "value_attribute")
-    private String value_attribute;
 
     @Column (name = "count")
     private String count;
@@ -51,14 +44,36 @@ public class Metric {
     @Column (name = "count_attribute")
     private String count_attribute;
 
+   /* public void addModifier(Modifier modifier) {
+        if (null == modifier) {
+            modifiers = new HashSet<>();
+        }
+        modifiers.add(modifier);
+        modifiers.setModifiers(this);
+    }
+    public void removeModifier(Modifier modifier) {
+        modifiers.remove(modifier);
+        modifiers.setModifiers(null);
+    }
+
+    public void addCondition(Condition condition) {
+        if (null == condition) {
+            conditions = new HashSet<>();
+        }
+        conditions.add(condition);
+        conditions.setConditions(this);
+    }
+    public void removeCondition(Condition condition) {
+        conditions.remove(condition);
+        conditions.setConditions(null);
+    }*/
 
     public Metric() {
-
     }
 
     public Metric(Long id, String name, String pattern, String subject, String type, String teamextension, String object,
-                  String modifier, String modifier_attribute, String condition,String condition_attribute, String value,
-                  String value_attribute, String count, String count_attribute) {
+                  Set<com.example.metricseditor.Modifier> modifiers, Set<Condition> conditions, String value,
+                  String count, String count_attribute) {
         this.id = id;
         this.name = name;
         this.pattern = pattern;
@@ -66,31 +81,24 @@ public class Metric {
         this.type = type;
         this.teamextension = teamextension;
         this.object = object;
-        this.modifier = modifier;
-        this.modifier_attribute = modifier_attribute;
-        this.condition = condition;
-        this.condition_attribute = condition_attribute;
+        this.modifiers = modifiers;
+        this.conditions = conditions;
         this.value = value;
-        this.value_attribute = value_attribute;
         this.count = count;
         this.count_attribute = count_attribute;
     }
 
     public Metric(String name, String pattern, String subject, String type, String teamextension, String object,
-                  String modifier, String modifier_attribute, String condition,String condition_attribute, String value,
-                  String value_attribute, String count, String count_attribute) {
+                  Set<com.example.metricseditor.Modifier> modifiers, Set<Condition> conditions, String value, String count, String count_attribute) {
         this.name = name;
         this.pattern = pattern;
         this.subject = subject;
         this.type = type;
         this.teamextension = teamextension;
         this.object = object;
-        this.modifier = modifier;
-        this.modifier_attribute = modifier_attribute;
-        this.condition = condition;
-        this.condition_attribute = condition_attribute;
+        this.modifiers = modifiers;
+        this.conditions = conditions;
         this.value = value;
-        this.value_attribute = value_attribute;
         this.count = count;
         this.count_attribute = count_attribute;
     }
@@ -151,37 +159,13 @@ public class Metric {
         this.object = object;
     }
 
-    public String getModifier() {
-        return modifier;
-    }
+    public Set<Modifier> getModifiers() { return modifiers;}
 
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
-    }
+    public void setModifiers(Set<Modifier> modifiers) { this.modifiers = modifiers; }
 
-    public String getModifier_attribute() {
-        return modifier_attribute;
-    }
+    public Set<Condition> getConditions() { return conditions;}
 
-    public void setModifier_attribute(String modifier_attribute) {
-        this.modifier_attribute = modifier_attribute;
-    }
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public String getCondition_attribute() {
-        return condition_attribute;
-    }
-
-    public void setCondition_attribute(String condition_attribute) {
-        this.condition_attribute = condition_attribute;
-    }
+    public void setConditions(Set<Condition> conditions) { this.conditions = conditions; }
 
     public String getValue() {
         return value;
@@ -189,14 +173,6 @@ public class Metric {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public String getValue_attribute() {
-        return value_attribute;
-    }
-
-    public void setValue_attribute(String value_attribute) {
-        this.value_attribute = value_attribute;
     }
 
     public String getCount() {
@@ -214,6 +190,7 @@ public class Metric {
     public void setCount_attribute(String count_attribute) {
         this.count_attribute = count_attribute;
     }
+
     @Override
     public String toString() {
         return "Query{" +
@@ -224,12 +201,9 @@ public class Metric {
                 ", type='" + type + '\'' +
                 ", teamextension='" + teamextension + '\'' +
                 ", object='" + object + '\'' +
-                ", modifier='" + modifier + '\'' +
-                ", modifier_attribute='" + modifier_attribute + '\'' +
-                ", condition='" + condition + '\'' +
-                ", condition_attribute='" + condition_attribute + '\'' +
+                ", modifier='" + modifiers + '\'' +
+                ", condition='" + conditions + '\'' +
                 ", value='" + value + '\'' +
-                ", value_attribute='" + value_attribute + '\'' +
                 ", count='" + count + '\'' +
                 ", count_attribute='" + count_attribute + '\'' +
                 '}';

@@ -3,10 +3,13 @@ package com.example.metricseditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 
 @Controller
@@ -17,6 +20,14 @@ public class MetricController {
     @Qualifier("metricservice")
     private MetricService metricService;
 
+    @Autowired
+    @Qualifier("conditionservice")
+    private ConditionService conditionService;
+
+    @Autowired
+    @Qualifier("modifierservice")
+    private ModifierService modifierService;
+
 
     @GetMapping("/metrics")
     public ModelAndView getAllMetrics() {
@@ -25,16 +36,34 @@ public class MetricController {
         return mav;
     }
 
-    @PostMapping("/metrics")
-    public String addMetric(@RequestBody Metric metric) {
+    @PostMapping("/save")
+    public String addMetric(@ModelAttribute Metric metric, @RequestParam("conditions") Set<Condition> conditions, @RequestParam("modifiers") Set<Modifier>modifiers) {
+       /* Metric metric = new Metric();
+        model.addAttribute("pattern", metric.getPattern());*/
+        metric.setModifiers(modifiers);
+        metric.setConditions(conditions);
         metricService.addMetric(metric);
+        //conditions.getId().setMetric(metric);
+        conditionService.addConditions(conditions);
+        modifierService.addModifiers(modifiers);
         return "redirect:/metrics";
 
     }
 
     @GetMapping("/metrics/{id}")
-    public ModelAndView getMetricById(@PathVariable(value = "id") Long metricId) throws ResourceNotFoundException {
+    public ModelAndView getMetricById(Model model, @PathVariable(value = "id") Long metricId) throws ResourceNotFoundException {
         ModelAndView mav = new ModelAndView("show");
+        //model.addAttribute("conditions",conditionService.getAllConditions());
+        //model.addAttribute("modifiers",modifierService.getAllModifiers());
+        mav.addObject("metric", metricService.getMetricById(metricId));
+        return mav;
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView getMetricByIdForEdit(Model model, @PathVariable(value = "id") Long metricId) throws ResourceNotFoundException {
+        ModelAndView mav = new ModelAndView("edit");
+        //model.addAttribute("conditions",conditionService.getAllConditions());
+        //model.addAttribute("modifiers",modifierService.getAllModifiers());
         mav.addObject("metric", metricService.getMetricById(metricId));
         return mav;
     }
