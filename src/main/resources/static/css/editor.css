@@ -9,7 +9,7 @@ body {
 }
 
 section.navigation {
-    background: blue;
+    background: rgba(0, 72, 255, 0.77);
     width: 120px;
     padding: 10px;
     height: 100vh;
@@ -76,8 +76,13 @@ table {
     margin-right: 20px;
 }
 
-thead {
+.metric_name {
+    text-align: left;
+}
+
+th {
     text-align: center;
+    cursor: pointer;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td,
@@ -90,4 +95,10 @@ thead {
 }
 .table-striped>thead>tr>th {
     background-color: #eee;
+}
+
+.search {
+    width: 600px;
+    height: 35px;
+    font-size: 16px;
 }

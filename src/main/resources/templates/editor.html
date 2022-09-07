@@ -15,24 +15,24 @@
             <a href="/assister"> <button type="button" id="metric_button" class="add-metric-button"> <i class="fa fa-plus"></i> <span> Create New Metric </span> </button> </a><br>
         </div> <br> <br>
 
+        <input class="search" id="search_metric" onkeyup="search_Metric();" name="search" placeholder="&nbsp;Search by Name, Pattern, Subject or Object" type="text">
         <table id="mytable" class="table table-bordered table-striped">
             <thead class="thead-dark">
-                <th scope="row"> Name </th>
-                <th scope="row"> Pattern </th>
-                <th scope="row"> Subject </th>
-                <th scope="row"> Object </th>
-                <th scope="row"> Actions </th>
+            <th onclick="sortTable(0);"> Name </th>
+                <th onclick="sortTable(1);"> Pattern </th>
+                <th onclick="sortTable(2);"> Subject </th>
+                <th onclick="sortTable(3);"> Object </th>
+                <th> Actions </th>
             </thead>
             <tbody>
                 <tr th:each="metric : ${metrics}">
-                    <td th:text="${metric.name}"> &nbsp;</td>
+                    <td class="metric_name" th:text="${metric.name}"> &nbsp;</td>
                     <td th:text="${metric.pattern}"> &nbsp;</td>
                     <td th:text="${metric.subject}"> &nbsp;</td>
                     <td th:text="${metric.object}"> &nbsp;</td>
                     <td>
                         <a th:href="@{'/metrics/' + ${metric.id}}"> <button type="submit" class="btn btn-success">Show</button></a> &nbsp;
                         <a th:href="@{'/edit/' + ${metric.id}}"> <button class="btn btn-info">Edit</button></a> &nbsp;
-                        <!--<form th:action="@{/delete/id}" method="post">-->
                         <a th:href="@{'/delete/' + ${metric.id}}"> <button type="button" onclick="return confirm('Are you sure to delete this metric?');" class="btn btn-danger"> Delete</button> </a>
                     </td>
                 </tr>
