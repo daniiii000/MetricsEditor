@@ -16,6 +16,7 @@
         </div> <br> <br>
 
         <input class="search" id="search_metric" onkeyup="search_Metric();" name="search" placeholder="&nbsp;Search by Name, Pattern, Subject or Object" type="text">
+        <div class="scroll">
         <table id="mytable" class="table table-bordered table-striped">
             <thead class="thead-dark">
             <th onclick="sortTable(0);"> Name </th>
@@ -33,11 +34,12 @@
                     <td>
                         <a th:href="@{'/metrics/' + ${metric.id}}"> <button type="submit" class="btn btn-success">Show</button></a> &nbsp;
                         <a th:href="@{'/edit/' + ${metric.id}}"> <button class="btn btn-info">Edit</button></a> &nbsp;
-                        <a th:href="@{'/delete/' + ${metric.id}}"> <button type="button" onclick="return confirm('Are you sure to delete this metric?');" class="btn btn-danger"> Delete</button> </a>
+                        <a th:href="@{'/delete/' + ${metric.id}}"> <button type="submit" onclick="return confirm('Are you sure to delete this metric?');" class="btn btn-danger"> Delete</button> </a>
                     </td>
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
     <div class="lateral-menu">
         <section class="navigation">
