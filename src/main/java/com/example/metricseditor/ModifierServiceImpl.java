@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class ModifierServiceImpl implements ModifierService {
 
     @Override
     public List<Modifier> getAllModifiers() {
-        return modifierRepository.findAll();
+        return (List<Modifier>) modifierRepository.findAll();
     }
 
     @Override
@@ -29,4 +30,11 @@ public class ModifierServiceImpl implements ModifierService {
     public void addModifiers(Set<Modifier> modifiers) {
         modifierRepository.saveAll(modifiers);
     }
+
+    @Override
+    public List<Modifier> getModifiers(Long metricId) throws ResourceNotFoundException{
+        List<Modifier> modifiers = modifierRepository.findAllByMetric(metricId);
+        return modifiers;
+    }
+
 }

@@ -32,6 +32,11 @@ public class Modifier implements Serializable {
         this.metric = metric;
     }
 
+    public Modifier(String type, String modifier_attribute) {
+        this.type = type;
+        this.modifier_attribute = modifier_attribute;
+    }
+
     public Long getId() {
         return id;
     }

@@ -16,34 +16,33 @@
         <div>
             <label class="title">CREATE YOUR METRIC</label>
         </div> <br>
-            <form object="${metric}" th:action="@{/save}" method="post">
             <div class="basic_info">
-            <label for="pattern"> Select Pattern: &nbsp;</label> <select field="*{pattern}" onchange="displayDiv();" name="pattern" id="pattern">
-                <option value="...">Select an option</option>
+            <label for="pattern"> Select Pattern: &nbsp;</label> <select onchange="type_enablement(); displayDiv();" name="pattern" id="pattern">
+                <option value="pattern">Select an option</option>
                 <option value="percentage">Percentage</option>
                 <option value="standard deviation">Standard Deviation</option>
                 <option value="frequency">Frequency</option>
             </select>
             <br> <br>
 
-            <label for="type"> Select Type: &nbsp;</label><select field="*{type}" onchange="displayDiv();" name="type" id="type">
+            <label for="type"> Select Type: &nbsp;</label><select disabled="disabled" onchange="subject_enablement()" name="type" id="type">
                 <option value="type">Select an option</option>
-                <option value="evaluative">Evaluative</option>
+                <option value="evaluative"> Evaluative</option>
                 <option value="informative">Informative</option>
             </select>
             <br> <br>
 
-            <label for="subject"> Select Subject: &nbsp;</label><select field="*{subject}" onchange="displayDiv();" name="subject" id="subject">
-                <option value="...">Select an option</option>
+            <label for="subject"> Select Subject: &nbsp;</label><select disabled="disabled" onchange="teamextension_enablement(); displayDiv()" name="subject" id="subject">
+                <option value="subject">Select an option</option>
                 <option value="individual">Individual</option>
                 <option value="team">Team</option>
             </select>
             <br> <br>
 
-            <label for="teamextension"> Select Team Extension: &nbsp;</label><select field="*{teamextension}" onchange="displayDiv();" name="teamextension" id="teamextension">
+            <label for="teamextension"> Select Team Extension: &nbsp;</label><select disabled="disabled" onchange="displayDiv();" name="teamextension" id="teamextension">
                 <option value="teamextension">Select an option</option>
                 <option value="overall">Overall</option>
-                <option value="standard_deviation">Standard Deviation</option>
+                <option value="standard_deviation" >Standard Deviation</option>
             </select>
             <br> <br>
             </div>
@@ -53,7 +52,7 @@
                 <textarea id="description_box" readonly class="description" rows="2" type="text" >  </textarea>
                 <br> <br>
                 <label for="object"> Select Object: &nbsp;</label>
-                <select field="*{object}" name="object" id="object">
+                <select onchange="modifier_enablement(); count_enablement()" name="object" id="object">
                     <option value="object">Select an option</option>
                     <option value="task">Task</option>
                     <option value="userstory">User Story</option>
@@ -61,8 +60,9 @@
                 </select>
                 <br> <br>
 
+                <div onchange="cond_val_enablement()" class="modifier" id="modifier_div">
                 <label for="modifier"> Select Modifier Type: &nbsp;</label>
-                <select onchange="modifier_expressions()" field="*{modifiers.type}" name="modifier" id="modifier">
+                <select disabled="disabled" onchange="modifier_expressions()" name="modifier" id="modifier">
                     <option value="modifier">Select an option</option>
                     <option value="none">None</option>
                     <option value="state">State</option>
@@ -70,7 +70,7 @@
                 </select>
 
                 <label for="modifier_attribute" id="modifier_attribute_label" class="modifier_attribute_label"> Select Modifier Attribute: &nbsp;</label>
-                <select field="*{modifiers.modifier_attribute}" class="modifier_attribute" id="modifier_attribute">
+                <select disabled="disabled" class="modifier_attribute" id="modifier_attribute">
                     <option value="modifier_attribute">Select an option</option>
                     <option value="closed">Closed</option>
                     <option value="lines_of_code">Lines of code</option>
@@ -78,9 +78,11 @@
                     <option value="actual_effort">Actual effort</option>
                 </select>
                 <br> <br>
+                </div>
 
+                <div class="condition" id="condition_div">
                 <label for="condition"> Select Condition Type: &nbsp;</label>
-                <select field="*{conditions.type}" name="condition" id="condition">
+                <select onchange="condition_changes()" disabled="disabled" name="condition" id="condition">
                     <option value="condition">Select an option</option>
                     <option value="defined">Defined</option>
                     <option value="card">Card</option>
@@ -89,23 +91,24 @@
                 </select>
 
                 <label for="condition_attribute"> Select Condition Attribute: &nbsp;</label>
-                <select field="*{conditions.condition_attribute}" name="condition_attribute" id="condition_attribute">
+                <select onchange="condition_changes()" disabled="disabled" name="condition_attribute" id="condition_attribute">
                     <option value="condition_attribute">Select an option</option>
                     <option value="estimated_effort">Estimated effort</option>
                     <option value="actual_effort">Actual effort</option>
                 </select>
                 <br> <br>
+                </div>
 
                 <div class="count" id="count_div">
                 <label for="count"> Select Count Type: &nbsp;</label>
-                <select field="*{count}" name="count" id="count">
+                <select onchange="count_changes()" disabled="disabled" name="count" id="count">
                     <option value="count">Select an option</option>
                     <option value="state">State</option>
 
                 </select>
 
                 <label for="count_attribute"> Select Count Attribute: &nbsp;</label>
-                <select field="*{count_attribute}" name="count_attribute" id="count_attribute">
+                <select onchange="count_changes()" disabled="disabled" name="count_attribute" id="count_attribute">
                     <option value="count_attribute">Select an option</option>
                     <option value="closed">Closed</option>
                 </select>
@@ -114,27 +117,24 @@
 
                 <div class="value" id="value_div">
                 <label for="value"> Select Value: &nbsp;</label>
-                <select onchange="value_expressions();" name="value" id="value">
+                <select disabled="disabled" onchange="value_expressions(); value_changes()" name="value" id="value">
                     <option value="value">Select an option</option>
                     <option value="estimated_effort">Estimated effort</option>
                     <option value="actual_effort">Actual effort</option>
                 </select>
-                    <input field="*{value}" class="value_input" id="value_input"></input>
+                    <input class="value_input" id="value_input"></input>
                 <br> <br>
                 </div>
 
                 <label for="name" id="name"> Metric name: &nbsp; </label>
-                <input field="*{name}" class="metric_name" type="text"></input>
+                <input disabled="disabled" onkeydown="button_enablement()" id="name_metric" class="metric_name" type="text"></input>
                 <br> <br>
 
 
             <div class="options">
-                <button type="button" class="btn btn-primary" onclick="back();"> <i class="fa fa-angle-left"> </i><span> Back </span> </button>
-                <button type="button" class="btn btn-primary" onclick="next();"> <span> Next </span> <i class="fa fa-angle-right"> </i> </button>
-                <button type="submit" class="btn btn-success"> Generate </button>
+                <button  disabled="disabled" id="generate_button" type="submit" class="btn btn-success" onclick="create()"> Generate </button>
             </div>
-            </div>
-        </form>
+           </div>
         </div>
 
 
@@ -151,5 +151,6 @@
 </div>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="js/assister.js"></script>
 </html>

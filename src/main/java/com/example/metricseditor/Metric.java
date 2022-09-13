@@ -20,6 +20,18 @@ public class Metric implements Serializable {
     @Column (name = "subject")
     private String subject;
 
+    public Metric(String name, String pattern, String subject, String type, String teamextension, String object, String value, String count, String count_attribute) {
+        this.name = name;
+        this.pattern = pattern;
+        this.subject = subject;
+        this.type = type;
+        this.teamextension = teamextension;
+        this.object = object;
+        this.value = value;
+        this.count = count;
+        this.count_attribute = count_attribute;
+    }
+
     @Column (name = "type")
     private String type;
 
@@ -30,10 +42,10 @@ public class Metric implements Serializable {
     private String object;
 
     @OneToMany(mappedBy = "metric", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Modifier> modifiers;
+    private List<Modifier> modifiers;
 
     @OneToMany(mappedBy = "metric", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Condition> conditions;
+    private List<Condition> conditions;
 
     @Column (name = "value")
     private String value;
@@ -72,7 +84,7 @@ public class Metric implements Serializable {
     }
 
     public Metric(Long id, String name, String pattern, String subject, String type, String teamextension, String object,
-                  Set<com.example.metricseditor.Modifier> modifiers, Set<Condition> conditions, String value,
+                  List<Modifier> modifiers, List<Condition> conditions, String value,
                   String count, String count_attribute) {
         this.id = id;
         this.name = name;
@@ -89,7 +101,7 @@ public class Metric implements Serializable {
     }
 
     public Metric(String name, String pattern, String subject, String type, String teamextension, String object,
-                  Set<com.example.metricseditor.Modifier> modifiers, Set<Condition> conditions, String value, String count, String count_attribute) {
+                  List<Modifier> modifiers, List<Condition> conditions, String value, String count, String count_attribute) {
         this.name = name;
         this.pattern = pattern;
         this.subject = subject;
@@ -159,13 +171,13 @@ public class Metric implements Serializable {
         this.object = object;
     }
 
-    public Set<Modifier> getModifiers() { return modifiers;}
+    public List<Modifier> getModifiers() { return modifiers;}
 
-    public void setModifiers(Set<Modifier> modifiers) { this.modifiers = modifiers; }
+    public void setModifiers(List<Modifier> modifiers) { this.modifiers = modifiers; }
 
-    public Set<Condition> getConditions() { return conditions;}
+    public List<Condition> getConditions() { return conditions;}
 
-    public void setConditions(Set<Condition> conditions) { this.conditions = conditions; }
+    public void setConditions(List<Condition> conditions) { this.conditions = conditions; }
 
     public String getValue() {
         return value;

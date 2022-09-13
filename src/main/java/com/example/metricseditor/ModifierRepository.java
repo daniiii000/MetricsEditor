@@ -1,9 +1,12 @@
 package com.example.metricseditor;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("modifierrepository")
-public interface ModifierRepository extends JpaRepository<Modifier,Long> {
+import java.util.List;
 
+@Repository("modifierrepository")
+public interface ModifierRepository extends CrudRepository<Modifier,Long> {
+
+    public List<Modifier> findAllByMetric(Long metricId);
 }

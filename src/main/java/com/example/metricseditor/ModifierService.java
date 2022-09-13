@@ -12,4 +12,6 @@ public interface ModifierService {
     public abstract Modifier getModifierById(Long modifierId) throws ResourceNotFoundException;
 
     void addModifiers(@RequestBody Set<Modifier> modifiers);
+
+    List<Modifier> getModifiers(Long metricId) throws ResourceNotFoundException;
 }

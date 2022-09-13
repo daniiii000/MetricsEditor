@@ -2,6 +2,7 @@ package com.example.metricseditor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -17,11 +18,22 @@ public class MetricServiceImpl implements MetricService {
 
     @Override
     public List<Metric> getAllMetrics() {
-        return metricRepository.findAll();
+        return (List<Metric>) metricRepository.findAll();
     }
 
     @Override
     public Metric addMetric(@RequestBody Metric metric) {
+        metric.setName(metric.getName());
+        metric.setPattern(metric.getPattern());
+        metric.setSubject(metric.getSubject());
+        metric.setType(metric.getType());
+        metric.setTeamextension(metric.getTeamextension());
+        metric.setObject(metric.getObject());
+        metric.setModifiers(metric.getModifiers());
+        metric.setConditions(metric.getConditions());
+        metric.setValue(metric.getValue());
+        metric.setCount(metric.getCount());
+        metric.setCount_attribute(metric.getCount_attribute());
         return metricRepository.save(metric);
     }
 

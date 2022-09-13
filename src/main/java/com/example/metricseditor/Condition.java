@@ -32,6 +32,12 @@ public class Condition implements Serializable {
         this.metric = metric;
     }
 
+    public Condition(String type, String condition_attribute) {
+        this.type = type;
+        this.condition_attribute = condition_attribute;
+    }
+
+
     public Long getId() {
         return id;
     }

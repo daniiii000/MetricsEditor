@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service("conditionservice")
@@ -17,7 +18,7 @@ public class ConditionServiceImpl implements ConditionService {
 
     @Override
     public List<Condition> getAllConditions() {
-        return conditionRepository.findAll();
+        return (List<Condition>) conditionRepository.findAll();
     }
 
     @Override
@@ -30,4 +31,12 @@ public class ConditionServiceImpl implements ConditionService {
     public void addConditions(@RequestBody Set<Condition> conditions) {
         conditionRepository.saveAll(conditions);
     }
+
+    @Override
+    public List<Condition> getConditions(Long metricId) throws ResourceNotFoundException {
+        //List<Condition> conditions = conditionRepository.findAllByMetric(metricId).orElseThrow(() -> new ResourceNotFoundException("Condition not found for this id :: " + metricId));
+        List<Condition> conditions = conditionRepository.findAllByMetric(metricId);
+        return conditions;
+    }
+
 }

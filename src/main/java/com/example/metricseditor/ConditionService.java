@@ -12,4 +12,6 @@ public interface ConditionService {
     public abstract Condition getConditionById(Long conditionId) throws ResourceNotFoundException;
 
     void addConditions(@RequestBody Set<Condition> conditions);
+
+    List<Condition> getConditions(Long metricId) throws ResourceNotFoundException;
 }
