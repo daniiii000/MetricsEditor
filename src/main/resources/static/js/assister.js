@@ -339,6 +339,11 @@ function create() {
     var condition_text = condition.options[condition.selectedIndex].text;
     var condition_attribute = document.getElementById("condition_attribute");
     var condition_attribute_text = condition_attribute.options[condition_attribute.selectedIndex].text;
+    var value_text = document.getElementById("value_input").value;
+    var count = document.getElementById("count");
+    var count_text = count.options[count.selectedIndex].text;
+    var count_attribute = document.getElementById("count_attribute");
+    var count_attribute_text = count_attribute.options[count_attribute.selectedIndex].text;
     var name_text = document.getElementById("name_metric").value;
 
     console.log(pattern_text);
@@ -351,6 +356,9 @@ function create() {
     console.log(condition_text);
     console.log(condition_attribute_text);
     console.log(name_text);
+    console.log(value_text);
+    console.log(count_text);
+    console.log(count_attribute_text);
 
 
     var formData = new FormData();
@@ -359,11 +367,22 @@ function create() {
     formData.append("subject", subject_text);
     formData.append("teamextension", teamextension_text);
     formData.append("object", object_text);
-    formData.append("modifier", modifier_text);
-    formData.append("modifier_attribute", modifier_attribute_text);
-    formData.append("condition", condition_text);
-    formData.append("condition_attribute", condition_attribute_text);
     formData.append("name", name_text);
+    if (pattern_text === "Percentage") {
+        formData.append("modifier", modifier_text);
+        formData.append("modifier_attribute", modifier_attribute_text);
+        formData.append("condition", condition_text);
+        formData.append("condition_attribute", condition_attribute_text);
+    }
+    else if (pattern_text === "Standard Deviation") {
+        formData.append("modifier", modifier_text);
+        formData.append("modifier_attribute", modifier_attribute_text);
+        formData.append("value", value_text);
+    }
+    else if (pattern_text === "Frequency") {
+        formData.append("count", count_text);
+        formData.append("count_attribute", count_attribute_text);
+    }
     jQuery.ajax({
         url: "/save",
         data: formData,

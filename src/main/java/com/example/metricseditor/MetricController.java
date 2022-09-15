@@ -1,6 +1,7 @@
 package com.example.metricseditor;
 
 
+import com.example.metricseditor.files.FileOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -56,7 +57,7 @@ public class MetricController {
     }
 
     @PostMapping("/save")
-    public String addMetric(HttpServletRequest request) {
+    public String addMetric(HttpServletRequest request) throws IOException {
 
         String pattern = request.getParameter("pattern");
         String type = request.getParameter("type");
@@ -68,25 +69,50 @@ public class MetricController {
         String condition_type = request.getParameter("condition");
         String condition_attribute = request.getParameter("condition_attribute");
         String name = request.getParameter("name");
+        String value = request.getParameter("value");
+        String count_type = request.getParameter("count");
+        String count_attribute = request.getParameter("count_attribute");
 
-        Metric metric = new Metric(name, pattern,subject,type,teamextension,object,null,null,null);
-        metricRepository.save(metric);
+        if (pattern.equals("Percentage")) {
+            Metric metric = new Metric(name, pattern,subject,type,teamextension,object,null,null,null);
+            metricRepository.save(metric);
 
-        Condition condition = new Condition(condition_type, condition_attribute);
-        condition.setMetric(metric);
-        conditionRepository.save(condition);
-        Modifier modifier = new Modifier(modifier_type,modifier_attribute);
-        modifier.setMetric(metric);
-        modifierRepository.save(modifier);
-        List<Condition> conditions_list = new ArrayList<>();
-        conditions_list.add(condition);
+            Condition condition = new Condition(condition_type, condition_attribute);
+            condition.setMetric(metric);
+            conditionRepository.save(condition);
+            Modifier modifier = new Modifier(modifier_type,modifier_attribute);
+            modifier.setMetric(metric);
+            modifierRepository.save(modifier);
+            List<Condition> conditions_list = new ArrayList<>();
+            conditions_list.add(condition);
 
-        List<Modifier> modifiers_list = new ArrayList<>();
-        modifiers_list.add(modifier);
-        metric.setConditions(conditions_list);
-        metric.setModifiers(modifiers_list);
+            List<Modifier> modifiers_list = new ArrayList<>();
+            modifiers_list.add(modifier);
+            metric.setConditions(conditions_list);
+            metric.setModifiers(modifiers_list);
 
-        metricRepository.save(metric);
+            metricRepository.save(metric);
+        }
+        else if (pattern.equals("Standard Deviation")) {
+            Metric metric = new Metric(name, pattern,subject,type,teamextension,object,value,null,null);
+            metricRepository.save(metric);
+            Modifier modifier = new Modifier(modifier_type,modifier_attribute);
+            modifier.setMetric(metric);
+            modifierRepository.save(modifier);
+
+            List<Modifier> modifiers_list = new ArrayList<>();
+            modifiers_list.add(modifier);
+            metric.setModifiers(modifiers_list);
+
+            metricRepository.save(metric);
+        }
+        else if (pattern.equals("Frequency")) {
+            Metric metric = new Metric(name, pattern,subject,type,teamextension,object,null,count_type,count_attribute);
+            metricRepository.save(metric);
+        }
+
+        FileOperations.createProperties(name, object, pattern);
+        FileOperations.createQueries(name);
 
         return "redirect:/metrics";
 
@@ -96,8 +122,16 @@ public class MetricController {
     public ModelAndView getMetricById(@PathVariable(value = "id") Long metricId) throws ResourceNotFoundException {
         ModelAndView mav = new ModelAndView("show");
         mav.addObject("metric", metricService.getMetricById(metricId));
-        mav.addObject("conditions", conditionService.getConditions(metricId));
-        mav.addObject("modifiers", modifierService.getModifiers(metricId));
+       /* mav.addObject("conditions", conditionService.getConditions(metricId));
+        mav.addObject("modifiers", modifierService.getModifiers(metricId));*/
+        return mav;
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView getMetricForUpdate(@PathVariable (value = "id") Long metricId) throws ResourceNotFoundException {
+        ModelAndView mav = new ModelAndView("edit");
+        mav.addObject("metric", metricService.getMetricById(metricId));
+        mav.addObject("id", metricId);
         return mav;
     }
 
@@ -108,9 +142,29 @@ public class MetricController {
 
     }
 
-    @PutMapping("/metrics/{id}")
-    public String updateMetric(@PathVariable(value = "id") Long metricId, @Valid @RequestBody Metric metricDetails) throws ResourceNotFoundException {
-        metricService.updateMetric(metricId, metricDetails);
+    @PutMapping("/update/{id}")
+    public String updateMetric(@PathVariable(value = "id") Long metricId, HttpServletRequest request) throws ResourceNotFoundException {
+        String pattern = request.getParameter("pattern");
+        String type = request.getParameter("type");
+        String subject = request.getParameter("subject");
+        String teamextension = request.getParameter("teamextension");
+        String object = request.getParameter("object");
+        String modifier_type = request.getParameter("modifier");
+        String modifier_attribute = request.getParameter("modifier_attribute");
+        String condition_type = request.getParameter("condition");
+        String condition_attribute = request.getParameter("condition_attribute");
+        String name = request.getParameter("name");
+
+        Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
+
+        metric.setName(name);
+        metric.setPattern(pattern);
+        metric.setSubject(subject);
+        metric.setType(type);
+        metric.setTeamextension(teamextension);
+        metric.setObject(object);
+
+        metricRepository.save(metric);
 
         return "redirect:/metrics";
     }

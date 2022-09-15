@@ -1,12 +1,15 @@
 package com.example.metricseditor;
 
+import com.example.metricseditor.files.FileOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("metricservice")
@@ -15,6 +18,14 @@ public class MetricServiceImpl implements MetricService {
     @Autowired
     @Qualifier("metricrepository")
     private MetricRepository metricRepository;
+
+    @Autowired
+    @Qualifier("conditionrepository")
+    private ConditionRepository conditionRepository;
+
+    @Autowired
+    @Qualifier("modifierrepository")
+    private ModifierRepository modifierRepository;
 
     @Override
     public List<Metric> getAllMetrics() {
@@ -38,7 +49,7 @@ public class MetricServiceImpl implements MetricService {
     }
 
     @Override
-    public Metric getMetricById(Long metricId) throws ResourceNotFoundException{
+    public Metric getMetricById(Long metricId) throws ResourceNotFoundException {
         Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
         return metric;
     }
@@ -46,26 +57,69 @@ public class MetricServiceImpl implements MetricService {
     @Override
     public Metric deleteMetric(Long metricId) throws ResourceNotFoundException {
         Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
+        FileOperations.deleteProperties(metric.getName());
+        FileOperations.deleteQueries(metric.getName());
         metricRepository.deleteById(metricId);
         return metric;
     }
 
     @Override
-    public Metric updateMetric(Long metricId, @Valid @RequestBody Metric metricDetails) throws ResourceNotFoundException{
+    public Metric updateMetric(Long metricId, HttpServletRequest request) throws ResourceNotFoundException {
         Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
 
-        metric.setName(metricDetails.getName());
-        metric.setPattern(metricDetails.getPattern());
-        metric.setSubject(metricDetails.getSubject());
-        metric.setType(metricDetails.getType());
-        metric.setTeamextension(metricDetails.getTeamextension());
-        metric.setObject(metricDetails.getObject());
-        metric.setModifiers(metricDetails.getModifiers());
-        metric.setConditions(metricDetails.getConditions());
-        metric.setValue(metricDetails.getValue());
-        metric.setCount(metricDetails.getCount());
-        metric.setCount_attribute(metricDetails.getCount_attribute());
+        String pattern = request.getParameter("pattern");
+        String type = request.getParameter("type");
+        String subject = request.getParameter("subject");
+        String teamextension = request.getParameter("teamextension");
+        String object = request.getParameter("object");
+        String modifier_type = request.getParameter("modifier");
+        String modifier_attribute = request.getParameter("modifier_attribute");
+        String condition_type = request.getParameter("condition");
+        String condition_attribute = request.getParameter("condition_attribute");
+        String name = request.getParameter("name");
 
-        return metricRepository.save(metric);
+        metric.setName(name);
+        metric.setPattern(pattern);
+        metric.setSubject(subject);
+        metric.setType(type);
+        metric.setTeamextension(teamextension);
+        metric.setObject(object);
+
+
+       /* List<Condition> conditions = conditionRepository.findAllByMetric(metricId);
+        List<Modifier> modifiers_list = new ArrayList<>();
+        List<Condition> conditions_list = new ArrayList<>();
+        Condition condition;
+        Modifier modifier;
+
+        if (conditions.size() == 0) {
+            condition = new Condition(condition_type, condition_attribute);
+            condition.setMetric(metric);
+            conditionRepository.save(condition);
+        }
+
+        List<Modifier> modifiers = modifierRepository.findAllByMetric(metricId);
+
+        if (modifiers.size() == 0) {
+            modifier = new Modifier(modifier_type, modifier_attribute);
+            modifier.setMetric(metric);
+            modifierRepository.save(modifier);
+        }
+
+        condition.setMetric(metric);
+        conditionRepository.save(condition);
+
+        modifier.setMetric(metric);
+        modifierRepository.save(modifier);
+
+        conditions_list.add(condition);
+
+
+        modifiers_list.add(modifier);
+        metric.setConditions(conditions_list);
+        metric.setModifiers(modifiers_list);*/
+
+        metricRepository.save(metric);
+        return metric;
     }
 }
