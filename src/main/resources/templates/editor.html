@@ -33,7 +33,7 @@
                     <td th:text="${metric.object}"> &nbsp;</td>
                     <td>
                         <a th:href="@{'/metrics/' + ${metric.id}}"> <button type="submit" class="btn btn-success">Show</button></a> &nbsp;
-                        <a th:href="@{'/edit/' + ${metric.id}}"> <button class="btn btn-info">Edit</button></a> &nbsp;
+                        <a th:href="@{'/edit/' + ${metric.id}}"> <button type="submit" class="btn btn-info">Edit</button> </a>&nbsp;
                         <a th:href="@{'/delete/' + ${metric.id}}"> <button type="submit" onclick="return confirm('Are you sure to delete this metric?');" class="btn btn-danger"> Delete</button> </a>
                     </td>
                 </tr>
@@ -54,7 +54,7 @@
 
 </div>
 </body>
-<script src="js/editor.js"></script>
+<script src="/js/editor.js"></script>
 
 </html>
 

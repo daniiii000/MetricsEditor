@@ -26,7 +26,7 @@ function search_Metric() {
 function sortTable(n) {
     var shouldSwitch, i, x, y, rows, table, dir, switching, switchcount = 0;
 
-    table = document.getElementById("myTable");
+    table = document.getElementById("mytable");
     switching = true;
 
     dir = "asc";
@@ -37,8 +37,8 @@ function sortTable(n) {
 
         for (i = 1; i < (rows.length - 1); i++) {
             shouldSwitch = false;
-            x = rows[i].getElementsByTagName("td")[n];
-            y = rows[i + 1].getElementsByTagName("td")[n];
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
 
             if (dir === "asc") {
                 if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
