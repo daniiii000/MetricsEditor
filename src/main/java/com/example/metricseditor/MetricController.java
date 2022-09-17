@@ -72,9 +72,13 @@ public class MetricController {
         String value = request.getParameter("value");
         String count_type = request.getParameter("count");
         String count_attribute = request.getParameter("count_attribute");
+        String description = request.getParameter("description");
+
+        List<Condition> conditions_list = new ArrayList<>();
+        List<Modifier> modifiers_list = new ArrayList<>();
 
         if (pattern.equals("Percentage")) {
-            Metric metric = new Metric(name, pattern,subject,type,teamextension,object,null,null,null);
+            Metric metric = new Metric(name, description, pattern,subject,type,teamextension,object,null,null,null);
             metricRepository.save(metric);
 
             Condition condition = new Condition(condition_type, condition_attribute);
@@ -83,10 +87,8 @@ public class MetricController {
             Modifier modifier = new Modifier(modifier_type,modifier_attribute);
             modifier.setMetric(metric);
             modifierRepository.save(modifier);
-            List<Condition> conditions_list = new ArrayList<>();
             conditions_list.add(condition);
 
-            List<Modifier> modifiers_list = new ArrayList<>();
             modifiers_list.add(modifier);
             metric.setConditions(conditions_list);
             metric.setModifiers(modifiers_list);
@@ -94,25 +96,24 @@ public class MetricController {
             metricRepository.save(metric);
         }
         else if (pattern.equals("Standard Deviation")) {
-            Metric metric = new Metric(name, pattern,subject,type,teamextension,object,value,null,null);
+            Metric metric = new Metric(name, description, pattern,subject,type,teamextension,object,value,null,null);
             metricRepository.save(metric);
             Modifier modifier = new Modifier(modifier_type,modifier_attribute);
             modifier.setMetric(metric);
             modifierRepository.save(modifier);
 
-            List<Modifier> modifiers_list = new ArrayList<>();
             modifiers_list.add(modifier);
             metric.setModifiers(modifiers_list);
 
             metricRepository.save(metric);
         }
         else if (pattern.equals("Frequency")) {
-            Metric metric = new Metric(name, pattern,subject,type,teamextension,object,null,count_type,count_attribute);
+            Metric metric = new Metric(name, description, pattern,subject,type,teamextension,object,null,count_type,count_attribute);
             metricRepository.save(metric);
         }
 
-        FileOperations.createProperties(name, object, pattern);
-        FileOperations.createQueries(name);
+        FileOperations.createProperties(name, description, object, pattern);
+        FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list);
 
         return "redirect:/metrics";
 

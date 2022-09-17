@@ -14,23 +14,14 @@ public class Metric implements Serializable {
     @Column (name = "metric_name")
     private String name;
 
+    @Column (name = "description")
+    private String description;
+
     @Column (name = "pattern")
     private String pattern;
 
     @Column (name = "subject")
     private String subject;
-
-    public Metric(String name, String pattern, String subject, String type, String teamextension, String object, String value, String count, String count_attribute) {
-        this.name = name;
-        this.pattern = pattern;
-        this.subject = subject;
-        this.type = type;
-        this.teamextension = teamextension;
-        this.object = object;
-        this.value = value;
-        this.count = count;
-        this.count_attribute = count_attribute;
-    }
 
     @Column (name = "type")
     private String type;
@@ -56,38 +47,29 @@ public class Metric implements Serializable {
     @Column (name = "count_attribute")
     private String count_attribute;
 
-   /* public void addModifier(Modifier modifier) {
-        if (null == modifier) {
-            modifiers = new HashSet<>();
-        }
-        modifiers.add(modifier);
-        modifiers.setModifiers(this);
-    }
-    public void removeModifier(Modifier modifier) {
-        modifiers.remove(modifier);
-        modifiers.setModifiers(null);
-    }
-
-    public void addCondition(Condition condition) {
-        if (null == condition) {
-            conditions = new HashSet<>();
-        }
-        conditions.add(condition);
-        conditions.setConditions(this);
-    }
-    public void removeCondition(Condition condition) {
-        conditions.remove(condition);
-        conditions.setConditions(null);
-    }*/
 
     public Metric() {
     }
 
-    public Metric(Long id, String name, String pattern, String subject, String type, String teamextension, String object,
+    public Metric(String name, String description, String pattern, String subject, String type, String teamextension, String object, String value, String count, String count_attribute) {
+        this.name = name;
+        this.description = description;
+        this.pattern = pattern;
+        this.subject = subject;
+        this.type = type;
+        this.teamextension = teamextension;
+        this.object = object;
+        this.value = value;
+        this.count = count;
+        this.count_attribute = count_attribute;
+    }
+
+    public Metric(Long id, String name, String description, String pattern, String subject, String type, String teamextension, String object,
                   List<Modifier> modifiers, List<Condition> conditions, String value,
                   String count, String count_attribute) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.pattern = pattern;
         this.subject = subject;
         this.type = type;
@@ -100,9 +82,10 @@ public class Metric implements Serializable {
         this.count_attribute = count_attribute;
     }
 
-    public Metric(String name, String pattern, String subject, String type, String teamextension, String object,
+    public Metric(String name, String description, String pattern, String subject, String type, String teamextension, String object,
                   List<Modifier> modifiers, List<Condition> conditions, String value, String count, String count_attribute) {
         this.name = name;
+        this.description = description;
         this.pattern = pattern;
         this.subject = subject;
         this.type = type;
@@ -203,11 +186,16 @@ public class Metric implements Serializable {
         this.count_attribute = count_attribute;
     }
 
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
     @Override
     public String toString() {
         return "Query{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 ", pattern='" + pattern + '\'' +
                 ", subject='" + subject + '\'' +
                 ", type='" + type + '\'' +
