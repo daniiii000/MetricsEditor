@@ -59,6 +59,7 @@ function type_enablement() {
     var count = document.getElementById('count');
     var count_attribute = document.getElementById('count_attribute');
     var generate = document.getElementById("generate_button");
+    var comments = document.getElementById("comments_metric");
 
             if(pattern.value !== "pattern") {
                 type.disabled = false;
@@ -93,6 +94,8 @@ function type_enablement() {
                 count_attribute.disabled = true;
                 count_attribute.value = "count_attribute"
                 generate.disabled = true;
+                comments.value = "";
+                comments.disabled = true;
             }
 }
 
@@ -139,6 +142,7 @@ function modifier_enablement() {
     var value = document.getElementById("value");
     var value_input = document.getElementById("value_input");
     var generate = document.getElementById("generate_button");
+    var comments = document.getElementById("comments_metric");
 
         if(object.value !== "object") {
             modifier.disabled = false;
@@ -167,6 +171,8 @@ function modifier_enablement() {
             name.disabled = true;
             name.value = "";
             generate.disabled = true;
+            comments.value = "";
+            comments.disabled = true;
         }
 
 }
@@ -192,6 +198,7 @@ function cond_val_enablement() {
     var value = document.getElementById("value");
     var name = document.getElementById("name_metric");
     var generate = document.getElementById("generate_button");
+    var comments = document.getElementById("comments_metric");
 
         if(modifier.value !== "modifier") {
             condition.disabled = false;
@@ -214,6 +221,8 @@ function cond_val_enablement() {
             name.disabled = true;
             name.value = "";
             generate.disabled = true;
+            comments.value = "";
+            comments.disabled = true;
         }
 }
 
@@ -222,6 +231,7 @@ function count_changes() {
     var count_attribute = document.getElementById("count_attribute");
     var name = document.getElementById("name_metric");
     var generate = document.getElementById("generate_button");
+    var comments = document.getElementById("comments_metric");
 
     if(count.value !== "count" && count_attribute.value !== "count_attribute") {
         name.disabled = false;
@@ -231,6 +241,8 @@ function count_changes() {
         name.value = "";
         generate.disabled = true;
         count_attribute.value = "count_attribute";
+        comments.value = "";
+        comments.disabled = true;
     }
 }
 
@@ -239,6 +251,7 @@ function condition_changes() {
     var condition_attribute = document.getElementById("condition_attribute");
     var name = document.getElementById("name_metric");
     var generate = document.getElementById("generate_button");
+    var comments = document.getElementById("comments_metric");
 
     if (condition.value !== "condition") {
         condition_attribute.disabled = false;
@@ -254,6 +267,8 @@ function condition_changes() {
         generate.disabled = true;
         condition_attribute.value = "condition_attribute";
         condition_attribute.disabled = true;
+        comments.value = "";
+        comments.disabled = true;
     }
 }
 
@@ -263,6 +278,7 @@ function count_enablement() {
     var count = document.getElementById("count");
     var count_attribute = document.getElementById("count_attribute");
     var name = document.getElementById("name_metric");
+    var comments = document.getElementById("comments_metric");
 
         if(object.value !== "object") {
             count.disabled = false;
@@ -276,13 +292,28 @@ function count_enablement() {
             count_attribute.value = "count_attribute";
             name.disabled = true;
             name.value = "";
+            comments.value = "";
+            comments.disabled = true;
         }
+}
+
+function comments_enablement() {
+    var generate = document.getElementById("generate_button");
+    var name = document.getElementById("name_metric");
+    var comments = document.getElementById("comments_metric");
+    if (name.value.length !== 0) {
+        comments.disabled = false;
+    }
+    else {
+        comments.disabled = true;
+        generate.disabled = true;
+    }
 }
 
 function button_enablement() {
     var generate = document.getElementById("generate_button");
-    var name = document.getElementById("name_metric");
-    if (name.value.length !== 0) {
+    var comments = document.getElementById("comments_metric");
+    if (comments.value.length !== 0) {
         generate.disabled = false;
     }
     else generate.disabled = true;
@@ -335,6 +366,9 @@ function create() {
     var modifier_text = modifier.options[modifier.selectedIndex].text;
     var modifier_attribute = document.getElementById("modifier_attribute");
     var modifier_attribute_text = modifier_attribute.options[modifier_attribute.selectedIndex].text;
+    if (modifier_attribute_text === "Select an option") {
+        modifier_attribute_text = "-";
+    }
     var condition = document.getElementById("condition");
     var condition_text = condition.options[condition.selectedIndex].text;
     var condition_attribute = document.getElementById("condition_attribute");
@@ -345,6 +379,7 @@ function create() {
     var count_attribute = document.getElementById("count_attribute");
     var count_attribute_text = count_attribute.options[count_attribute.selectedIndex].text;
     var name_text = document.getElementById("name_metric").value;
+    var comments_text = document.getElementById("comments_metric").value;
 
     console.log(pattern_text);
     console.log(type_text);
@@ -359,6 +394,7 @@ function create() {
     console.log(value_text);
     console.log(count_text);
     console.log(count_attribute_text);
+    console.log(comments_text);
 
 
     var formData = new FormData();
@@ -368,6 +404,7 @@ function create() {
     formData.append("teamextension", teamextension_text);
     formData.append("object", object_text);
     formData.append("name", name_text);
+    formData.append("description", comments_text);
     if (pattern_text === "Percentage") {
         formData.append("modifier", modifier_text);
         formData.append("modifier_attribute", modifier_attribute_text);
