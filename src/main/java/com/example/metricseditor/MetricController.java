@@ -112,7 +112,7 @@ public class MetricController {
             metricRepository.save(metric);
         }
 
-        FileOperations.createProperties(name, description, object, pattern);
+        FileOperations.createProperties(name, description, object, pattern, subject, teamextension, conditions_list);
         FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list);
 
         return "redirect:/metrics";
@@ -123,6 +123,15 @@ public class MetricController {
     public ModelAndView getMetricById(@PathVariable(value = "id") Long metricId) throws ResourceNotFoundException {
         ModelAndView mav = new ModelAndView("show");
         mav.addObject("metric", metricService.getMetricById(metricId));
+       /* mav.addObject("conditions", conditionService.getConditions(metricId));
+        mav.addObject("modifiers", modifierService.getModifiers(metricId));*/
+        return mav;
+    }
+
+    @GetMapping("/showProperties/{id}")
+    public ModelAndView getFileProperties(@PathVariable(value = "id") Long metricId) throws Exception {
+        ModelAndView mav = new ModelAndView("showProperties");
+        mav.addObject("properties", metricService.getPropertiesFile(metricId));
        /* mav.addObject("conditions", conditionService.getConditions(metricId));
         mav.addObject("modifiers", modifierService.getModifiers(metricId));*/
         return mav;
