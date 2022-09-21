@@ -1,7 +1,6 @@
 package com.example.metricseditor;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import com.example.metricseditor.files.FileOperations;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class MainController {
 
-    @Autowired
-    private MetricRepository metricRepository;
 
     @GetMapping("/index")
     public String showHomePage() {
@@ -38,4 +35,5 @@ public class MainController {
     public String showEditPage() {
         return "/edit";
     }
+
 }

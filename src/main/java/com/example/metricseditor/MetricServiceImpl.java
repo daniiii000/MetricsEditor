@@ -3,13 +3,10 @@ package com.example.metricseditor;
 import com.example.metricseditor.files.FileOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("metricservice")
@@ -61,6 +58,13 @@ public class MetricServiceImpl implements MetricService {
         FileOperations.deleteQueries(metric.getName());
         metricRepository.deleteById(metricId);
         return metric;
+    }
+
+    @Override
+    public String getPropertiesFile(Long metricId) throws Exception {
+        Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
+        String text = FileOperations.readProperties(metric.getName());
+        return text;
     }
 
     @Override

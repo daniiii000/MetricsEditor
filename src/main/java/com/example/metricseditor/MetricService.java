@@ -2,7 +2,7 @@ package com.example.metricseditor;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface MetricService {
@@ -15,6 +15,8 @@ public interface MetricService {
 
     public abstract Metric deleteMetric(Long metricId) throws ResourceNotFoundException;
 
-    public abstract Metric updateMetric(Long metricId, @Valid @RequestBody Metric metricDetails) throws ResourceNotFoundException;
+    public String getPropertiesFile(Long metricId) throws Exception;
+
+    public abstract Metric updateMetric(Long metricId, HttpServletRequest request) throws ResourceNotFoundException;
 
 }

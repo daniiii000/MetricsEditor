@@ -113,7 +113,7 @@ public class MetricController {
         }
 
         FileOperations.createProperties(name, description, object, pattern, subject, teamextension, conditions_list);
-        FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list);
+        FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list, subject, teamextension);
 
         return "redirect:/metrics";
 

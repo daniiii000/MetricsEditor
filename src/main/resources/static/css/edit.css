@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+section.navigation {
+    background: blue;
+    width: 120px;
+    padding: 10px;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+nav.menu {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    text-align: center;
+}
+
+nav.menu a {
+    display: block;
+    padding: 20px;
+    color: white;
+}
+
+div.mainContainer {
+    margin: auto;
+    width: 1367px;
+    height: 647px;
+    background-color: lightgrey;
+}
+
+div.main-screen {
+    margin: auto;
+    margin-top: 10px;
+    width: 1219px;
+    height: 647px;
+    float: right;
+}
+
+label.title {
+    position: relative;
+    margin-top: 20px;
+    font-size: 20px;
+
+}
+
+label {
+    position: relative;
+    margin-left: 20px;
+    font-size: 16px;
+
+}
+
+.resizable {
+    resize: both;
+    scale: inherit;
+}
+
+select {
+    width: 150px;
+    height: 30px;
+    font-size: 25px;
+    margin: 10px;
+    margin-left: 10px;
+}
+
+
+
+div.basic_info {
+    position: relative;
+    float: left;
+    width: 380px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+div.assister {
+    position: relative;
+    float: right;
+    width: 780px;
+    height: 500px;
+    margin-bottom: 20px;
+    margin-right: 35px;
+    background: 4px white;
+    border-radius: 25px;
+}
+
+.description {
+    width: 700px;
+    height: 60px;
+    font-size: 15px;
+    margin-left: 15px;
+    font-size: 16px;
+    resize: none;
+
+}
+
+.btn-primary {
+    position: relative;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    float: bottom;
+}
+
+.btn-success {
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    float: right;
+}
+
+
+.metric_name {
+    width: 600px;
+    height: 30px;
+    font-size: 15px;
+}
+
+div.count {
+    display: none;
+}
+
+div.value {
+    display: none;
+}
+
+.value_input {
+    margin-left: 10px;
+    width: 400px;
+    height: 25px;
+}
+
+.metric_comments {
+    position: relative;
+    margin-left: 10px;
+    width: 600px;
+    height: 90px;
+    resize: none;
+}
+
+div.comments {
+    display: flex;
+    align-items: center;
+}

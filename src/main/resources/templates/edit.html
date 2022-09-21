@@ -2,11 +2,205 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Metric</title>
+    <title>Metrics Update</title>
+    <link href="/css/edit.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <body>
+<div class="mainContainer">
+    <div class="main-screen">
+        <div> <a href="/metrics"> <i id="back-button" class="fa fa-arrow-circle-left fa-3x"></i> </a>
+            <br>
+        </div>
+        <div>
+            <label class="title">UPDATE YOUR METRIC</label>
+        </div> <br>
+        <div class="basic_info">
+            <label for="pattern"> Select Pattern: &nbsp;</label>
+            <select onchange="type_enablement(); displayDiv();" name="pattern" id="pattern">
+                <option value="pattern">Select an option</option>
+                <option value="percentage">Percentage</option>
+                <option value="standard deviation">Standard Deviation</option>
+                <option value="frequency">Frequency</option>
+            </select>
+            <abbr title="This field determines the pattern of the metric.
+                A percentage metric calculates the percentage of a set of instances that satisfy a condition over the total.
+                A Standard Deviation metric calculates the dispersion of an object over the global arithmetic mean.
+                A Frequency metric calculates the number of times that a value appears in the metric."><i class="fa fa-info-circle "> </i> </abbr>
+            <br> <br>
 
-<a href="/metrics"> <i class="fa fa-arrow-circle-left fa-3x"></i> </a>
+            <label for="type"> Select Type: &nbsp;</label>
+            <select onchange="subject_enablement()" name="type" id="type">
+                <option value="type">Select an option</option>
+                <option value="evaluative"> Evaluative</option>
+                <option value="informative">Informative</option>
+            </select>
+            <abbr title="This field determines the type of the metric.
+                 Evaluative type is used to detect a bad behaviour such as User Stories that don't follow the template.
+                 Informative type is used for a better understanding of a repository. For instance, knowing the number of commits in a repository "><i class="fa fa-info-circle "> </i> </abbr>
+            <br> <br>
+
+            <label for="subject"> Select Subject: &nbsp;</label>
+            <select onchange="teamextension_enablement(); displayDiv()" name="subject" id="subject">
+                <option value="subject">Select an option</option>
+                <option value="individual">Individual</option>
+                <option value="team">Team</option>
+            </select>
+            <abbr title="This field determines the subject of the metric.
+                An individual metric is only applied to one student.
+                A team metric is applied to a whole team, made by some students.  "><i class="fa fa-info-circle "> </i> </abbr>
+            <br> <br>
+
+            <label for="teamextension"> Select Team Extension: &nbsp;</label>
+            <select onchange="displayDiv();" name="teamextension" id="teamextension">
+                <option value="teamextension">Select an option</option>
+                <option value="overall">Overall</option>
+                <option value="standard_deviation" >Standard Deviation</option>
+            </select>
+            <abbr title="This field determines the team extension for an individual metric.
+                An overall team extension defines the associated global team metric.
+                A standard deviation team extension induce a team metric with a standard deviation category over the individual metric."><i class="fa fa-info-circle "> </i> </abbr>
+            <br> <br>
+        </div>
+
+        <div id="assister" class="assister">
+            <br>
+            <textarea id="description_box" readonly class="description" rows="2" type="text" >  </textarea>
+            <br> <br>
+            <label for="object"> Select Object: &nbsp;</label>
+            <select onchange="modifier_enablement(); count_enablement()" name="object" id="object">
+                <option value="object">Select an option</option>
+                <option value="task">Task</option>
+                <option value="userstory">User Story</option>
+                <option value="commit">Commit</option>
+            </select>
+            <abbr title="This field determines the domain object of the metric.
+                A task metric is defined for the tasks defined in the Taiga repository of the students.
+                A user story metric is defined for the user stories defined in the Taiga repository of the students.
+                A commit metric fot the commits defined in the GitHub repository of the students."><i class="fa fa-info-circle "> </i> </abbr>
+            <br> <br>
+
+            <div onchange="cond_val_enablement()" class="modifier" id="modifier_div">
+                <label for="modifier"> Select Modifier Type: &nbsp;</label>
+                <select onchange="modifier_expressions()" name="modifier" id="modifier">
+                    <option value="modifier">Select an option</option>
+                    <option value="none">None</option>
+                    <option value="state">State</option>
+                    <option value="sum">Sum</option>
+                    <option value="defined">Defined</option>
+                </select>
+                <abbr title="This field determines the modifier type of the metric.
+                    A none modifier means that the metric is applied for all the instances, so there is not any restriction.
+                    A state modifier is only applied for the boolean attributes of the tasks and user stories.
+                    A sum modifier adds all the values of determined attributes."><i class="fa fa-info-circle "> </i> </abbr>
+
+                <label for="modifier_attribute" id="modifier_attribute_label" class="modifier_attribute_label"> Select Modifier Attribute: &nbsp;</label>
+                <select class="modifier_attribute" id="modifier_attribute">
+                    <option value="modifier_attribute">Select an option</option>
+                    <option value="closed">Closed</option>
+                    <option value="lines_of_code">Lines of code</option>
+                    <option value="estimated_effort">Estimated effort</option>
+                    <option value="actual_effort">Actual effort</option>
+                </select>
+                <abbr title="This field determines the attribute in which the modifier apply in the metric.
+                    A closed state applies for the tasks or user stories that are closed.
+                    The sum of lines of code applies for the commits of a repository."><i class="fa fa-info-circle "> </i> </abbr>
+                <br> <br>
+            </div>
+
+            <div class="condition" id="condition_div">
+                <label for="condition"> Select Condition Type: &nbsp;</label>
+                <select onchange="condition_changes()" name="condition" id="condition">
+                    <option value="condition">Select an option</option>
+                    <option value="defined">Defined</option>
+                    <option value="card">Card</option>
+                    <option value="apply">Apply</option>
+                    <option value="self">Self</option>
+                </select>
+                <abbr title="This field determines the condition type of the metric.
+                    A defined type applies for an attribute of the corresponding object.
+                    A card type gives the number of appearances of a multivalued attribute.
+                    An apply type evaluates an external query.
+                    A self type checks if the attribute value is equal to the member on which the metric is applied."><i class="fa fa-info-circle "> </i> </abbr>
+
+                <label for="condition_attribute"> Select Condition Attribute: &nbsp;</label>
+                <select onchange="condition_changes()" name="condition_attribute" id="condition_attribute">
+                    <option value="condition_attribute">Select an option</option>
+                    <option value="estimated_effort">Estimated effort</option>
+                    <option value="actual_effort">Actual effort</option>
+                    <option value="commiter">Commiter</option>
+                    <option value="responsible">Responsible</option>
+                </select>
+                <abbr title="This field determines the attribute in which the condition apply in the metric.
+                    Estimated effort and actual effort are attributes for the defined type."><i class="fa fa-info-circle "> </i> </abbr>
+                <br> <br>
+            </div>
+
+            <div class="count" id="count_div">
+                <label for="count"> Select Count Type: &nbsp;</label>
+                <select onchange="count_changes()" name="count" id="count">
+                    <option value="count">Select an option</option>
+                    <option value="state">State</option>
+                </select>
+                <abbr title="This field determines the count type in frequency metrics.
+                    A state type is only applied for the boolean attributes of the tasks and user stories. "><i class="fa fa-info-circle "> </i> </abbr>
+
+                <label for="count_attribute"> Select Count Attribute: &nbsp;</label>
+                <select onchange="count_changes()" name="count_attribute" id="count_attribute">
+                    <option value="count_attribute">Select an option</option>
+                    <option value="closed">Closed</option>
+                </select>
+                <abbr title="This field determines the attribute in which the count apply in the metric.
+                    A closed state applies for the tasks or user stories that are closed."><i class="fa fa-info-circle "> </i> </abbr>
+                <br> <br>
+            </div>
+
+            <div class="value" id="value_div">
+                <label for="value"> Select Value: &nbsp;</label>
+                <select onchange="value_expressions(); value_changes()" name="value" id="value">
+                    <option value="value">Select an option</option>
+                    <option value="estimated_effort">Estimated effort</option>
+                    <option value="actual_effort">Actual effort</option>
+                </select>
+                <input class="value_input" id="value_input"></input>
+                <abbr title="This field determines the value for which the deviation is calculated in standard deviation metrics."><i class="fa fa-info-circle "> </i> </abbr>
+                <br> <br>
+            </div>
+
+            <label for="name" id="name"> Metric name: &nbsp; </label>
+            <input onkeydown="comments_enablement()" rows="20" id="name_metric" class="metric_name" type="text"></input>
+            <abbr title="This field determines the name of the metric."><i class="fa fa-info-circle "> </i> </abbr>
+            <br> <br>
+
+            <div class="comments">
+                <label for="comments" id="comments"> Description: </label>
+                <textarea onkeydown="button_enablement()" id="comments_metric" class="metric_comments" type="text"></textarea> &nbsp;
+                <abbr title="This field determines the description of the metric."><i class="fa fa-info-circle "> </i> </abbr>
+                <br> <br>
+            </div>
+            <br> <br>
+
+            <div class="options">
+                <button id="update_button" type="submit" class="btn btn-success" onclick="update()"> Update Metric </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="lateral-menu">
+        <section class="navigation">
+            <nav class="menu">
+                <a href="/index"><i class="fa fa-fw fa-home fa-2x"></i><span>Homepage</span></a><br>
+                <a href="/search"><i class="fa-fw fa fa-search fa-2x"></i><span>Search Dashboard</span></a><br>
+                <a href="/metrics"><i class="fa-fw fa fa-edit fa-2x"></i><span>Metrics Editor</span></a><br>
+                <a href="#"><i class="fa-fw fa fa-question-circle-o fa-2x"></i><span>Help</span></a><br>
+            </nav>
+        </section>
+    </div>
+</div>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="/js/edit.js"></script>
 </html>
