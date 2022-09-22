@@ -65,8 +65,8 @@ public class FileOperations {
             else if (object.equals("User Story")) partial = "userstory";
             else if (object.equals("Commit")) partial = "commit";
 
-            String variable = "repo_commits";
-            String variable2 = "commits";
+            String variable = "";
+            String variable2 = "";
 
             String obj = "";
             if (object.equals("Task")) obj = object.toLowerCase() + "s";
@@ -76,7 +76,8 @@ public class FileOperations {
 
             if (pattern.equals("Percentage")) {
                 if(object.equals("Commit")) {
-
+                    variable = "repo_commits";
+                    variable2 = "commits";
                     bw.write("result." + total);
                     bw.write("=aggregations." + variable + ".value");
                     bw.newLine();
@@ -106,6 +107,7 @@ public class FileOperations {
                         bw.write("result." + total);
                         bw.write("=hits.total");
                     }
+                    variable = "";
                     bw.newLine();
                     bw.write("result." + partial);
                     bw.write("=aggregations." + variable + ".doc_count");
@@ -136,8 +138,10 @@ public class FileOperations {
                 }
             }
             else if (pattern.equals("Frequency")) {
+                variable = "";
                 bw.write("result." + partial);
                 bw.write("=aggregations." + variable + ".doc_count");
+                bw.newLine();
                 bw.newLine();
             }
 
@@ -154,7 +158,7 @@ public class FileOperations {
         bw.close();
     }
 
-    public static void createQueries(String name, String object, String pattern, List<Modifier> modifierList, List<Condition> conditionList) throws IOException {
+    public static void createQueries(String name, String object, String pattern, List<Modifier> modifierList, List<Condition> conditionList, String subject, String teamextension) throws IOException {
         String filename = name.toLowerCase();
         filename = filename.replace(" ", "_");
 
@@ -167,72 +171,176 @@ public class FileOperations {
 
         File file = new File("/Users/danie/archivos/" + filename + "_template.query");
         BufferedWriter bw;
-            bw = new BufferedWriter(new FileWriter(file));
+        bw = new BufferedWriter(new FileWriter(file));
+        if (pattern.equals("Percentage")) {
+            bw.write("{");
+            bw.newLine();
+            bw.write("  \"size\" : 0,");
+            bw.newLine();
+            bw.write("  \"query\":  {");
+            bw.newLine();
+            bw.write("   \"bool\": {");
+            bw.newLine();
+            bw.write("     \"must\":");
             if (object.equals("Task") || object.equals("User Story")) {
-                bw.write("{"); bw.newLine();
-                bw.write("  \"size\" : 0,"); bw.newLine();
-                bw.write("  \"query\":  {"); bw.newLine();
-                bw.write("    \"bool\": {"); bw.newLine();
-                bw.write("      \"must\": ["); bw.newLine();
-                bw.write("       {\"match\": { \"milestone_closed\": false} }");
+                if (subject.equals("Individual") && teamextension.equals("Standard Deviation")) {
+                    if (!conditionList.isEmpty()) {
+                        for (int i = 0; i < conditionList.size(); ++i) {
+                            if (conditionList.get(i).getType().equals("Self") && (conditionList.get(i).getCondition_attribute().equals("Commiter") || conditionList.get(i).getCondition_attribute().equals("Responsible"))) {
+                                bw.write(" {"); bw.newLine();
+                                if (modifierList.isEmpty()) {
+                                    bw.write("      \"match_all: {}\"");
+                                }
+                                else {
+                                    bw.write("       \"match: { \"assigned\": \"[USERNAME]\" }\"");
+                                }
+                                bw.newLine();
+                                bw.write("     }"); bw.newLine();
+                                bw.write("    }"); bw.newLine();
+                                bw.write("   },"); bw.newLine();
+                                bw.write("  \"aggs\": {"); bw.newLine();
+                                bw.write("   \"total_"+ aggsobject +"\""); bw.newLine();
+                                bw.write("    \"filter\": {"); bw.newLine();
+                                bw.write("     \"match_all: {}\""); bw.newLine();
+                                bw.write("    }"); bw.newLine();
+                                bw.write("   },"); bw.newLine();
+                                bw.write("   \"" + aggsname + "_" + aggsobject + "\": {"); bw.newLine();
+                                bw.write("    \"filter\": {"); bw.newLine();
+                                bw.write("     \"bool\": {"); bw.newLine();
+                                bw.write("      \"must\": ["); bw.newLine();
+                                if (modifierList.isEmpty()) {
+                                    bw.write("      { \"match\": { \"assigned\": \"[USERNAME]\" }} ");
+                                }
+                                else {
+                                    for (int j = 0; j < modifierList.size(); ++j) {
+                                        if (modifierList.get(j).getType().equals("State") && modifierList.get(j).getModifier_attribute().equals("Closed")) {
+                                            bw.write("        { \"match\": { \"is_closed\": true } } ");
+                                        }
+                                    }
+                                }
+                                bw.write("]");
+                                bw.newLine();
+                                bw.write("      }");
+                                bw.newLine();
+                                bw.write("     }");
+                                bw.newLine();
+                                bw.write("    }");
+                                bw.newLine();
+                                bw.write("  }");
+                                bw.newLine();
+                                bw.write("}");
 
-                if (!modifierList.isEmpty()) {
-                    for (int i = 0; i < modifierList.size(); ++i) {
-                        if (!modifierList.get(i).getType().equals("None")) {
-                            bw.write(",");
-                            bw.newLine();
-                            if (modifierList.get(i).getType().equals("State") && modifierList.get(i).getModifier_attribute().equals("Closed")) {
-                                bw.write("{        {\"match\":  { \"is_closed\": true}}");
                             }
                         }
                     }
                 }
-                bw.write("]"); bw.newLine();
-                bw.write("}"); bw.newLine();
-                bw.write("},"); bw.newLine();
+                else {
 
-                bw.write("  \"aggs\": {"); bw.newLine();
-                bw.write("   \"" + aggsname + "_" + aggsobject + "\": {"); bw.newLine();
-                bw.write("     \"filter\": {"); bw.newLine();
-                bw.write("       \"bool\" : {"); bw.newLine();
-                bw.write("         \"must\": ["); bw.newLine();
-                bw.write("         {\"match\": { \"milestone_closed\": false} }");
-                if (!conditionList.isEmpty()) {
-                    for (int i = 0; i < conditionList.size(); ++i) {
+                    bw.write(" [");
+                    bw.newLine();
+                    bw.write("       {\"match\": { \"milestone_closed\": false} }");
+
+                    if (!modifierList.isEmpty()) {
+                        for (int i = 0; i < modifierList.size(); ++i) {
+                            if (!modifierList.get(i).getType().equals("None")) {
+                                bw.write(",");
+                                bw.newLine();
+                                if (modifierList.get(i).getType().equals("State") && modifierList.get(i).getModifier_attribute().equals("Closed")) {
+                                    bw.write("{        {\"match\":  { \"is_closed\": true}}");
+                                }
+                            }
+                        }
+                    }
+                    bw.write("]");
+                    bw.newLine();
+                    bw.write("}");
+                    bw.newLine();
+                    bw.write("},");
+                    bw.newLine();
+
+                    bw.write("  \"aggs\": {");
+                    bw.newLine();
+                    bw.write("   \"" + aggsname + "_" + aggsobject + "\": {");
+                    bw.newLine();
+                    bw.write("    \"filter\": {");
+                    bw.newLine();
+                    bw.write("      \"bool\" : {");
+                    bw.newLine();
+                    bw.write("        \"must\": [");
+                    bw.newLine();
+                    bw.write("          {\"match\": { \"milestone_closed\": false} }");
+                    if (!conditionList.isEmpty()) {
+                        for (int i = 0; i < conditionList.size(); ++i) {
                             bw.write(",");
                             bw.newLine();
                             if (conditionList.get(i).getType().equals("Defined")) {
                                 if (conditionList.get(i).getCondition_attribute().equals("Estimated effort")) {
-                                    bw.write("         { \"exists\": {\"field\": \"estimated_effort\"}}");
+                                    bw.write("          { \"exists\": {\"field\": \"estimated_effort\"}}");
+                                } else if (conditionList.get(i).getCondition_attribute().equals("Actual effort")) {
+                                    bw.write("          { \"exists\": {\"field\": \"actual_effort\"}}");
                                 }
-                                else if (conditionList.get(i).getCondition_attribute().equals("Actual effort")) {
-                                    bw.write("         { \"exists\": {\"field\": \"actual_effort\"}}");
-                                }
-                            }
-                    }
-                }
-                if (!modifierList.isEmpty()) {
-                    for (int i = 0; i < modifierList.size(); ++i) {
-                        if (!modifierList.get(i).getType().equals("None")) {
-                            bw.write(",");
-                            bw.newLine();
-                            if (modifierList.get(i).getType().equals("State") && modifierList.get(i).getModifier_attribute().equals("Closed")) {
-                                bw.write("         { \"match\":  { \"is_closed\": true}}");
                             }
                         }
                     }
+                    if (!modifierList.isEmpty()) {
+                        for (int i = 0; i < modifierList.size(); ++i) {
+                            if (!modifierList.get(i).getType().equals("None")) {
+                                bw.write(",");
+                                bw.newLine();
+                                if (modifierList.get(i).getType().equals("State") && modifierList.get(i).getModifier_attribute().equals("Closed")) {
+                                    bw.write("          { \"match\":  { \"is_closed\": true}}");
+                                }
+                            }
+                        }
+                    }
+                    bw.newLine();
+                    bw.write("       }");
+                    bw.newLine();
+                    bw.write("     }");
+                    bw.newLine();
+                    bw.write("   }");
+                    bw.newLine();
+                    bw.write("  }");
+                    bw.newLine();
+                    bw.write("}");
                 }
-                bw.newLine();
-                bw.write("       }"); bw.newLine();
+
+            } else if (object.equals("Commit")) {
+                bw.write(" {"); bw.newLine();
+                bw.write("\"match_all\" {}"); bw.newLine();
                 bw.write("     }"); bw.newLine();
-                bw.write("   }"); bw.newLine();
-                bw.write("  }"); bw.newLine();
-                bw.write("}"); bw.newLine();
+                bw.write("    }"); bw.newLine();
+                bw.write("   },"); bw.newLine();
+                bw.write("");
+
+                bw.write("  \"aggs\": {");
+                bw.newLine();
+                bw.write("   \"repo_commits\": {");
+                bw.newLine();
+                bw.write("    \"filter\": {");
+                bw.newLine();
+                bw.write("      \"bool\" : {");
+                bw.newLine();
+                bw.write("        \"must\": [");
+                bw.newLine();
+                bw.write("[BEGIN]{ \"match\": { \"repository\": \"[REPO_NAME]\" }}[END]");
+                bw.newLine();
+                bw.write("],");
+                bw.newLine();
 
             }
-            else {
-                bw.write("");
+        }
+        else if (pattern.equals("Standard Deviation")) {
+            if (object.equals("Task") || object.equals("User Story")) {
+
             }
+            else if (object.equals("Commit")) {
+
+            }
+        }
+        else if (pattern.equals("Frequency")) {
+
+        }
 
         bw.close();
     }
