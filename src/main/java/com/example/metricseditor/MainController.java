@@ -1,6 +1,5 @@
 package com.example.metricseditor;
 
-import com.example.metricseditor.files.FileOperations;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +12,7 @@ public class MainController {
 
     @GetMapping("/index")
     public String showHomePage() {
-        return "/index";
-    }
-
-    @GetMapping("/search")
-    public String showSearchPage() {
-        return "/search";
+        return "homepage";
     }
 
     @GetMapping("/assister")
@@ -34,6 +28,11 @@ public class MainController {
     @GetMapping("/edit")
     public String showEditPage() {
         return "/edit";
+    }
+
+    @GetMapping("/help")
+    public String showHelpPage() {
+        return "/help";
     }
 
 }

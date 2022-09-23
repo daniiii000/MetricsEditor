@@ -32,3 +32,31 @@ nav.menu a {
     padding: 20px;
     color: white;
 }
+
+div.mainContainer {
+    margin: auto;
+    width: 1367px;
+    height: 647px;
+}
+
+div.main-screen {
+    margin: auto;
+    margin-top: 10px;
+    width: 1219px;
+    height: 647px;
+    float: right;
+}
+
+p {
+    position: relative;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+b.title {
+    position: relative;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}

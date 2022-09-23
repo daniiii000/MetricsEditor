@@ -88,6 +88,7 @@
                     <option value="none">None</option>
                     <option value="state">State</option>
                     <option value="sum">Sum</option>
+                    <option value="defined">Defined</option>
                 </select>
                     <abbr title="This field determines the modifier type of the metric.
                     A none modifier means that the metric is applied for all the instances, so there is not any restriction.
@@ -99,6 +100,8 @@
                     <option value="modifier_attribute">Select an option</option>
                     <option value="closed">Closed</option>
                     <option value="lines_of_code">Lines of code</option>
+                    <option value="estimated_effort">Estimated effort</option>
+                    <option value="actual_effort">Actual effort</option>
                 </select>
                     <abbr title="This field determines the attribute in which the modifier apply in the metric.
                     A closed state applies for the tasks or user stories that are closed.
@@ -126,6 +129,8 @@
                     <option value="condition_attribute">Select an option</option>
                     <option value="estimated_effort">Estimated effort</option>
                     <option value="actual_effort">Actual effort</option>
+                    <option value="commiter">Commiter</option>
+                    <option value="responsible">Responsible</option>
                 </select>
                     <abbr title="This field determines the attribute in which the condition apply in the metric.
                     Estimated effort and actual effort are attributes for the defined type."><i class="fa fa-info-circle "> </i> </abbr>
@@ -170,7 +175,7 @@
 
                 <div class="comments">
                 <label for="comments" id="comments"> Description: </label>
-                <textarea disabled="disabled" onkeydown="button_enablement()" id="comments_metric" class="metric_comments" type="text"></textarea> &nbsp;
+                <textarea onkeydown="button_enablement()" id="comments_metric" class="metric_comments" type="text"></textarea> &nbsp;
                 <abbr title="This field determines the description of the metric."><i class="fa fa-info-circle "> </i> </abbr>
                 <br> <br>
                 </div>
@@ -187,9 +192,8 @@
         <section class="navigation">
             <nav class="menu">
                 <a href="/index"><i class="fa fa-fw fa-home fa-2x"></i><span>Homepage</span></a><br>
-                <a href="/search"><i class="fa-fw fa fa-search fa-2x"></i><span>Search Dashboard</span></a><br>
                 <a href="/metrics"><i class="fa-fw fa fa-edit fa-2x"></i><span>Metrics Editor</span></a><br>
-                <a href="#"><i class="fa-fw fa fa-question-circle-o fa-2x"></i><span>Help</span></a><br>
+                <a href="/help"><i class="fa-fw fa fa-question-circle-o fa-2x"></i><span>Help</span></a><br>
             </nav>
         </section>
     </div>
