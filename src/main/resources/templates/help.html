@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Help</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="css/help.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="mainContainer">
+    <div class="main-screen" id="help_page">
+        <div id="content">
+            <label>HELP</label>
+        </div> <br>
+        <div id="explanation" class="explanation_div">
+            <p>In this section an explanation about all the fields that you can find when creating a metric is provided.</p>
+            <br>
+            <b>Pattern:</b>
+            <p>This field determines the pattern of the metric. <br>
+                A Percentage metric calculates the percentage of a set of instances that satisfy a condition over the total. <br>
+                A Standard Deviation metric calculates the dispersion of an object over the global arithmetic mean. <br>
+                A Frequency metric calculates the number of times that a value appears in the metric.</p>
+
+            <b>Type:</b>
+            <p>This field determines the type of the metric. <br>
+                Evaluative type is used to detect a bad behaviour such as User Stories that don't follow the template. <br>
+                Informative type is used for a better understanding of a repository. For instance, knowing the number of commits in a repository.</p>
+
+            <b>Subject:</b>
+            <p>This field determines the subject of the metric. <br>
+                An individual metric is only applied to one student. <br>
+                A team metric is applied to a whole team, which is made by some students.</p>
+
+            <b>Team Extension:</b>
+            <p>This field determines the team extension for an individual metric. <br>
+                An overall team extension defines the associated global team metric. <br>
+                A standard deviation team extension induce a team metric with a standard deviation category over the individual metric.</p>
+
+            <b>Object:</b>
+            <p>This field determines the domain object of the metric. <br>
+                A task metric is defined for the tasks defined in the Taiga repository of the students. <br>
+                A user story metric is defined for the user stories defined in the Taiga repository of the students. <br>
+                A commit metric fot the commits defined in the GitHub repository of the students.</p>
+
+            <b>Modifier Type:</b>
+            <p>This field determines the modifier type of the metric. <br>
+                A none modifier means that the metric is applied for all the instances, so there is not any restriction. <br>
+                A state modifier is only applied for the boolean attributes of the tasks and user stories. <br>
+                A sum modifier adds all the values of determined attributes. <br>
+                A defined modifier applies for an attribute of the corresponding object.</p>
+
+            <b>Modifier Attribute:</b>
+            <p>This field determines the attribute in which the modifier apply in the metric. <br>
+                A closed state applies for the tasks or user stories that are closed. <br>
+                The sum of lines of code applies for the commits of a repository. <br>
+                Estimated effort and actual effort are attributes for the defined type.</p>
+
+            <b>Condition Type:</b>
+            <p>This field determines the condition type of the metric. <br>
+                A defined type applies for an attribute of the corresponding object. <br>
+                A card type gives the number of appearances of a multivalued attribute. <br>
+                An apply type evaluates an external query. <br>
+                A self type checks if the attribute value is equal to the member on which the metric is applied. <br>
+                A Not Defined type applies for an attribute that doesn't belong to a metric.</p>
+
+            <b>Condition Attribute:</b>
+            <p>This field determines the attribute in which the condition apply in the metric. <br>
+                Estimated effort and actual effort are attributes for the defined type. <br>
+                Committer attribute belongs to the student that has done the corresponding commit. <br>
+                Responsible attribute belongs to the student that is responsible for a task. <br>
+                Acceptance criteria belongs to user stories that has defined this attribute. <br>
+                Check template US and check task reference are external queries for applying them in a metric.</p>
+
+            <b>Value:</b>
+            <p>This field determines the value for which the deviation is calculated in standard deviation metrics. <br>
+                It can have the value of estimated effort - actual effort</p>
+
+            <b>Count Type:</b>
+            <p>This field determines the count type in frequency metrics. <br>
+                A state type is only applied for the boolean attributes of the tasks and user stories.</p>
+
+            <b>Count Attribute:</b>
+            <p>This field determines the attribute in which the count apply in the metric. <br>
+                A closed state applies for the tasks or user stories that are closed.</p>
+
+            <b>Metric name:</b>
+            <p>This field determines the name of the metric.</p>
+
+            <b>Description:</b>
+            <p>This field determines the description of the metric.</p>
+
+        </div>
+    </div>
+
+        <div class="lateral-menu">
+            <section class="navigation">
+                <nav class="menu">
+                    <a href="/index"><i class="fa fa-fw fa-home fa-2x"></i><span>Homepage</span></a><br>
+                    <a href="/metrics"><i class="fa-fw fa fa-edit fa-2x"></i><span>Metrics Editor</span></a><br>
+                    <a href="#"><i class="fa-fw fa fa-question-circle-o fa-2x"></i><span>Help</span></a><br>
+                </nav>
+            </section>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
