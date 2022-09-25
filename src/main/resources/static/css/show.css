@@ -35,8 +35,20 @@ table {
     border-collapse: collapse;
     text-align: center;
     font-size: 18px;
+
 }
 
+table.modifiers {
+    display: table-row;
+    position: center;
+
+
+}
+
+table.conditions {
+    display: table-row;
+    position: center;
+}
 
 
 div.main-screen {

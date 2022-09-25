@@ -55,7 +55,7 @@
         <tr th:if="${not #lists.isEmpty(metric.modifiers)}">
             <td> Modifiers </td>
             <td>
-            <table class="table table-bordered table-striped" id="table_modifiers">
+            <table class="table table-bordered table-striped modifiers">
                 <tr class="title_table">
                     <td> Type </td>
                     <td> Attribute </td>
@@ -71,7 +71,7 @@
         <tr th:if="${not #lists.isEmpty(metric.conditions)}">
             <td> Conditions </td>
             <td>
-            <table class="table table-bordered table-striped" id="table_conditions">
+            <table class="table table-bordered table-striped conditions" >
                 <tr class="title_table">
                     <td> Type </td>
                     <td> Attribute </td>
