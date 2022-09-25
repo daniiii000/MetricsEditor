@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show File</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="/css/showProperties.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div class="main-screen">
+
+    <div class="back_button">
+        <a href="javascript: history.go(-1)"> <i id="back-button" class="fa fa-arrow-circle-left fa-4x"></i> </a>
+    </div>
+    <br>
+    <div>
+        <label id="title" class="prop_title"> Properties file associated to this metric </label>
+    </div>
+
+    <div class="file_text">
+        <textarea th:text="${properties}" type="text" id="properties" class="properties_field" readonly></textarea>
+    </div>
+
+</div>
+
+</body>
+<script src="/js/showProperties.js"></script>
+</html>

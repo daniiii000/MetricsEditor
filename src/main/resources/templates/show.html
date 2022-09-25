@@ -12,6 +12,8 @@
 <!-- FALTA AÑADIR LA CABECERA A LA PÁGINA CON EL LOGO-->
 <div class="main-screen">
     <div> <a href="/metrics"> <i id="back-button" class="fa fa-arrow-circle-left fa-4x"></i> </a>
+        <a th:href="@{'/showProperties/' + ${metric.id}}"> <button id="show-properties_button" type="button" class="btn btn-primary"> Show Properties File </button> </a>
+        <a th:href="@{'/showQuery/' + ${metric.id}}">  <button id="show-query_button" type="button" class="btn btn-primary"> Show Query File </button> </a>
         <br>
     </div>
     <table class="table table-bordered table-striped">
@@ -21,6 +23,9 @@
 
         <tr> <td> Name </td>
             <td th:text="${metric.name}"> </td></tr>
+
+        <tr> <td> Description </td>
+            <td th:text="${metric.description}"> </td></tr>
 
         <tr> <td> Pattern </td>
             <td th:text="${metric.pattern}"> </td></tr>
@@ -37,12 +42,6 @@
         <tr> <td> Object </td>
             <td th:text="${metric.object}"> &nbsp;</td></tr>
 
-        <tr> <td> Modifier </td>
-            <td th:text="${metric.modifiers}"> &nbsp;</td></tr>
-
-        <tr> <td> Condition </td>
-            <td th:text="${metric.conditions}"> &nbsp;</td></tr>
-
         <tr> <td th:if="${metric.value != null}">  Value  </td>
             <td  th:if="${metric.value != null}" th:text="${metric.value}"> </td></tr>
 
@@ -53,7 +52,40 @@
             <td th:if="${metric.count_attribute != null}" th:text="${metric.count_attribute}"> </td></tr>
         </tr>
 
+        <tr th:if="${not #lists.isEmpty(metric.modifiers)}">
+            <td> Modifiers </td>
+            <td>
+            <table class="table table-bordered table-striped" id="table_modifiers">
+                <tr class="title_table">
+                    <td> Type </td>
+                    <td> Attribute </td>
+                </tr>
+                <tr th:each="modifiers : ${metric.modifiers}">
+                    <td th:text="${metric.modifiers[0].type}"></td>
+                    <td th:text="${metric.modifiers[0].modifier_attribute}"></td>
+                </tr>
+            </table>
+            </td>
+        </tr>
+
+        <tr th:if="${not #lists.isEmpty(metric.conditions)}">
+            <td> Conditions </td>
+            <td>
+            <table class="table table-bordered table-striped" id="table_conditions">
+                <tr class="title_table">
+                    <td> Type </td>
+                    <td> Attribute </td>
+                </tr>
+                <tr th:each="condition : ${metric.conditions}">
+                    <td th:text="${metric.conditions[0].type}"></td>
+                    <td th:text="${metric.conditions[0].condition_attribute}"></td>
+                </tr>
+            </table>
+            </td>
+        </tr>
+
     </table>
+
 </div>
 </body>
 <script src="js/show.js"></script>

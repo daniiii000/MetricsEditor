@@ -132,8 +132,13 @@ public class MetricController {
     public ModelAndView getFileProperties(@PathVariable(value = "id") Long metricId) throws Exception {
         ModelAndView mav = new ModelAndView("showProperties");
         mav.addObject("properties", metricService.getPropertiesFile(metricId));
-       /* mav.addObject("conditions", conditionService.getConditions(metricId));
-        mav.addObject("modifiers", modifierService.getModifiers(metricId));*/
+        return mav;
+    }
+
+    @GetMapping("/showQuery/{id}")
+    public ModelAndView getFileQuery(@PathVariable(value = "id") Long metricId) throws Exception {
+        ModelAndView mav = new ModelAndView("showQuery");
+        mav.addObject("query", metricService.getQueryFile(metricId));
         return mav;
     }
 
@@ -142,6 +147,7 @@ public class MetricController {
         ModelAndView mav = new ModelAndView("edit");
         mav.addObject("metric", metricService.getMetricById(metricId));
         mav.addObject("id", metricId);
+
         return mav;
     }
 
@@ -153,8 +159,12 @@ public class MetricController {
     }
 
     @PutMapping("/update/{id}")
-    public String updateMetric(@PathVariable(value = "id") Long metricId, HttpServletRequest request) throws ResourceNotFoundException {
-        String pattern = request.getParameter("pattern");
+    public String updateMetric(@PathVariable(value = "id") Long metricId, HttpServletRequest request) throws ResourceNotFoundException, IOException {
+        Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
+        String name_before = metric.getName();
+        metricService.updateMetric(metricId,request,name_before);
+        return "redirect:/metrics";
+        /*String pattern = request.getParameter("pattern");
         String type = request.getParameter("type");
         String subject = request.getParameter("subject");
         String teamextension = request.getParameter("teamextension");
@@ -163,19 +173,24 @@ public class MetricController {
         String modifier_attribute = request.getParameter("modifier_attribute");
         String condition_type = request.getParameter("condition");
         String condition_attribute = request.getParameter("condition_attribute");
+        String value = request.getParameter("value");
+        String count_type = request.getParameter("count");
+        String count_attribute = request.getParameter("count_attribute");
         String name = request.getParameter("name");
+        String description = request.getParameter("description");
 
         Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
 
         metric.setName(name);
+        metric.setDescription(description);
         metric.setPattern(pattern);
         metric.setSubject(subject);
         metric.setType(type);
         metric.setTeamextension(teamextension);
         metric.setObject(object);
 
-        metricRepository.save(metric);
+        metricRepository.save(metric);*/
 
-        return "redirect:/metrics";
+//        return "redirect:/metrics";
     }
 }

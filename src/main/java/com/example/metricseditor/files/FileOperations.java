@@ -187,31 +187,43 @@ public class FileOperations {
                     if (!conditionList.isEmpty()) {
                         for (int i = 0; i < conditionList.size(); ++i) {
                             if (conditionList.get(i).getType().equals("Self") && (conditionList.get(i).getCondition_attribute().equals("Commiter") || conditionList.get(i).getCondition_attribute().equals("Responsible"))) {
-                                bw.write(" {"); bw.newLine();
+                                bw.write(" {");
+                                bw.newLine();
                                 if (modifierList.isEmpty()) {
                                     bw.write("      \"match_all: {}\"");
-                                }
-                                else {
+                                } else {
                                     bw.write("       \"match: { \"assigned\": \"[USERNAME]\" }\"");
                                 }
                                 bw.newLine();
-                                bw.write("     }"); bw.newLine();
-                                bw.write("    }"); bw.newLine();
-                                bw.write("   },"); bw.newLine();
-                                bw.write("  \"aggs\": {"); bw.newLine();
-                                bw.write("   \"total_"+ aggsobject +"\""); bw.newLine();
-                                bw.write("    \"filter\": {"); bw.newLine();
-                                bw.write("     \"match_all: {}\""); bw.newLine();
-                                bw.write("    }"); bw.newLine();
-                                bw.write("   },"); bw.newLine();
-                                bw.write("   \"" + aggsname + "_" + aggsobject + "\": {"); bw.newLine();
-                                bw.write("    \"filter\": {"); bw.newLine();
-                                bw.write("     \"bool\": {"); bw.newLine();
-                                bw.write("      \"must\": ["); bw.newLine();
+                                bw.write("     }");
+                                bw.newLine();
+                                bw.write("    }");
+                                bw.newLine();
+                                bw.write("   },");
+                                bw.newLine();
+                                bw.write("  \"aggs\": {");
+                                bw.newLine();
+                                bw.write("   \"total_" + aggsobject + "\"");
+                                bw.newLine();
+                                bw.write("    \"filter\": {");
+                                bw.newLine();
+                                bw.write("     \"match_all: {}\"");
+                                bw.newLine();
+                                bw.write("    }");
+                                bw.newLine();
+                                bw.write("   },");
+                                bw.newLine();
+                                bw.write("   \"" + aggsname + "_" + aggsobject + "\": {");
+                                bw.newLine();
+                                bw.write("    \"filter\": {");
+                                bw.newLine();
+                                bw.write("     \"bool\": {");
+                                bw.newLine();
+                                bw.write("      \"must\": [");
+                                bw.newLine();
                                 if (modifierList.isEmpty()) {
                                     bw.write("      { \"match\": { \"assigned\": \"[USERNAME]\" }} ");
-                                }
-                                else {
+                                } else {
                                     for (int j = 0; j < modifierList.size(); ++j) {
                                         if (modifierList.get(j).getType().equals("State") && modifierList.get(j).getModifier_attribute().equals("Closed")) {
                                             bw.write("        { \"match\": { \"is_closed\": true } } ");
@@ -233,8 +245,7 @@ public class FileOperations {
                             }
                         }
                     }
-                }
-                else {
+                } else {
 
                     bw.write(" [");
                     bw.newLine();
@@ -280,6 +291,9 @@ public class FileOperations {
                                     bw.write("          { \"exists\": {\"field\": \"actual_effort\"}}");
                                 }
                             }
+                            else if(object.equals("User Story") && conditionList.get(i).getType().equals("Apply") && conditionList.get(i).getCondition_attribute().equals("Check template US")) {
+                                bw.write("          {\"match\":  { \"pattern\":  true}}");
+                            }
                         }
                     }
                     if (!modifierList.isEmpty()) {
@@ -293,6 +307,7 @@ public class FileOperations {
                             }
                         }
                     }
+                    bw.write(" ]");
                     bw.newLine();
                     bw.write("       }");
                     bw.newLine();
@@ -306,28 +321,169 @@ public class FileOperations {
                 }
 
             } else if (object.equals("Commit")) {
-                bw.write(" {"); bw.newLine();
-                bw.write("\"match_all\" {}"); bw.newLine();
-                bw.write("     }"); bw.newLine();
-                bw.write("    }"); bw.newLine();
-                bw.write("   },"); bw.newLine();
-                bw.write("");
+                if (!conditionList.isEmpty()) {
+                    for (int i = 0; i < conditionList.size(); ++i) {
+                        if (conditionList.get(i).getType().equals("Not Defined") && conditionList.get(i).getCondition_attribute().equals("Committer")) {
+                            bw.write(" ["); bw.newLine();
+                            bw.write("         [BEGIN]{ \"match\": { \"repository\": \"[REPO_NAME]\" }}[END]");
+                            bw.newLine();
+                            bw.write("         ]"); bw.newLine();
+                            bw.write("    }"); bw.newLine();
+                            bw.write("   },"); bw.newLine();
+                            bw.write("  \"aggs\": {");
+                            bw.newLine();
+                            bw.write("   \"anonymous_commits\": {");
+                            bw.newLine();
+                            bw.write("    \"filter\": {");
+                            bw.newLine();
+                            bw.write("      \"bool\" : {");
+                            bw.newLine();
+                            bw.write("        \"must\": [");
+                            bw.newLine();
+                            bw.write("         { \"match\": { \"user.login\": \"anonymous\" }} ]");
+                            bw.newLine();
+                            bw.write("       }");
+                            bw.newLine();
+                            bw.write("     }");
+                            bw.newLine();
+                            bw.write("   }");
+                            bw.newLine();
+                            bw.write("  }");
+                            bw.newLine();
+                            bw.write("}");
 
-                bw.write("  \"aggs\": {");
-                bw.newLine();
-                bw.write("   \"repo_commits\": {");
-                bw.newLine();
-                bw.write("    \"filter\": {");
-                bw.newLine();
-                bw.write("      \"bool\" : {");
-                bw.newLine();
-                bw.write("        \"must\": [");
-                bw.newLine();
-                bw.write("[BEGIN]{ \"match\": { \"repository\": \"[REPO_NAME]\" }}[END]");
-                bw.newLine();
-                bw.write("],");
-                bw.newLine();
+                        }
+                        else if (!modifierList.isEmpty()) {
+                            for (int j = 0; i < modifierList.size(); ++i) {
+                                if (modifierList.get(j).getType().equals("Sum") && modifierList.get(j).getModifier_attribute().equals("Lines of code")) {
+                                    bw.write(" [");
+                                    bw.newLine();
+                                    bw.write("         [BEGIN]{ \"match\": { \"repository\": \"[REPO_NAME]\" }}[END]");
+                                    bw.newLine();
+                                    bw.write("         ],");
+                                    bw.newLine();
+                                    bw.write("        \"must_not\": ["); bw.newLine();
+                                    bw.write("           { \"match\": { \"user.login\": \"anonymous\" }}]");
+                                    bw.newLine();
+                                    bw.write("    }");
+                                    bw.newLine();
+                                    bw.write("   },");
+                                    bw.newLine();
+                                    bw.write("  \"aggs\": {");
+                                    bw.newLine();
+                                    bw.write("   \"" + aggsobject + "\": {"); bw.newLine();
+                                    bw.write("      \"sum\": {"); bw.newLine();
+                                    bw.write("        \"field\": \"stats.total\""); bw.newLine();
+                                    bw.write("       }");
+                                    bw.newLine();
+                                    bw.write("    },");
+                                    bw.newLine();
 
+                                    bw.write("    \"user\": {");
+                                    bw.newLine();
+                                    bw.write("      \"filter\": {");
+                                    bw.newLine();
+                                    bw.write("        \"bool\" : {");
+                                    bw.newLine();
+                                    bw.write("          \"must\": [");
+                                    bw.newLine();
+                                    bw.write("            { \"match\": { \"user.login\": [USERNAME] }} ],");
+                                    bw.newLine();
+                                    bw.write("        }");
+                                    bw.newLine();
+                                    bw.write("       },");
+                                    bw.newLine();
+
+                                    bw.write("       \"aggs\": {");
+                                    bw.newLine();
+                                    bw.write("        \"" + aggsname + "\": {"); bw.newLine();
+                                    bw.write("          \"sum\": {"); bw.newLine();
+                                    bw.write("            \"field\": \"stats.total\""); bw.newLine();
+                                    bw.write("          }");
+                                    bw.newLine();
+                                    bw.write("       }");
+                                    bw.newLine();
+                                    bw.write("     }");
+                                    bw.newLine();
+                                    bw.write("   }");
+                                    bw.newLine();
+                                    bw.write("  }");
+                                    bw.newLine();
+                                    bw.write("}");
+
+                                }
+                            }
+                        }
+                        else {
+                            bw.write(" {");
+                            bw.newLine();
+                            bw.write("      \"match_all\" {}");
+                            bw.newLine();
+                            bw.write("     }");
+                            bw.newLine();
+                            bw.write("    }");
+                            bw.newLine();
+                            bw.write("   },");
+                            bw.newLine();
+
+                            bw.write("  \"aggs\": {");
+                            bw.newLine();
+                            bw.write("   \"repo_commits\": {");
+                            bw.newLine();
+                            bw.write("    \"filter\": {");
+                            bw.newLine();
+                            bw.write("      \"bool\" : {");
+                            bw.newLine();
+                            bw.write("        \"must\": [");
+                            bw.newLine();
+                            bw.write("         [BEGIN]{ \"match\": { \"repository\": \"[REPO_NAME]\" }}[END]");
+                            bw.newLine();
+                            bw.write("         ],");
+                            bw.newLine();
+                            bw.write("        \"must_not\": ["); bw.newLine();
+                            bw.write("           { \"match\": { \"user.login\": \"anonymous\" }}]");
+                            bw.newLine();
+                            bw.write("");
+                            bw.write("     }");
+                            bw.newLine();
+                            bw.write("    }");
+                            bw.newLine();
+                            bw.write("   },");
+                            bw.newLine();
+                            bw.write("   \"" + aggsname + "\": {"); bw.newLine();
+                            bw.write("    \"filter\": {");
+                            bw.newLine();
+                            bw.write("      \"bool\" : {");
+                            bw.newLine();
+                            bw.write("        \"must\": [");
+                            bw.newLine();
+                            if (conditionList.get(i).getType().equals("Apply") && conditionList.get(i).getCondition_attribute().equals("Check task reference")) {
+                                bw.write("         { \"match\": { \"task_is_written\": true }} ],");
+                                bw.newLine();
+                                bw.write("              \"must_not\": [");
+                                bw.newLine();
+                                bw.write("         { \"match\": { \"user.login\": \"anonymous\"}}]");
+
+                            }
+                            else if (conditionList.get(i).getType().equals("Self") && conditionList.get(i).getCondition_attribute().equals("Committer")) {
+
+                                bw.write("         { \"match\": { \"user.login\": [USERNAME] }} ],");
+                                bw.newLine();
+                            }
+                            bw.newLine();
+                            bw.write("       }");
+                            bw.newLine();
+                            bw.write("     }");
+                            bw.newLine();
+                            bw.write("   }");
+                            bw.newLine();
+                            bw.write("  }");
+                            bw.newLine();
+                            bw.write("}");
+
+                        }
+                    }
+                }
             }
         }
         else if (pattern.equals("Standard Deviation")) {
@@ -392,7 +548,7 @@ public class FileOperations {
                 String temp = "";
                 String string;
                 while ((string = obj.readLine()) != null) {
-                    temp = temp + string;
+                    temp = temp + string +"\n";
                 }
 
                 text = temp;
@@ -403,16 +559,28 @@ public class FileOperations {
             return text;
     }
 
-    public static void readQueries(String name) throws Exception {
+    public static String readQueries(String name) throws Exception {
             String filename_aux = name.toLowerCase();
             filename_aux = filename_aux.replace(" ", "_");
             File file = new File("/Users/danie/archivos/" + filename_aux + "_template.query");
 
 
+        String text = "";
+
+        try {
             BufferedReader obj = new BufferedReader(new FileReader(file));
 
+            String temp = "";
             String string;
-            while ((string = obj.readLine()) != null)
-                System.out.println(string);
+            while ((string = obj.readLine()) != null) {
+                temp = temp + string +"\n";
+            }
+
+            text = temp;
+        }
+        catch (Exception e) {
+            System.err.println("File not found");
+        }
+        return text;
     }
 }

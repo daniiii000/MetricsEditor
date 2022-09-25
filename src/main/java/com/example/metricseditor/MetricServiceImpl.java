@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("metricservice")
@@ -68,8 +71,18 @@ public class MetricServiceImpl implements MetricService {
     }
 
     @Override
-    public Metric updateMetric(Long metricId, HttpServletRequest request) throws ResourceNotFoundException {
+    public String getQueryFile(Long metricId) throws Exception {
         Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
+        String text = FileOperations.readQueries(metric.getName());
+        return text;
+    }
+
+    @Override
+    public Metric updateMetric(Long metricId, HttpServletRequest request, String name_before) throws ResourceNotFoundException, IOException {
+        Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
+
+        FileOperations.deleteProperties(name_before);
+        FileOperations.deleteQueries(name_before);
 
         String pattern = request.getParameter("pattern");
         String type = request.getParameter("type");
@@ -80,50 +93,79 @@ public class MetricServiceImpl implements MetricService {
         String modifier_attribute = request.getParameter("modifier_attribute");
         String condition_type = request.getParameter("condition");
         String condition_attribute = request.getParameter("condition_attribute");
+        String value = request.getParameter("value");
+        String count_type = request.getParameter("count");
+        String count_attribute = request.getParameter("count_attribute");
         String name = request.getParameter("name");
+        String description = request.getParameter("description");
+
+        List<Condition> conditions_list = new ArrayList<>();
+        List<Modifier> modifiers_list = new ArrayList<>();
 
         metric.setName(name);
+        metric.setDescription(description);
         metric.setPattern(pattern);
         metric.setSubject(subject);
         metric.setType(type);
         metric.setTeamextension(teamextension);
         metric.setObject(object);
 
-
-       /* List<Condition> conditions = conditionRepository.findAllByMetric(metricId);
-        List<Modifier> modifiers_list = new ArrayList<>();
-        List<Condition> conditions_list = new ArrayList<>();
-        Condition condition;
-        Modifier modifier;
-
-        if (conditions.size() == 0) {
-            condition = new Condition(condition_type, condition_attribute);
+        if (pattern.equals("Percentage")) {
+            Condition condition = conditionRepository.findByMetricId(metricId);
+            if (condition.getType() == null && condition.getCondition_attribute() == null) {
+                condition = new Condition(condition_type, condition_attribute);
+            }
+            else {
+                condition.setType(condition_type);
+                condition.setCondition_attribute(condition_attribute);
+            }
             condition.setMetric(metric);
             conditionRepository.save(condition);
-        }
 
-        List<Modifier> modifiers = modifierRepository.findAllByMetric(metricId);
-
-        if (modifiers.size() == 0) {
-            modifier = new Modifier(modifier_type, modifier_attribute);
+            Modifier modifier = modifierRepository.findByMetricId(metricId);
+            if (modifier.getModifier_attribute() == null && modifier.getType() == null) {
+                modifier = new Modifier(modifier_type,modifier_attribute);
+            }
+            else {
+                modifier.setType(modifier_type);
+                modifier.setModifier_attribute(modifier_attribute);
+            }
             modifier.setMetric(metric);
             modifierRepository.save(modifier);
+
+            conditions_list.add(condition);
+            modifiers_list.add(modifier);
+            metric.setConditions(conditions_list);
+            metric.setModifiers(modifiers_list);
+
+            metricRepository.save(metric);
+        }
+        else if (pattern.equals("Standard Deviation")) {
+            Modifier modifier = modifierRepository.findByMetricId(metricId);
+            if (modifier.getModifier_attribute() == null && modifier.getType() == null) {
+                modifier = new Modifier(modifier_type,modifier_attribute);
+            }
+            else {
+                modifier.setType(modifier_type);
+                modifier.setModifier_attribute(modifier_attribute);
+            }
+            modifier.setMetric(metric);
+            modifierRepository.save(modifier);
+
+            modifiers_list.add(modifier);
+            metric.setModifiers(modifiers_list);
+
+            metricRepository.save(metric);
+        }
+        else if (pattern.equals("Frequency")) {
+            metric.setCount(count_type);
+            metric.setCount_attribute(count_attribute);
+            metricRepository.save(metric);
         }
 
-        condition.setMetric(metric);
-        conditionRepository.save(condition);
+        FileOperations.createProperties(name, description, object, pattern, subject, teamextension, conditions_list);
+        FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list, subject, teamextension);
 
-        modifier.setMetric(metric);
-        modifierRepository.save(modifier);
-
-        conditions_list.add(condition);
-
-
-        modifiers_list.add(modifier);
-        metric.setConditions(conditions_list);
-        metric.setModifiers(modifiers_list);*/
-
-        metricRepository.save(metric);
         return metric;
     }
 }

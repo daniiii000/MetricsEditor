@@ -1,0 +1,43 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: lightgrey;
+}
+
+.back-button {
+    position: relative;
+    margin-left: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+div.main-screen {
+    margin: 15px;
+    width: 1219px;
+    height: 647px;
+    float: left;
+}
+
+.properties_field {
+    position: relative;
+    float: left;
+    margin-bottom: 10px;
+    margin-left: 40px;
+    height: 500px;
+    width: 1200px;
+    overflow-y: scroll;
+    resize: none;
+}
+
+label.prop_title {
+    position: relative;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+
+}
