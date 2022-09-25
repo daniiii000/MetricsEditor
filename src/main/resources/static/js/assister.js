@@ -7,7 +7,11 @@ function displayDiv() {
     var condition = document.getElementById("condition_div");
     var modifier = document.getElementById("modifier_div");
     var object = document.getElementById("object");
-    if (teamextension.value !== "teamextension" && teamextension.disabled === false) {
+    var subject = document.getElementById("subject");
+    var pattern = document.getElementById("pattern");
+    var type = document.getElementById("type");
+    if ((teamextension.disabled === true && subject.value === "team" && type.value !== "type")
+        ||(teamextension.value !== "teamextension" && teamextension.disabled === false && subject.value === "individual")) {
         x.style.display = "inline";
 
         //var index = document.getElementById('subject');
@@ -17,21 +21,23 @@ function displayDiv() {
          if (index.value === "individual") {
              document.getElementById('description_box').value = "You are creating a " + document.getElementById('pattern').value + " metric for an "+ document.getElementById('subject').value + "\nPlease, complete the information below to generate the whole metric";
          }*/
-        var pattern = document.getElementById('pattern').value;
-        if (pattern === "frequency") {
+        if (pattern.value === "frequency") {
             object.value = "object";
             condition.style.display = "none";
             count.style.display = "block";
             value.style.display = "none";
             modifier.style.display = "none";
-        } else if (pattern === "standard deviation") {
+        } else if (pattern.value === "standard deviation") {
             object.value = "object";
             condition.style.display = "none";
             value.style.display = "block";
             count.style.display = "none";
             modifier.style.display = "inline";
+            subject.value = "team";
+            teamextension.disabled = true;
+            teamextension.value = "teamextension";
 
-        } else if (pattern === "percentage") {
+        } else if (pattern.value === "percentage") {
             object.value = "object";
             condition.style.display = "inline";
             modifier.style.display = "inline";
@@ -63,12 +69,16 @@ function type_enablement() {
 
             if(pattern.value !== "pattern") {
                 type.disabled = false;
-                /*if (pattern.value === "standard deviation") {
+                if (pattern.value === "standard deviation") {
+                    subject.value = "team";
                     subject.options[1].disabled = true;
+                    teamextension.disabled = true;
+                    teamextension.value = "teamextension";
                 }
                 else if (pattern.value !== "standard deviation") {
-                    subject.disabled = false;
-                }*/
+                    subject.value = "subject";
+                    subject.options[1].disabled = false;
+                }
             } else {
                 type.value = "type";
                 type.disabled = true;
@@ -103,9 +113,13 @@ function subject_enablement() {
     var type = document.getElementById('type');
     var subject = document.getElementById('subject');
     var teamextension = document.getElementById('teamextension');
+    var pattern = document.getElementById("pattern");
 
         if(type.value !== "type") {
             subject.disabled = false;
+            if (pattern.value === "standard deviation") {
+                document.getElementById('assister').style.display = 'inline';
+            }
 
         } else {
             subject.value = "subject";
@@ -121,7 +135,14 @@ function teamextension_enablement() {
     var teamextension = document.getElementById('teamextension');
 
         if(subject.value !== "subject") {
-            teamextension.disabled = false;
+            if (subject.value === "team") {
+                teamextension.disabled = true;
+                teamextension.value = "teamextension";
+                document.getElementById('assister').style.display = 'inline';
+            }
+            else if (subject.value === "individual") {
+                teamextension.disabled = false;
+            }
         } else {
             teamextension.value = "teamextension";
             document.getElementById('assister').style.display = 'none';
@@ -183,6 +204,25 @@ function modifier_expressions() {
 
         if (modifier.value !== "none" && modifier.value !== "modifier") {
             modifier_attribute.enabled = true;
+            if (modifier.value === "state") {
+                modifier_attribute.options[1].disabled = false;
+                modifier_attribute.options[2].disabled = true;
+                modifier_attribute.options[3].disabled = true;
+                modifier_attribute.options[4].disabled = true;
+            }
+            else if (modifier.value === "sum") {
+                modifier_attribute.options[1].disabled = true;
+                modifier_attribute.options[2].disabled = false;
+                modifier_attribute.options[3].disabled = true;
+                modifier_attribute.options[4].disabled = true;
+
+            }
+            else if (modifier.value === "defined") {
+                modifier_attribute.options[1].disabled = true;
+                modifier_attribute.options[2].disabled = true;
+                modifier_attribute.options[3].disabled = false;
+                modifier_attribute.options[4].disabled = false;
+            }
         }
         else {
             modifier_attribute.value = "modifier_attribute";
@@ -255,6 +295,43 @@ function condition_changes() {
 
     if (condition.value !== "condition") {
         condition_attribute.disabled = false;
+        if (condition.value === "defined") {
+            condition_attribute.options[1].disabled = false;
+            condition_attribute.options[2].disabled = false;
+            condition_attribute.options[3].disabled = true;
+            condition_attribute.options[4].disabled = true;
+            condition_attribute.options[5].disabled = true;
+            condition_attribute.options[6].disabled = true;
+            condition_attribute.options[7].disabled = true;
+        }
+        else if (condition.value === "card") {
+            condition_attribute.options[1].disabled = true;
+            condition_attribute.options[2].disabled = true;
+            condition_attribute.options[3].disabled = true;
+            condition_attribute.options[4].disabled = true;
+            condition_attribute.options[5].disabled = false;
+            condition_attribute.options[6].disabled = true;
+            condition_attribute.options[7].disabled = true;
+        }
+        else if (condition.value === "apply") {
+            condition_attribute.options[1].disabled = true;
+            condition_attribute.options[2].disabled = true;
+            condition_attribute.options[3].disabled = true;
+            condition_attribute.options[4].disabled = true;
+            condition_attribute.options[5].disabled = true;
+            condition_attribute.options[6].disabled = false;
+            condition_attribute.options[7].disabled = false;
+        }
+        else if (condition.value === "self" || condition.value === "not_defined") {
+            condition_attribute.options[1].disabled = true;
+            condition_attribute.options[2].disabled = true;
+            condition_attribute.options[3].disabled = false;
+            condition_attribute.options[4].disabled = false;
+            condition_attribute.options[5].disabled = true;
+            condition_attribute.options[6].disabled = true;
+            condition_attribute.options[7].disabled = true;
+        }
+
         if (condition_attribute.value !== "condition_attribute") {
             name.disabled = false;
         } else {
@@ -359,6 +436,9 @@ function create() {
     var subject_text = subject.options[subject.selectedIndex].text;
     var teamextension = document.getElementById("teamextension");
     var teamextension_text = teamextension.options[teamextension.selectedIndex].text;
+    if (teamextension_text === "Select an option") {
+        teamextension_text = "-";
+    }
 
     var object = document.getElementById("object");
     var object_text = object.options[object.selectedIndex].text;

@@ -25,20 +25,20 @@
                 <option value="frequency">Frequency</option>
                 </select>
                 <abbr title="This field determines the pattern of the metric.
-                A percentage metric calculates the percentage of a set of instances that satisfy a condition over the total.
+                A Percentage metric calculates the percentage of a set of instances that satisfy a condition over the total.
                 A Standard Deviation metric calculates the dispersion of an object over the global arithmetic mean.
                 A Frequency metric calculates the number of times that a value appears in the metric."><i class="fa fa-info-circle "> </i> </abbr>
             <br> <br>
 
             <label for="type"> Select Type: &nbsp;</label>
-                <select disabled="disabled" onchange="subject_enablement()" name="type" id="type">
+                <select disabled="disabled" onchange="subject_enablement(); displayDiv()" name="type" id="type">
                 <option value="type">Select an option</option>
-                <option value="evaluative"> Evaluative</option>
+                <option value="evaluative">Evaluative</option>
                 <option value="informative">Informative</option>
                 </select>
                 <abbr title="This field determines the type of the metric.
                  Evaluative type is used to detect a bad behaviour such as User Stories that don't follow the template.
-                 Informative type is used for a better understanding of a repository. For instance, knowing the number of commits in a repository "><i class="fa fa-info-circle "> </i> </abbr>
+                 Informative type is used for a better understanding of a repository. For instance, knowing the number of commits in a repository."><i class="fa fa-info-circle "> </i> </abbr>
             <br> <br>
 
             <label for="subject"> Select Subject: &nbsp;</label>
@@ -49,7 +49,7 @@
                 </select>
                 <abbr title="This field determines the subject of the metric.
                 An individual metric is only applied to one student.
-                A team metric is applied to a whole team, made by some students.  "><i class="fa fa-info-circle "> </i> </abbr>
+                A team metric is applied to a whole team, which is made by some students."><i class="fa fa-info-circle "> </i> </abbr>
             <br> <br>
 
             <label for="teamextension"> Select Team Extension: &nbsp;</label>
@@ -93,7 +93,8 @@
                     <abbr title="This field determines the modifier type of the metric.
                     A none modifier means that the metric is applied for all the instances, so there is not any restriction.
                     A state modifier is only applied for the boolean attributes of the tasks and user stories.
-                    A sum modifier adds all the values of determined attributes."><i class="fa fa-info-circle "> </i> </abbr>
+                    A sum modifier adds all the values of determined attributes.
+                    A defined type applies for an attribute of the corresponding object."><i class="fa fa-info-circle "> </i> </abbr>
 
                 <label for="modifier_attribute" id="modifier_attribute_label" class="modifier_attribute_label"> Select Modifier Attribute: &nbsp;</label>
                 <select disabled="disabled" class="modifier_attribute" id="modifier_attribute">
@@ -105,7 +106,8 @@
                 </select>
                     <abbr title="This field determines the attribute in which the modifier apply in the metric.
                     A closed state applies for the tasks or user stories that are closed.
-                    The sum of lines of code applies for the commits of a repository."><i class="fa fa-info-circle "> </i> </abbr>
+                    The sum of lines of code applies for the commits of a repository.
+                    Estimated effort and actual effort are attributes for the defined type."><i class="fa fa-info-circle "> </i> </abbr>
                 <br> <br>
                 </div>
 
@@ -117,23 +119,32 @@
                     <option value="card">Card</option>
                     <option value="apply">Apply</option>
                     <option value="self">Self</option>
+                    <option value="not_defined">Not Defined</option>
                 </select>
                     <abbr title="This field determines the condition type of the metric.
                     A defined type applies for an attribute of the corresponding object.
                     A card type gives the number of appearances of a multivalued attribute.
                     An apply type evaluates an external query.
-                    A self type checks if the attribute value is equal to the member on which the metric is applied."><i class="fa fa-info-circle "> </i> </abbr>
+                    A self type checks if the attribute value is equal to the member on which the metric is applied.
+                    A Not Defined type applies for an attribute that doesn't belong to a metric."><i class="fa fa-info-circle "> </i> </abbr>
 
                 <label for="condition_attribute"> Select Condition Attribute: &nbsp;</label>
                 <select onchange="condition_changes()" disabled="disabled" name="condition_attribute" id="condition_attribute">
                     <option value="condition_attribute">Select an option</option>
                     <option value="estimated_effort">Estimated effort</option>
                     <option value="actual_effort">Actual effort</option>
-                    <option value="commiter">Commiter</option>
+                    <option value="commiter">Committer</option>
                     <option value="responsible">Responsible</option>
+                    <option value="acceptance_criteria">Acceptance criteria</option>
+                    <option value="check_template_US">Check template US</option>
+                    <option value="check_task_reference">Check task reference</option>
                 </select>
                     <abbr title="This field determines the attribute in which the condition apply in the metric.
-                    Estimated effort and actual effort are attributes for the defined type."><i class="fa fa-info-circle "> </i> </abbr>
+                    Estimated effort and actual effort are attributes for the defined type.
+                    Committer attribute belongs to the student that has done the corresponding commit.
+                    Responsible attribute belongs to the student that is responsible for a task.
+                    Acceptance criteria belongs to user stories that has defined this attribute.
+                    Check template US and check task reference are external queries for applying them in a metric."><i class="fa fa-info-circle "> </i> </abbr>
                 <br> <br>
                 </div>
 
@@ -144,7 +155,7 @@
                     <option value="state">State</option>
                 </select>
                     <abbr title="This field determines the count type in frequency metrics.
-                    A state type is only applied for the boolean attributes of the tasks and user stories. "><i class="fa fa-info-circle "> </i> </abbr>
+                    A state type is only applied for the boolean attributes of the tasks and user stories."><i class="fa fa-info-circle "> </i> </abbr>
 
                 <label for="count_attribute"> Select Count Attribute: &nbsp;</label>
                 <select onchange="count_changes()" disabled="disabled" name="count_attribute" id="count_attribute">
@@ -175,7 +186,7 @@
 
                 <div class="comments">
                 <label for="comments" id="comments"> Description: </label>
-                <textarea onkeydown="button_enablement()" id="comments_metric" class="metric_comments" type="text"></textarea> &nbsp;
+                <textarea disabled="disabled" onkeydown="button_enablement()" id="comments_metric" class="metric_comments" type="text"></textarea> &nbsp;
                 <abbr title="This field determines the description of the metric."><i class="fa fa-info-circle "> </i> </abbr>
                 <br> <br>
                 </div>
