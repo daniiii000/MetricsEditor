@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
-<body>
+<body onload="displayDiv()">
 <div class="mainContainer">
     <div class="main-screen">
         <div> <a href="/metrics"> <i id="back-button" class="fa fa-arrow-circle-left fa-3x"></i> </a>
@@ -18,7 +18,7 @@
         </div> <br>
         <div class="basic_info">
             <label for="pattern"> Select Pattern: &nbsp;</label>
-            <select onchange="type_enablement(); displayDiv();" name="pattern" id="pattern">
+            <select th:value="${metric.pattern}" onchange="displayDiv();" name="pattern" id="pattern">
                 <option value="pattern">Select an option</option>
                 <option value="percentage">Percentage</option>
                 <option value="standard deviation">Standard Deviation</option>
@@ -31,18 +31,18 @@
             <br> <br>
 
             <label for="type"> Select Type: &nbsp;</label>
-            <select onchange="subject_enablement()" name="type" id="type">
+            <select th:field="${metric.type}" name="type" id="type">
                 <option value="type">Select an option</option>
                 <option value="evaluative"> Evaluative</option>
                 <option value="informative">Informative</option>
             </select>
             <abbr title="This field determines the type of the metric.
                  Evaluative type is used to detect a bad behaviour such as User Stories that don't follow the template.
-                 Informative type is used for a better understanding of a repository. For instance, knowing the number of commits in a repository "><i class="fa fa-info-circle "> </i> </abbr>
+                 Informative type is used for a better understanding of a repository. For instance, knowing the number of commits in a repository."><i class="fa fa-info-circle "> </i> </abbr>
             <br> <br>
 
             <label for="subject"> Select Subject: &nbsp;</label>
-            <select onchange="teamextension_enablement(); displayDiv()" name="subject" id="subject">
+            <select th:option="${metric.subject}" onchange="displayDiv()" name="subject" id="subject">
                 <option value="subject">Select an option</option>
                 <option value="individual">Individual</option>
                 <option value="team">Team</option>
@@ -53,7 +53,7 @@
             <br> <br>
 
             <label for="teamextension"> Select Team Extension: &nbsp;</label>
-            <select onchange="displayDiv();" name="teamextension" id="teamextension">
+            <select name="teamextension" id="teamextension">
                 <option value="teamextension">Select an option</option>
                 <option value="overall">Overall</option>
                 <option value="standard_deviation" >Standard Deviation</option>
@@ -69,7 +69,7 @@
             <textarea id="description_box" readonly class="description" rows="2" type="text" >  </textarea>
             <br> <br>
             <label for="object"> Select Object: &nbsp;</label>
-            <select onchange="modifier_enablement(); count_enablement()" name="object" id="object">
+            <select name="object" id="object">
                 <option value="object">Select an option</option>
                 <option value="task">Task</option>
                 <option value="userstory">User Story</option>
@@ -81,7 +81,7 @@
                 A commit metric fot the commits defined in the GitHub repository of the students."><i class="fa fa-info-circle "> </i> </abbr>
             <br> <br>
 
-            <div onchange="cond_val_enablement()" class="modifier" id="modifier_div">
+            <div class="modifier" id="modifier_div">
                 <label for="modifier"> Select Modifier Type: &nbsp;</label>
                 <select onchange="modifier_expressions()" name="modifier" id="modifier">
                     <option value="modifier">Select an option</option>
@@ -111,7 +111,7 @@
 
             <div class="condition" id="condition_div">
                 <label for="condition"> Select Condition Type: &nbsp;</label>
-                <select onchange="condition_changes()" name="condition" id="condition">
+                <select name="condition" id="condition">
                     <option value="condition">Select an option</option>
                     <option value="defined">Defined</option>
                     <option value="card">Card</option>
@@ -125,7 +125,7 @@
                     A self type checks if the attribute value is equal to the member on which the metric is applied."><i class="fa fa-info-circle "> </i> </abbr>
 
                 <label for="condition_attribute"> Select Condition Attribute: &nbsp;</label>
-                <select onchange="condition_changes()" name="condition_attribute" id="condition_attribute">
+                <select name="condition_attribute" id="condition_attribute">
                     <option value="condition_attribute">Select an option</option>
                     <option value="estimated_effort">Estimated effort</option>
                     <option value="actual_effort">Actual effort</option>
@@ -139,7 +139,7 @@
 
             <div class="count" id="count_div">
                 <label for="count"> Select Count Type: &nbsp;</label>
-                <select onchange="count_changes()" name="count" id="count">
+                <select name="count" id="count">
                     <option value="count">Select an option</option>
                     <option value="state">State</option>
                 </select>
@@ -147,7 +147,7 @@
                     A state type is only applied for the boolean attributes of the tasks and user stories. "><i class="fa fa-info-circle "> </i> </abbr>
 
                 <label for="count_attribute"> Select Count Attribute: &nbsp;</label>
-                <select onchange="count_changes()" name="count_attribute" id="count_attribute">
+                <select name="count_attribute" id="count_attribute" th:selected="${metric.count_attribute}">
                     <option value="count_attribute">Select an option</option>
                     <option value="closed">Closed</option>
                 </select>
@@ -158,24 +158,24 @@
 
             <div class="value" id="value_div">
                 <label for="value"> Select Value: &nbsp;</label>
-                <select onchange="value_expressions(); value_changes()" name="value" id="value">
+                <select onchange="value_expressions()" name="value" id="value">
                     <option value="value">Select an option</option>
                     <option value="estimated_effort">Estimated effort</option>
                     <option value="actual_effort">Actual effort</option>
                 </select>
-                <input class="value_input" id="value_input"></input>
+                <input class="value_input" id="value_input" th:value="${metric.value}"></input>
                 <abbr title="This field determines the value for which the deviation is calculated in standard deviation metrics."><i class="fa fa-info-circle "> </i> </abbr>
                 <br> <br>
             </div>
 
             <label for="name" id="name"> Metric name: &nbsp; </label>
-            <input onkeydown="comments_enablement()" rows="20" id="name_metric" class="metric_name" type="text"></input>
+            <input rows="20" id="name_metric" class="metric_name" type="text" th:value="${metric.name}"></input>
             <abbr title="This field determines the name of the metric."><i class="fa fa-info-circle "> </i> </abbr>
             <br> <br>
 
             <div class="comments">
                 <label for="comments" id="comments"> Description: </label>
-                <textarea onkeydown="button_enablement()" id="comments_metric" class="metric_comments" type="text"></textarea> &nbsp;
+                <textarea id="comments_metric" class="metric_comments" type="text" th:text="${metric.description}"></textarea> &nbsp;
                 <abbr title="This field determines the description of the metric."><i class="fa fa-info-circle "> </i> </abbr>
                 <br> <br>
             </div>
@@ -192,9 +192,8 @@
         <section class="navigation">
             <nav class="menu">
                 <a href="/index"><i class="fa fa-fw fa-home fa-2x"></i><span>Homepage</span></a><br>
-                <a href="/search"><i class="fa-fw fa fa-search fa-2x"></i><span>Search Dashboard</span></a><br>
                 <a href="/metrics"><i class="fa-fw fa fa-edit fa-2x"></i><span>Metrics Editor</span></a><br>
-                <a href="#"><i class="fa-fw fa fa-question-circle-o fa-2x"></i><span>Help</span></a><br>
+                <a href="/help"><i class="fa-fw fa fa-question-circle-o fa-2x"></i><span> Help</span></a><br>
             </nav>
         </section>
     </div>
