@@ -10,7 +10,7 @@ public interface MetricService {
 
     public abstract List<Metric> getAllMetrics();
 
-    public abstract Metric addMetric(@RequestBody Metric metric);
+    public void addMetric(HttpServletRequest request) throws IOException;
 
     public abstract Metric getMetricById(Long metricId) throws ResourceNotFoundException;
 

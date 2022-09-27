@@ -58,63 +58,7 @@ public class MetricController {
 
     @PostMapping("/save")
     public String addMetric(HttpServletRequest request) throws IOException {
-
-        String pattern = request.getParameter("pattern");
-        String type = request.getParameter("type");
-        String subject = request.getParameter("subject");
-        String teamextension = request.getParameter("teamextension");
-        String object = request.getParameter("object");
-        String modifier_type = request.getParameter("modifier");
-        String modifier_attribute = request.getParameter("modifier_attribute");
-        String condition_type = request.getParameter("condition");
-        String condition_attribute = request.getParameter("condition_attribute");
-        String name = request.getParameter("name");
-        String value = request.getParameter("value");
-        String count_type = request.getParameter("count");
-        String count_attribute = request.getParameter("count_attribute");
-        String description = request.getParameter("description");
-
-        List<Condition> conditions_list = new ArrayList<>();
-        List<Modifier> modifiers_list = new ArrayList<>();
-
-        if (pattern.equals("Percentage")) {
-            Metric metric = new Metric(name, description, pattern,subject,type,teamextension,object,null,null,null);
-            metricRepository.save(metric);
-
-            Condition condition = new Condition(condition_type, condition_attribute);
-            condition.setMetric(metric);
-            conditionRepository.save(condition);
-            Modifier modifier = new Modifier(modifier_type,modifier_attribute);
-            modifier.setMetric(metric);
-            modifierRepository.save(modifier);
-            conditions_list.add(condition);
-
-            modifiers_list.add(modifier);
-            metric.setConditions(conditions_list);
-            metric.setModifiers(modifiers_list);
-
-            metricRepository.save(metric);
-        }
-        else if (pattern.equals("Standard Deviation")) {
-            Metric metric = new Metric(name, description, pattern,subject,type,teamextension,object,value,null,null);
-            metricRepository.save(metric);
-            Modifier modifier = new Modifier(modifier_type,modifier_attribute);
-            modifier.setMetric(metric);
-            modifierRepository.save(modifier);
-
-            modifiers_list.add(modifier);
-            metric.setModifiers(modifiers_list);
-
-            metricRepository.save(metric);
-        }
-        else if (pattern.equals("Frequency")) {
-            Metric metric = new Metric(name, description, pattern,subject,type,teamextension,object,null,count_type,count_attribute);
-            metricRepository.save(metric);
-        }
-
-        FileOperations.createProperties(name, description, object, pattern, subject, teamextension, conditions_list);
-        FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list, subject, teamextension);
-
+        metricService.addMetric(request);
         return "redirect:/metrics";
 
     }
