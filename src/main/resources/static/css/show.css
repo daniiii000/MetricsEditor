@@ -27,9 +27,6 @@ table, td, th {
 
 table {
     position: relative;
-    margin-top: 20px;
-    margin-left: 60px;
-    margin-bottom: 20px;
     width: 100%;
     padding: 15px;
     border-collapse: collapse;
@@ -39,15 +36,13 @@ table {
 }
 
 table.modifiers {
-    display: table-row;
-    position: center;
-
-
+    position: relative;
+    float: right;
 }
 
 table.conditions {
-    display: table-row;
-    position: center;
+    position: relative;
+    float: right;
 }
 
 
@@ -79,4 +74,31 @@ button.btn-primary {
     float: right;
     margin: 10px;
     font-size: 15px;
+}
+
+button.btn-info {
+    position: relative;
+    float: right;
+    margin: 10px;
+}
+
+button.btn-danger {
+    position: relative;
+    float: right;
+    margin: 10px;
+}
+
+div.scroll {
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-top: 20px;
+    overflow-y: scroll;
+    height: 500px;
+    width: 1300px;
+}
+
+div.buttons {
+    position: relative;
+    height: 50px;
+    width: 1300px;
 }

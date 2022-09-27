@@ -9,13 +9,17 @@
 </head>
 <body>
 
-<!-- FALTA AÑADIR LA CABECERA A LA PÁGINA CON EL LOGO-->
 <div class="main-screen">
-    <div> <a href="/metrics"> <i id="back-button" class="fa fa-arrow-circle-left fa-4x"></i> </a>
-        <a th:href="@{'/showProperties/' + ${metric.id}}"> <button id="show-properties_button" type="button" class="btn btn-primary"> Show Properties File </button> </a>
+    <div class="buttons"> <a href="/metrics"> <i id="back-button" class="fa fa-arrow-circle-left fa-4x"></i> </a>
         <a th:href="@{'/showQuery/' + ${metric.id}}">  <button id="show-query_button" type="button" class="btn btn-primary"> Show Query File </button> </a>
+        <a th:href="@{'/showProperties/' + ${metric.id}}"> <button id="show-properties_button" type="button" class="btn btn-primary"> Show Properties File </button> </a>
+        <br>
+        <a th:href="@{'/delete/' + ${metric.id}}">  <button type="submit" onclick="return confirm('Are you sure to delete this metric?');" class="btn btn-danger"> Delete </button> </a>
+        <a th:href="@{'/edit/' + ${metric.id}}"> <button type="submit" class="btn btn-info"> Edit </button> </a>
         <br>
     </div>
+    <br>
+    <div class="scroll">
     <table class="table table-bordered table-striped">
         <tr>
             <th class="title_table" colspan="2"> Detailed metric information </th>
@@ -85,6 +89,7 @@
         </tr>
 
     </table>
+    </div>
 
 </div>
 </body>
