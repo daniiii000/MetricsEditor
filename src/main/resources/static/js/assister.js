@@ -170,6 +170,19 @@ function modifier_enablement() {
             if (modifier.value !== "none") {
                 modifier_attribute.disabled = false;
             }
+            if (object.value === "commit") {
+                modifier.options[1].disabled = false;
+                modifier.options[2].disabled = true;
+                modifier.options[3].disabled = false;
+                modifier.options[4].disabled = true;
+                modifier.options[0].display;
+            }
+            else if (object.value === "task" || object.value === "userstory") {
+                modifier.options[1].disabled = false;
+                modifier.options[2].disabled = false;
+                modifier.options[3].disabled = true;
+                modifier.options[4].disabled = false;
+            }
         }
         else
          {
@@ -228,6 +241,38 @@ function modifier_expressions() {
             modifier_attribute.value = "modifier_attribute";
             modifier_attribute.disabled = true;
         }
+}
+
+function condition_enablement() {
+    var object = document.getElementById("object");
+    var condition = document.getElementById("condition");
+
+    if (object.value !== "object") {
+        if (object.value === "commit") {
+            condition.options[1].disabled = true;
+            condition.options[2].disabled = true;
+            condition.options[3].disabled = false;
+            condition.options[4].disabled = false;
+            condition.options[5].disabled = false;
+            condition.options[6].disabled = true;
+        }
+        else if (object.value === "task") {
+            condition.options[1].disabled = false;
+            condition.options[2].disabled = false;
+            condition.options[3].disabled = true;
+            condition.options[4].disabled = false;
+            condition.options[5].disabled = false;
+            condition.options[6].disabled = false;
+        }
+        else if (object.value === "userstory") {
+            condition.options[1].disabled = false;
+            condition.options[2].disabled = false;
+            condition.options[3].disabled = false;
+            condition.options[4].disabled = true;
+            condition.options[5].disabled = false;
+            condition.options[6].disabled = false;
+        }
+    }
 }
 
 function cond_val_enablement() {
@@ -303,6 +348,7 @@ function condition_changes() {
             condition_attribute.options[5].disabled = true;
             condition_attribute.options[6].disabled = true;
             condition_attribute.options[7].disabled = true;
+            condition_attribute.options[8].disabled = true;
         }
         else if (condition.value === "card") {
             condition_attribute.options[1].disabled = true;
@@ -312,6 +358,7 @@ function condition_changes() {
             condition_attribute.options[5].disabled = false;
             condition_attribute.options[6].disabled = true;
             condition_attribute.options[7].disabled = true;
+            condition_attribute.options[8].disabled = true;
         }
         else if (condition.value === "apply") {
             condition_attribute.options[1].disabled = true;
@@ -321,6 +368,7 @@ function condition_changes() {
             condition_attribute.options[5].disabled = true;
             condition_attribute.options[6].disabled = false;
             condition_attribute.options[7].disabled = false;
+            condition_attribute.options[8].disabled = true;
         }
         else if (condition.value === "self" || condition.value === "not_defined") {
             condition_attribute.options[1].disabled = true;
@@ -330,6 +378,17 @@ function condition_changes() {
             condition_attribute.options[5].disabled = true;
             condition_attribute.options[6].disabled = true;
             condition_attribute.options[7].disabled = true;
+            condition_attribute.options[8].disabled = true;
+        }
+        else if (condition.value === "state") {
+            condition_attribute.options[1].disabled = true;
+            condition_attribute.options[2].disabled = true;
+            condition_attribute.options[3].disabled = true;
+            condition_attribute.options[4].disabled = true;
+            condition_attribute.options[5].disabled = true;
+            condition_attribute.options[6].disabled = true;
+            condition_attribute.options[7].disabled = true;
+            condition_attribute.options[8].disabled = false;
         }
 
         if (condition_attribute.value !== "condition_attribute") {

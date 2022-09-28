@@ -69,7 +69,7 @@
                 <textarea id="description_box" readonly class="description" rows="2" type="text" >  </textarea>
                 <br> <br>
                 <label for="object"> Select Object: &nbsp;</label>
-                <select onchange="modifier_enablement(); count_enablement()" name="object" id="object">
+                <select onchange="modifier_enablement(); count_enablement(); condition_enablement()" name="object" id="object">
                     <option value="object">Select an option</option>
                     <option value="task">Task</option>
                     <option value="userstory">User Story</option>
@@ -120,8 +120,10 @@
                     <option value="apply">Apply</option>
                     <option value="self">Self</option>
                     <option value="not_defined">Not Defined</option>
+                    <option value="state">State</option>
                 </select>
                     <abbr title="This field determines the condition type of the metric.
+                    A state condition is only applied for the boolean attributes of the tasks and user stories.
                     A defined type applies for an attribute of the corresponding object.
                     A card type gives the number of appearances of a multivalued attribute.
                     An apply type evaluates an external query.
@@ -138,8 +140,10 @@
                     <option value="acceptance_criteria">Acceptance criteria</option>
                     <option value="check_template_US">Check template US</option>
                     <option value="check_task_reference">Check task reference</option>
+                    <option value="closed">Closed</option>
                 </select>
                     <abbr title="This field determines the attribute in which the condition apply in the metric.
+                    A closed state applies for the tasks or user stories that are closed.
                     Estimated effort and actual effort are attributes for the defined type.
                     Committer attribute belongs to the student that has done the corresponding commit.
                     Responsible attribute belongs to the student that is responsible for a task.
