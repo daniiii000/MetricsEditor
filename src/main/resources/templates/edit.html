@@ -18,7 +18,7 @@
         </div> <br>
         <div class="basic_info">
             <label for="pattern"> Select Pattern: &nbsp;</label>
-            <select th:value="${metric.pattern}" onchange="displayDiv();" name="pattern" id="pattern">
+            <select th:value="${metric.pattern}" onchange="displayDiv(); type_enablement()" name="pattern" id="pattern">
                 <option value="pattern">Select an option</option>
                 <option value="percentage">Percentage</option>
                 <option value="standard deviation">Standard Deviation</option>
@@ -31,7 +31,7 @@
             <br> <br>
 
             <label for="type"> Select Type: &nbsp;</label>
-            <select th:field="${metric.type}" name="type" id="type">
+            <select th:field="${metric.type}" onchange="subject_enablement()" name="type" id="type">
                 <option value="type">Select an option</option>
                 <option value="evaluative"> Evaluative</option>
                 <option value="informative">Informative</option>
@@ -42,7 +42,7 @@
             <br> <br>
 
             <label for="subject"> Select Subject: &nbsp;</label>
-            <select th:option="${metric.subject}" onchange="displayDiv()" name="subject" id="subject">
+            <select onchange="teamextension_enablement(); displayDiv()" name="subject" id="subject">
                 <option value="subject">Select an option</option>
                 <option value="individual">Individual</option>
                 <option value="team">Team</option>
@@ -53,7 +53,7 @@
             <br> <br>
 
             <label for="teamextension"> Select Team Extension: &nbsp;</label>
-            <select name="teamextension" id="teamextension">
+            <select onchange="displayDiv()" name="teamextension" id="teamextension">
                 <option value="teamextension">Select an option</option>
                 <option value="overall">Overall</option>
                 <option value="standard_deviation" >Standard Deviation</option>
@@ -69,7 +69,7 @@
             <textarea id="description_box" readonly class="description" rows="2" type="text" >  </textarea>
             <br> <br>
             <label for="object"> Select Object: &nbsp;</label>
-            <select name="object" id="object">
+            <select onchange="modifier_enablement(); count_enablement(); condition_enablement()" name="object" id="object">
                 <option value="object">Select an option</option>
                 <option value="task">Task</option>
                 <option value="userstory">User Story</option>
@@ -111,29 +111,42 @@
 
             <div class="condition" id="condition_div">
                 <label for="condition"> Select Condition Type: &nbsp;</label>
-                <select name="condition" id="condition">
+                <select onchange="condition_changes()" name="condition" id="condition">
                     <option value="condition">Select an option</option>
                     <option value="defined">Defined</option>
                     <option value="card">Card</option>
                     <option value="apply">Apply</option>
                     <option value="self">Self</option>
+                    <option value="not_defined">Not Defined</option>
+                    <option value="state">State</option>
                 </select>
                 <abbr title="This field determines the condition type of the metric.
+                    A state condition is only applied for the boolean attributes of the tasks and user stories.
                     A defined type applies for an attribute of the corresponding object.
                     A card type gives the number of appearances of a multivalued attribute.
                     An apply type evaluates an external query.
-                    A self type checks if the attribute value is equal to the member on which the metric is applied."><i class="fa fa-info-circle "> </i> </abbr>
+                    A self type checks if the attribute value is equal to the member on which the metric is applied.
+                    A Not Defined type applies for an attribute that doesn't belong to a metric."><i class="fa fa-info-circle "> </i> </abbr>
 
                 <label for="condition_attribute"> Select Condition Attribute: &nbsp;</label>
-                <select name="condition_attribute" id="condition_attribute">
+                <select onchange="condition_changes()" name="condition_attribute" id="condition_attribute">
                     <option value="condition_attribute">Select an option</option>
                     <option value="estimated_effort">Estimated effort</option>
                     <option value="actual_effort">Actual effort</option>
                     <option value="commiter">Commiter</option>
                     <option value="responsible">Responsible</option>
+                    <option value="acceptance_criteria">Acceptance criteria</option>
+                    <option value="check_template_US">Check template US</option>
+                    <option value="check_task_reference">Check task reference</option>
+                    <option value="closed">Closed</option>
                 </select>
                 <abbr title="This field determines the attribute in which the condition apply in the metric.
-                    Estimated effort and actual effort are attributes for the defined type."><i class="fa fa-info-circle "> </i> </abbr>
+                    A closed state applies for the tasks or user stories that are closed.
+                    Estimated effort and actual effort are attributes for the defined type.
+                    Committer attribute belongs to the student that has done the corresponding commit.
+                    Responsible attribute belongs to the student that is responsible for a task.
+                    Acceptance criteria belongs to user stories that has defined this attribute.
+                    Check template US and check task reference are external queries for applying them in a metric."><i class="fa fa-info-circle "> </i> </abbr>
                 <br> <br>
             </div>
 
@@ -147,7 +160,7 @@
                     A state type is only applied for the boolean attributes of the tasks and user stories. "><i class="fa fa-info-circle "> </i> </abbr>
 
                 <label for="count_attribute"> Select Count Attribute: &nbsp;</label>
-                <select name="count_attribute" id="count_attribute" th:selected="${metric.count_attribute}">
+                <select onchange="count_changes()" name="count_attribute" id="count_attribute" th:selected="${metric.count_attribute}">
                     <option value="count_attribute">Select an option</option>
                     <option value="closed">Closed</option>
                 </select>
@@ -158,7 +171,7 @@
 
             <div class="value" id="value_div">
                 <label for="value"> Select Value: &nbsp;</label>
-                <select onchange="value_expressions()" name="value" id="value">
+                <select onchange="value_expressions(); value_changes()" name="value" id="value">
                     <option value="value">Select an option</option>
                     <option value="estimated_effort">Estimated effort</option>
                     <option value="actual_effort">Actual effort</option>
@@ -169,13 +182,13 @@
             </div>
 
             <label for="name" id="name"> Metric name: &nbsp; </label>
-            <input rows="20" id="name_metric" class="metric_name" type="text" th:value="${metric.name}"></input>
+            <input onkeydown="comments_enablement()" rows="20" id="name_metric" class="metric_name" type="text" th:value="${metric.name}"></input>
             <abbr title="This field determines the name of the metric."><i class="fa fa-info-circle "> </i> </abbr>
             <br> <br>
 
             <div class="comments">
                 <label for="comments" id="comments"> Description: </label>
-                <textarea id="comments_metric" class="metric_comments" type="text" th:text="${metric.description}"></textarea> &nbsp;
+                <textarea onkeydown="button_enablement()" id="comments_metric" class="metric_comments" type="text" th:text="${metric.description}"></textarea> &nbsp;
                 <abbr title="This field determines the description of the metric."><i class="fa fa-info-circle "> </i> </abbr>
                 <br> <br>
             </div>

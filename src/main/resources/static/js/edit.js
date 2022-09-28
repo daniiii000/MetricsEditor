@@ -6,30 +6,42 @@ function displayDiv() {
     var condition = document.getElementById("condition_div");
     var modifier = document.getElementById("modifier_div");
     var object = document.getElementById("object");
+    var subject = document.getElementById("subject");
+    var pattern = document.getElementById("pattern");
+    var type = document.getElementById("type");
+    if ((teamextension.disabled === true && subject.value === "team" && type.value !== "type")
+        ||(teamextension.value !== "teamextension" && teamextension.disabled === false && subject.value === "individual")) {
+        x.style.display = "inline";
 
-         document.getElementById('description_box').value = "You are modifying a " + document.getElementById('pattern').value + " metric for a " + document.getElementById('subject').value + ".\nPlease, change the information below to update the metric.";
+        document.getElementById('description_box').value = "You are modifying a " + document.getElementById('pattern').value + " metric for a " + document.getElementById('subject').value + ".\nPlease, complete the information below to update the metric.";
 
-        var pattern = document.getElementById('pattern').value;
-        if (pattern === "frequency") {
+        if (pattern.value === "frequency") {
             object.value = "object";
             condition.style.display = "none";
             count.style.display = "block";
             value.style.display = "none";
             modifier.style.display = "none";
-        } else if (pattern === "standard deviation") {
+        } else if (pattern.value === "standard deviation") {
             object.value = "object";
             condition.style.display = "none";
             value.style.display = "block";
             count.style.display = "none";
             modifier.style.display = "inline";
+            subject.value = "team";
+            teamextension.disabled = true;
+            teamextension.value = "teamextension";
 
-        } else if (pattern === "percentage") {
+        } else if (pattern.value === "percentage") {
             object.value = "object";
             condition.style.display = "inline";
             modifier.style.display = "inline";
             value.style.display = "none";
             count.style.display = "none";
         }
+    }
+    else {
+        x.style.display = 'none';
+    }
 }
 
 function type_enablement() {
@@ -47,27 +59,61 @@ function type_enablement() {
     var count = document.getElementById('count');
     var count_attribute = document.getElementById('count_attribute');
     var update = document.getElementById("update_button");
+    var comments = document.getElementById("comments_metric");
 
+    if(pattern.value !== "pattern") {
+        type.disabled = false;
+        if (pattern.value === "standard deviation") {
+            subject.value = "team";
+            subject.options[1].disabled = true;
+            teamextension.disabled = true;
+            teamextension.value = "teamextension";
+        }
+        else if (pattern.value !== "standard deviation") {
+            subject.value = "subject";
+            subject.options[1].disabled = false;
+        }
+    } else {
         type.value = "type";
+        type.disabled = true;
         subject.value = "subject";
+        subject.disabled = true;
         teamextension.value = "teamextension";
+        document.getElementById('assister').style.display = 'none';
+        teamextension.disabled = true;
+        modifier.disabled = true;
         modifier.value = "modifier";
+        modifier_attribute.disabled = true;
         modifier_attribute.value = "modifier_attribute";
+        condition.disabled = true;
         condition.value = "condition";
+        condition_attribute.disabled = true;
         condition_attribute.value = "condition_attribute";
+        value.disabled = true;
         value.value = "value";
+        name.disabled = true;
         name.value = "";
+        count.disabled = true;
         count.value = "count"
-        count_attribute.value = "count_attribute";
+        count_attribute.disabled = true;
+        count_attribute.value = "count_attribute"
+        update.disabled = true;
+        comments.value = "";
+        comments.disabled = true;
+    }
 }
 
 function subject_enablement() {
     var type = document.getElementById('type');
     var subject = document.getElementById('subject');
     var teamextension = document.getElementById('teamextension');
+    var pattern = document.getElementById("pattern");
 
     if(type.value !== "type") {
         subject.disabled = false;
+        if (pattern.value === "standard deviation") {
+            document.getElementById('assister').style.display = 'inline';
+        }
 
     } else {
         subject.value = "subject";
@@ -83,7 +129,14 @@ function teamextension_enablement() {
     var teamextension = document.getElementById('teamextension');
 
     if(subject.value !== "subject") {
-        teamextension.disabled = false;
+        if (subject.value === "team") {
+            teamextension.disabled = true;
+            teamextension.value = "teamextension";
+            document.getElementById('assister').style.display = 'inline';
+        }
+        else if (subject.value === "individual") {
+            teamextension.disabled = false;
+        }
     } else {
         teamextension.value = "teamextension";
         document.getElementById('assister').style.display = 'none';
@@ -104,11 +157,25 @@ function modifier_enablement() {
     var value = document.getElementById("value");
     var value_input = document.getElementById("value_input");
     var update = document.getElementById("update_button");
+    var comments = document.getElementById("comments_metric");
 
     if(object.value !== "object") {
         modifier.disabled = false;
-        if (modifier.value !== "none") {
+        if (modifier.value !== "none" && modifier.value !== "modifier") {
             modifier_attribute.disabled = false;
+        }
+        if (object.value === "commit") {
+            modifier.options[1].disabled = false;
+            modifier.options[2].disabled = true;
+            modifier.options[3].disabled = false;
+            modifier.options[4].disabled = true;
+            modifier.options[0].display;
+        }
+        else if (object.value === "task" || object.value === "userstory") {
+            modifier.options[1].disabled = false;
+            modifier.options[2].disabled = false;
+            modifier.options[3].disabled = true;
+            modifier.options[4].disabled = false;
         }
     }
     else
@@ -132,6 +199,8 @@ function modifier_enablement() {
         name.disabled = true;
         name.value = "";
         update.disabled = true;
+        comments.value = "";
+        comments.disabled = true;
     }
 
 }
@@ -141,11 +210,62 @@ function modifier_expressions() {
     var modifier_attribute = document.getElementById("modifier_attribute");
 
     if (modifier.value !== "none" && modifier.value !== "modifier") {
-        modifier_attribute.enabled = true;
+        modifier_attribute.disabled = false;
+        if (modifier.value === "state") {
+            modifier_attribute.options[1].disabled = false;
+            modifier_attribute.options[2].disabled = true;
+            modifier_attribute.options[3].disabled = true;
+            modifier_attribute.options[4].disabled = true;
+        }
+        else if (modifier.value === "sum") {
+            modifier_attribute.options[1].disabled = true;
+            modifier_attribute.options[2].disabled = false;
+            modifier_attribute.options[3].disabled = true;
+            modifier_attribute.options[4].disabled = true;
+        }
+        else if (modifier.value === "defined") {
+            modifier_attribute.options[1].disabled = true;
+            modifier_attribute.options[2].disabled = true;
+            modifier_attribute.options[3].disabled = false;
+            modifier_attribute.options[4].disabled = false;
+        }
     }
     else {
         modifier_attribute.value = "modifier_attribute";
         modifier_attribute.disabled = true;
+    }
+}
+
+
+function condition_enablement() {
+    var object = document.getElementById("object");
+    var condition = document.getElementById("condition");
+
+    if (object.value !== "object") {
+        if (object.value === "commit") {
+            condition.options[1].disabled = true;
+            condition.options[2].disabled = true;
+            condition.options[3].disabled = false;
+            condition.options[4].disabled = false;
+            condition.options[5].disabled = false;
+            condition.options[6].disabled = true;
+        }
+        else if (object.value === "task") {
+            condition.options[1].disabled = false;
+            condition.options[2].disabled = false;
+            condition.options[3].disabled = true;
+            condition.options[4].disabled = false;
+            condition.options[5].disabled = false;
+            condition.options[6].disabled = false;
+        }
+        else if (object.value === "userstory") {
+            condition.options[1].disabled = false;
+            condition.options[2].disabled = false;
+            condition.options[3].disabled = false;
+            condition.options[4].disabled = true;
+            condition.options[5].disabled = false;
+            condition.options[6].disabled = false;
+        }
     }
 }
 
@@ -157,6 +277,7 @@ function cond_val_enablement() {
     var value = document.getElementById("value");
     var name = document.getElementById("name_metric");
     var update = document.getElementById("update_button");
+    var comments = document.getElementById("comments_metric");
 
     if(modifier.value !== "modifier") {
         condition.disabled = false;
@@ -179,6 +300,8 @@ function cond_val_enablement() {
         name.disabled = true;
         name.value = "";
         update.disabled = true;
+        comments.value = "";
+        comments.disabled = true;
     }
 }
 
@@ -187,6 +310,7 @@ function count_changes() {
     var count_attribute = document.getElementById("count_attribute");
     var name = document.getElementById("name_metric");
     var update = document.getElementById("update_button");
+    var comments = document.getElementById("comments_metric");
 
     if(count.value !== "count" && count_attribute.value !== "count_attribute") {
         name.disabled = false;
@@ -196,6 +320,8 @@ function count_changes() {
         name.value = "";
         update.disabled = true;
         count_attribute.value = "count_attribute";
+        comments.value = "";
+        comments.disabled = true;
     }
 }
 
@@ -204,9 +330,61 @@ function condition_changes() {
     var condition_attribute = document.getElementById("condition_attribute");
     var name = document.getElementById("name_metric");
     var update = document.getElementById("update_button");
+    var comments = document.getElementById("comments_metric");
 
     if (condition.value !== "condition") {
         condition_attribute.disabled = false;
+        if (condition.value === "defined") {
+            condition_attribute.options[1].disabled = false;
+            condition_attribute.options[2].disabled = false;
+            condition_attribute.options[3].disabled = true;
+            condition_attribute.options[4].disabled = true;
+            condition_attribute.options[5].disabled = true;
+            condition_attribute.options[6].disabled = true;
+            condition_attribute.options[7].disabled = true;
+            condition_attribute.options[8].disabled = true;
+        }
+        else if (condition.value === "card") {
+            condition_attribute.options[1].disabled = true;
+            condition_attribute.options[2].disabled = true;
+            condition_attribute.options[3].disabled = true;
+            condition_attribute.options[4].disabled = true;
+            condition_attribute.options[5].disabled = false;
+            condition_attribute.options[6].disabled = true;
+            condition_attribute.options[7].disabled = true;
+            condition_attribute.options[8].disabled = true;
+        }
+        else if (condition.value === "apply") {
+            condition_attribute.options[1].disabled = true;
+            condition_attribute.options[2].disabled = true;
+            condition_attribute.options[3].disabled = true;
+            condition_attribute.options[4].disabled = true;
+            condition_attribute.options[5].disabled = true;
+            condition_attribute.options[6].disabled = false;
+            condition_attribute.options[7].disabled = false;
+            condition_attribute.options[8].disabled = true;
+        }
+        else if (condition.value === "self" || condition.value === "not_defined") {
+            condition_attribute.options[1].disabled = true;
+            condition_attribute.options[2].disabled = true;
+            condition_attribute.options[3].disabled = false;
+            condition_attribute.options[4].disabled = false;
+            condition_attribute.options[5].disabled = true;
+            condition_attribute.options[6].disabled = true;
+            condition_attribute.options[7].disabled = true;
+            condition_attribute.options[8].disabled = true;
+        }
+        else if (condition.value === "state") {
+            condition_attribute.options[1].disabled = true;
+            condition_attribute.options[2].disabled = true;
+            condition_attribute.options[3].disabled = true;
+            condition_attribute.options[4].disabled = true;
+            condition_attribute.options[5].disabled = true;
+            condition_attribute.options[6].disabled = true;
+            condition_attribute.options[7].disabled = true;
+            condition_attribute.options[8].disabled = false;
+        }
+
         if (condition_attribute.value !== "condition_attribute") {
             name.disabled = false;
         } else {
@@ -219,6 +397,8 @@ function condition_changes() {
         update.disabled = true;
         condition_attribute.value = "condition_attribute";
         condition_attribute.disabled = true;
+        comments.value = "";
+        comments.disabled = true;
     }
 }
 
@@ -228,6 +408,7 @@ function count_enablement() {
     var count = document.getElementById("count");
     var count_attribute = document.getElementById("count_attribute");
     var name = document.getElementById("name_metric");
+    var comments = document.getElementById("comments_metric");
 
     if(object.value !== "object") {
         count.disabled = false;
@@ -241,13 +422,28 @@ function count_enablement() {
         count_attribute.value = "count_attribute";
         name.disabled = true;
         name.value = "";
+        comments.value = "";
+        comments.disabled = true;
+    }
+}
+
+function comments_enablement() {
+    var update = document.getElementById("update_button");
+    var name = document.getElementById("name_metric");
+    var comments = document.getElementById("comments_metric");
+    if (name.value.length !== 0) {
+        comments.disabled = false;
+    }
+    else {
+        comments.disabled = true;
+        update.disabled = true;
     }
 }
 
 function button_enablement() {
     var update = document.getElementById("update_button");
-    var name = document.getElementById("name_metric");
-    if (name.value.length !== 0) {
+    var comments = document.getElementById("comments_metric");
+    if (comments.value.length !== 0) {
         update.disabled = false;
     }
     else update.disabled = true;
@@ -270,6 +466,7 @@ function value_changes() {
     var value = document.getElementById("value");
     var value_input = document.getElementById("value_input");
     var name = document.getElementById("name_metric");
+    var description = document.getElementById("comments_metric");
 
     if(value.value !== "value") {
         value_input.disabled = false;
@@ -280,11 +477,12 @@ function value_changes() {
         value_input.disabled = true;
         name.disabled = true;
         name.value = "";
+        description.value = "";
+        description.disabled = true;
     }
 }
 
 function update() {
-
     var pattern = document.getElementById("pattern");
     var pattern_text = pattern.options[pattern.selectedIndex].text;
     var type = document.getElementById("type");
@@ -300,11 +498,20 @@ function update() {
     var modifier_text = modifier.options[modifier.selectedIndex].text;
     var modifier_attribute = document.getElementById("modifier_attribute");
     var modifier_attribute_text = modifier_attribute.options[modifier_attribute.selectedIndex].text;
+    if (modifier_attribute_text === "Select an option") {
+        modifier_attribute_text = "-";
+    }
     var condition = document.getElementById("condition");
     var condition_text = condition.options[condition.selectedIndex].text;
     var condition_attribute = document.getElementById("condition_attribute");
     var condition_attribute_text = condition_attribute.options[condition_attribute.selectedIndex].text;
+    var value_text = document.getElementById("value_input").value;
+    var count = document.getElementById("count");
+    var count_text = count.options[count.selectedIndex].text;
+    var count_attribute = document.getElementById("count_attribute");
+    var count_attribute_text = count_attribute.options[count_attribute.selectedIndex].text;
     var name_text = document.getElementById("name_metric").value;
+    var description_text = document.getElementById("comments_metric").value;
 
     console.log(pattern_text);
     console.log(type_text);
@@ -316,6 +523,10 @@ function update() {
     console.log(condition_text);
     console.log(condition_attribute_text);
     console.log(name_text);
+    console.log(value_text);
+    console.log(count_text);
+    console.log(count_attribute_text);
+    console.log(description_text);
 
 
     var formData = new FormData();
@@ -324,11 +535,23 @@ function update() {
     formData.append("subject", subject_text);
     formData.append("teamextension", teamextension_text);
     formData.append("object", object_text);
-    formData.append("modifier", modifier_text);
-    formData.append("modifier_attribute", modifier_attribute_text);
-    formData.append("condition", condition_text);
-    formData.append("condition_attribute", condition_attribute_text);
     formData.append("name", name_text);
+    formData.append("description", description_text);
+    if (pattern_text === "Percentage") {
+        formData.append("modifier", modifier_text);
+        formData.append("modifier_attribute", modifier_attribute_text);
+        formData.append("condition", condition_text);
+        formData.append("condition_attribute", condition_attribute_text);
+    }
+    else if (pattern_text === "Standard Deviation") {
+        formData.append("modifier", modifier_text);
+        formData.append("modifier_attribute", modifier_attribute_text);
+        formData.append("value", value_text);
+    }
+    else if (pattern_text === "Frequency") {
+        formData.append("count", count_text);
+        formData.append("count_attribute", count_attribute_text);
+    }
     jQuery.ajax({
         url: "/update/{id}",
         data: formData,

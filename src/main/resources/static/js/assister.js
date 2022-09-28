@@ -472,6 +472,7 @@ function value_changes() {
     var value = document.getElementById("value");
     var value_input = document.getElementById("value_input");
     var name = document.getElementById("name_metric");
+    var description = document.getElementById("comments_metric");
 
         if(value.value !== "value") {
             value_input.disabled = false;
@@ -482,6 +483,8 @@ function value_changes() {
             value_input.disabled = true;
             name.disabled = true;
             name.value = "";
+            description.value = "";
+            description.disabled = true;
         }
 }
 
