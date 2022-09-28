@@ -15,7 +15,8 @@ public class FileOperations {
     public static void createProperties(String name, String description, String object, String pattern, String subject, String teamextension, List<Condition> conditionList) throws IOException {
         String filename = name.toLowerCase();
         filename = filename.replace(" ", "_");
-        File file = new File("/Users/danie/archivos/" + filename + "_template.properties");
+        Path path = Paths.get("/Users/danie/archivos/" + Paths.get(filename) + "_template.properties");
+        File file = new File(String.valueOf(path));
         BufferedWriter bw;
 
             bw = new BufferedWriter(new FileWriter(file));
@@ -161,6 +162,7 @@ public class FileOperations {
     public static void createQueries(String name, String object, String pattern, List<Modifier> modifierList, List<Condition> conditionList, String subject, String teamextension) throws IOException {
         String filename = name.toLowerCase();
         filename = filename.replace(" ", "_");
+        Path path = Paths.get("/Users/danie/archivos/" + Paths.get(filename) + "_template.query");
 
         String aggsname = "";
 
@@ -169,7 +171,7 @@ public class FileOperations {
         else if (object.equals("User Story")) aggsobject = "userstories";
         else if (object.equals("Commit")) aggsobject = object.toLowerCase() + "s";
 
-        File file = new File("/Users/danie/archivos/" + filename + "_template.query");
+        File file = new File(String.valueOf(path));
         BufferedWriter bw;
         bw = new BufferedWriter(new FileWriter(file));
         if (pattern.equals("Percentage")) {
@@ -515,6 +517,8 @@ public class FileOperations {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            e.getMessage();
+            e.getCause();
         }
     }
 
@@ -540,7 +544,8 @@ public class FileOperations {
             filename_aux = filename_aux.replace(" ", "_");
             File file = new File("/Users/danie/archivos/" + filename_aux + "_template.properties");
 
-            String text = "";
+
+        String text = "";
 
             try {
                 BufferedReader obj = new BufferedReader(new FileReader(file));
@@ -550,8 +555,8 @@ public class FileOperations {
                 while ((string = obj.readLine()) != null) {
                     temp = temp + string +"\n";
                 }
-
                 text = temp;
+                obj.close();
             }
             catch (Exception e) {
                 System.err.println("File not found");
@@ -575,8 +580,8 @@ public class FileOperations {
             while ((string = obj.readLine()) != null) {
                 temp = temp + string +"\n";
             }
-
             text = temp;
+            obj.close();
         }
         catch (Exception e) {
             System.err.println("File not found");

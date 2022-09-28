@@ -97,7 +97,7 @@ public class MetricServiceImpl implements MetricService {
     }
 
     @Override
-    public Metric deleteMetric(Long metricId) throws ResourceNotFoundException {
+    public Metric deleteMetric(Long metricId) throws ResourceNotFoundException, IOException {
         Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
         FileOperations.deleteProperties(metric.getName());
         FileOperations.deleteQueries(metric.getName());

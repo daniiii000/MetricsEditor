@@ -14,7 +14,7 @@ public interface MetricService {
 
     public abstract Metric getMetricById(Long metricId) throws ResourceNotFoundException;
 
-    public abstract Metric deleteMetric(Long metricId) throws ResourceNotFoundException;
+    public abstract Metric deleteMetric(Long metricId) throws ResourceNotFoundException, IOException;
 
     public String getPropertiesFile(Long metricId) throws Exception;
 
