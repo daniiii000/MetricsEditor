@@ -27,6 +27,7 @@ function displayDiv() {
             count.style.display = "block";
             value.style.display = "none";
             modifier.style.display = "none";
+            object.options[3].disabled = true;
         } else if (pattern.value === "standard deviation") {
             object.value = "object";
             condition.style.display = "none";
@@ -36,6 +37,7 @@ function displayDiv() {
             subject.value = "team";
             teamextension.disabled = true;
             teamextension.value = "teamextension";
+            object.options[3].disabled = false;
 
         } else if (pattern.value === "percentage") {
             object.value = "object";
@@ -43,6 +45,7 @@ function displayDiv() {
             modifier.style.display = "inline";
             value.style.display = "none";
             count.style.display = "none";
+            object.options[3].disabled = false;
         }
     }
     else {
