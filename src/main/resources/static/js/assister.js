@@ -340,6 +340,7 @@ function condition_changes() {
     var name = document.getElementById("name_metric");
     var generate = document.getElementById("generate_button");
     var comments = document.getElementById("comments_metric");
+    var object = document.getElementById("object");
 
     if (condition.value !== "condition") {
         condition_attribute.disabled = false;
@@ -364,14 +365,26 @@ function condition_changes() {
             condition_attribute.options[8].disabled = true;
         }
         else if (condition.value === "apply") {
-            condition_attribute.options[1].disabled = true;
-            condition_attribute.options[2].disabled = true;
-            condition_attribute.options[3].disabled = true;
-            condition_attribute.options[4].disabled = true;
-            condition_attribute.options[5].disabled = true;
-            condition_attribute.options[6].disabled = false;
-            condition_attribute.options[7].disabled = false;
-            condition_attribute.options[8].disabled = true;
+            if (object.value === "commit") {
+                condition_attribute.options[1].disabled = true;
+                condition_attribute.options[2].disabled = true;
+                condition_attribute.options[3].disabled = true;
+                condition_attribute.options[4].disabled = true;
+                condition_attribute.options[5].disabled = true;
+                condition_attribute.options[6].disabled = true;
+                condition_attribute.options[7].disabled = false;
+                condition_attribute.options[8].disabled = true;
+            }
+            else if (object.value === "userstory") {
+                condition_attribute.options[1].disabled = true;
+                condition_attribute.options[2].disabled = true;
+                condition_attribute.options[3].disabled = true;
+                condition_attribute.options[4].disabled = true;
+                condition_attribute.options[5].disabled = true;
+                condition_attribute.options[6].disabled = false;
+                condition_attribute.options[7].disabled = true;
+                condition_attribute.options[8].disabled = true;
+            }
         }
         else if (condition.value === "self" || condition.value === "not_defined") {
             condition_attribute.options[1].disabled = true;

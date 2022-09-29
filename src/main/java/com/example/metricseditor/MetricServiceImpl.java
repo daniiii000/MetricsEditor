@@ -86,8 +86,8 @@ public class MetricServiceImpl implements MetricService {
             metricRepository.save(metric);
         }
 
-        FileOperations.createProperties(name, description, object, pattern, subject, teamextension, conditions_list);
-        FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list, subject, teamextension);
+        FileOperations.createProperties(name, description, object, pattern, subject, teamextension, conditions_list, modifiers_list);
+        FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list, subject, teamextension, count_type, count_attribute);
     }
 
     @Override
@@ -205,8 +205,8 @@ public class MetricServiceImpl implements MetricService {
             metricRepository.save(metric);
         }
 
-        FileOperations.createProperties(name, description, object, pattern, subject, teamextension, conditions_list);
-        FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list, subject, teamextension);
+        FileOperations.createProperties(name, description, object, pattern, subject, teamextension, conditions_list, modifiers_list);
+        FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list, subject, teamextension, count_type, count_attribute);
 
         return metric;
     }
