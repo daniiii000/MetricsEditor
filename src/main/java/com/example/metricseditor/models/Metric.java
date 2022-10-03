@@ -1,4 +1,4 @@
-package com.example.metricseditor;
+package com.example.metricseditor.models;
 
 import javax.persistence.*;
 import java.io.Serializable;

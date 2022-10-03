@@ -1,5 +1,6 @@
-package com.example.metricseditor;
+package com.example.metricseditor.repositories;
 
+import com.example.metricseditor.models.Metric;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

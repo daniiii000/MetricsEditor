@@ -1,5 +1,7 @@
-package com.example.metricseditor;
+package com.example.metricseditor.services;
 
+import com.example.metricseditor.models.Modifier;
+import com.example.metricseditor.exceptions.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;

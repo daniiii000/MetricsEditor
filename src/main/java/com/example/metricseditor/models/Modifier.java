@@ -1,11 +1,11 @@
-package com.example.metricseditor;
+package com.example.metricseditor.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "conditions")
-public class Condition implements Serializable {
+@Table(name = "modifiers")
+public class Modifier implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,29 +14,28 @@ public class Condition implements Serializable {
     @Column (name = "type")
     private String type;
 
-    @Column (name = "condition_attribute")
-    private String condition_attribute;
+    @Column (name = "modifier_attribute")
+    private String modifier_attribute;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "metric_id", nullable = false)
     private Metric metric;
 
 
-    public Condition () {
+    public Modifier () {
 
     }
 
-    public Condition(String type, String condition_attribute, Metric metric) {
+    public Modifier(String type, String modifier_attribute, Metric metric) {
         this.type = type;
-        this.condition_attribute = condition_attribute;
+        this.modifier_attribute = modifier_attribute;
         this.metric = metric;
     }
 
-    public Condition(String type, String condition_attribute) {
+    public Modifier(String type, String modifier_attribute) {
         this.type = type;
-        this.condition_attribute = condition_attribute;
+        this.modifier_attribute = modifier_attribute;
     }
-
 
     public Long getId() {
         return id;
@@ -54,12 +53,12 @@ public class Condition implements Serializable {
         this.type = type;
     }
 
-    public String getCondition_attribute() {
-        return condition_attribute;
+    public String getModifier_attribute() {
+        return modifier_attribute;
     }
 
-    public void setCondition_attribute(String condition_attribute) {
-        this.condition_attribute = condition_attribute;
+    public void setModifier_attribute(String modifier_attribute) {
+        this.modifier_attribute = modifier_attribute;
     }
 
     public Metric getMetric() {

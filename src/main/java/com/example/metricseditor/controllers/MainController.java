@@ -1,4 +1,4 @@
-package com.example.metricseditor;
+package com.example.metricseditor.controllers;
 
 import org.springframework.stereotype.Controller;
 

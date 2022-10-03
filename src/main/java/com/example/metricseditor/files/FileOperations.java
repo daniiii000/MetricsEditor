@@ -1,7 +1,7 @@
 package com.example.metricseditor.files;
 
-import com.example.metricseditor.Condition;
-import com.example.metricseditor.Modifier;
+import com.example.metricseditor.models.Condition;
+import com.example.metricseditor.models.Modifier;
 
 import java.io.*;
 import java.nio.file.Files;

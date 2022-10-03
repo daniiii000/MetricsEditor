@@ -1,12 +1,17 @@
-package com.example.metricseditor;
+package com.example.metricseditor.controllers;
 
 
-import com.example.metricseditor.files.FileOperations;
+import com.example.metricseditor.exceptions.ResourceNotFoundException;
+import com.example.metricseditor.models.Metric;
+import com.example.metricseditor.repositories.ConditionRepository;
+import com.example.metricseditor.repositories.MetricRepository;
+import com.example.metricseditor.repositories.ModifierRepository;
+import com.example.metricseditor.services.ConditionService;
+import com.example.metricseditor.services.MetricService;
+import com.example.metricseditor.services.ModifierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-
-import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 
 
 @RestController
