@@ -1,3 +1,5 @@
+var name_before_edit = document.getElementById("name_metric").value;
+
 function displayDiv() {
     var teamextension = document.getElementById('teamextension');
     var x = document.getElementById("assister");
@@ -358,14 +360,25 @@ function condition_changes() {
             condition_attribute.options[8].disabled = true;
         }
         else if (condition.value === "apply") {
-            condition_attribute.options[1].disabled = true;
-            condition_attribute.options[2].disabled = true;
-            condition_attribute.options[3].disabled = true;
-            condition_attribute.options[4].disabled = true;
-            condition_attribute.options[5].disabled = true;
-            condition_attribute.options[6].disabled = false;
-            condition_attribute.options[7].disabled = false;
-            condition_attribute.options[8].disabled = true;
+            if (object.value === "commit") {
+                condition_attribute.options[1].disabled = true;
+                condition_attribute.options[2].disabled = true;
+                condition_attribute.options[3].disabled = true;
+                condition_attribute.options[4].disabled = true;
+                condition_attribute.options[5].disabled = true;
+                condition_attribute.options[6].disabled = true;
+                condition_attribute.options[7].disabled = false;
+                condition_attribute.options[8].disabled = true;
+            } else if (object.value === "userstory") {
+                condition_attribute.options[1].disabled = true;
+                condition_attribute.options[2].disabled = true;
+                condition_attribute.options[3].disabled = true;
+                condition_attribute.options[4].disabled = true;
+                condition_attribute.options[5].disabled = true;
+                condition_attribute.options[6].disabled = false;
+                condition_attribute.options[7].disabled = true;
+                condition_attribute.options[8].disabled = true;
+            }
         }
         else if (condition.value === "self" || condition.value === "not_defined") {
             condition_attribute.options[1].disabled = true;
@@ -494,6 +507,9 @@ function update() {
     var subject_text = subject.options[subject.selectedIndex].text;
     var teamextension = document.getElementById("teamextension");
     var teamextension_text = teamextension.options[teamextension.selectedIndex].text;
+    if (teamextension_text === "Select an option") {
+        teamextension_text = "-";
+    }
 
     var object = document.getElementById("object");
     var object_text = object.options[object.selectedIndex].text;
@@ -516,6 +532,7 @@ function update() {
     var name_text = document.getElementById("name_metric").value;
     var description_text = document.getElementById("comments_metric").value;
 
+    console.log(name_before_edit);
     console.log(pattern_text);
     console.log(type_text);
     console.log(subject_text);
@@ -533,6 +550,7 @@ function update() {
 
 
     var formData = new FormData();
+    formData.append("name_before_edit", name_before_edit);
     formData.append("pattern", pattern_text);
     formData.append("type", type_text);
     formData.append("subject", subject_text);
@@ -556,7 +574,7 @@ function update() {
         formData.append("count_attribute", count_attribute_text);
     }
     jQuery.ajax({
-        url: "/update/{id}",
+        url: "/update",
         data: formData,
         type: "PUT",
         async: true,

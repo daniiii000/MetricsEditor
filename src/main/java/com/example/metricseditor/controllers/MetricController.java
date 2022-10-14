@@ -87,10 +87,10 @@ public class MetricController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView getMetricForUpdate(@PathVariable (value = "id") Long metricId) throws ResourceNotFoundException {
+    public ModelAndView getMetricForUpdate(@PathVariable (value = "id") Long metricId) throws ResourceNotFoundException, IOException {
         ModelAndView mav = new ModelAndView("edit");
         mav.addObject("metric", metricService.getMetricById(metricId));
-        mav.addObject("id", metricId);
+        mav.addObject("metric_id", metricId);
 
         return mav;
     }
@@ -102,39 +102,8 @@ public class MetricController {
 
     }
 
-    @PutMapping("/update/{id}")
-    public String updateMetric(@PathVariable(value = "id") Long metricId, HttpServletRequest request) throws ResourceNotFoundException, IOException {
-        Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
-        String name_before = metric.getName();
-        metricService.updateMetric(metricId,request,name_before);
-        return "redirect:/metrics";
-        /*String pattern = request.getParameter("pattern");
-        String type = request.getParameter("type");
-        String subject = request.getParameter("subject");
-        String teamextension = request.getParameter("teamextension");
-        String object = request.getParameter("object");
-        String modifier_type = request.getParameter("modifier");
-        String modifier_attribute = request.getParameter("modifier_attribute");
-        String condition_type = request.getParameter("condition");
-        String condition_attribute = request.getParameter("condition_attribute");
-        String value = request.getParameter("value");
-        String count_type = request.getParameter("count");
-        String count_attribute = request.getParameter("count_attribute");
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-
-        Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
-
-        metric.setName(name);
-        metric.setDescription(description);
-        metric.setPattern(pattern);
-        metric.setSubject(subject);
-        metric.setType(type);
-        metric.setTeamextension(teamextension);
-        metric.setObject(object);
-
-        metricRepository.save(metric);*/
-
-//        return "redirect:/metrics";
+    @GetMapping("/update")
+    public void updateMetric(HttpServletRequest request, String name_before_edit) throws ResourceNotFoundException, IOException {
+        metricService.updateMetric(request,name_before_edit);
     }
 }

@@ -128,11 +128,12 @@ public class MetricServiceImpl implements MetricService {
     }
 
     @Override
-    public Metric updateMetric(Long metricId, HttpServletRequest request, String name_before) throws ResourceNotFoundException, IOException {
+    public String updateMetric(HttpServletRequest request, String name_before_edit) throws ResourceNotFoundException, IOException {
+        Long metricId = Long.valueOf(214);
         Metric metric = metricRepository.findById(metricId).orElseThrow(() -> new ResourceNotFoundException("Metric not found for this id :: " + metricId));
 
-        FileOperations.deleteProperties(name_before);
-        FileOperations.deleteQueries(name_before);
+        FileOperations.deleteProperties(name_before_edit);
+        FileOperations.deleteQueries(name_before_edit);
 
         String pattern = request.getParameter("pattern");
         String type = request.getParameter("type");
@@ -156,13 +157,18 @@ public class MetricServiceImpl implements MetricService {
         metric.setDescription(description);
         metric.setPattern(pattern);
         metric.setSubject(subject);
-        metric.setType(type);
         metric.setTeamextension(teamextension);
+        metric.setType(type);
         metric.setObject(object);
 
         if (pattern.equals("Percentage")) {
+            metricRepository.save(metric);
+            metric.setValue(null);
+            metric.setCount(null);
+            metric.setCount_attribute(null);
+
             Condition condition = conditionRepository.findByMetricId(metricId);
-            if (condition.getType() == null && condition.getCondition_attribute() == null) {
+            if (condition == null) {
                 condition = new Condition(condition_type, condition_attribute);
             }
             else {
@@ -172,8 +178,9 @@ public class MetricServiceImpl implements MetricService {
             condition.setMetric(metric);
             conditionRepository.save(condition);
 
+
             Modifier modifier = modifierRepository.findByMetricId(metricId);
-            if (modifier.getModifier_attribute() == null && modifier.getType() == null) {
+            if (modifier == null) {
                 modifier = new Modifier(modifier_type,modifier_attribute);
             }
             else {
@@ -191,8 +198,18 @@ public class MetricServiceImpl implements MetricService {
             metricRepository.save(metric);
         }
         else if (pattern.equals("Standard Deviation")) {
+            metricRepository.save(metric);
+            metric.setValue(value);
+            metric.setCount(null);
+            metric.setCount_attribute(null);
+
+            Condition condition = conditionRepository.findByMetricId(metricId);
+            if (condition != null) {
+                conditionRepository.delete(condition);
+            }
+
             Modifier modifier = modifierRepository.findByMetricId(metricId);
-            if (modifier.getModifier_attribute() == null && modifier.getType() == null) {
+            if (modifier == null) {
                 modifier = new Modifier(modifier_type,modifier_attribute);
             }
             else {
@@ -208,6 +225,15 @@ public class MetricServiceImpl implements MetricService {
             metricRepository.save(metric);
         }
         else if (pattern.equals("Frequency")) {
+            Condition condition = conditionRepository.findByMetricId(metricId);
+            if (condition != null) {
+                conditionRepository.delete(condition);
+            }
+            Modifier modifier = modifierRepository.findByMetricId(metricId);
+            if (modifier != null) {
+                modifierRepository.delete(modifier);
+            }
+            metric.setValue(null);
             metric.setCount(count_type);
             metric.setCount_attribute(count_attribute);
             metricRepository.save(metric);
@@ -215,7 +241,6 @@ public class MetricServiceImpl implements MetricService {
 
         FileOperations.createProperties(name, description, object, pattern, subject, teamextension, conditions_list, modifiers_list);
         FileOperations.createQueries(name, object, pattern, modifiers_list, conditions_list, subject, teamextension, count_type, count_attribute);
-
-        return metric;
+        return "redirect:/metrics";
     }
 }

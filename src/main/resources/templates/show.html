@@ -40,8 +40,8 @@
         <tr> <td> Type </td>
             <td th:text="${metric.type}"> &nbsp;</td></tr>
 
-        <tr> <td> Team Extension </td>
-            <td th:text="${metric.teamextension}"> &nbsp;</td></tr>
+        <tr> <td th:if="${metric.teamextension != null}"> Team Extension </td>
+            <td th:if="${metric.teamextension != null}" th:text="${metric.teamextension}"> &nbsp;</td></tr>
 
         <tr> <td> Object </td>
             <td th:text="${metric.object}"> &nbsp;</td></tr>

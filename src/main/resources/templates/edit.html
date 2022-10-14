@@ -31,7 +31,7 @@
             <br> <br>
 
             <label for="type"> Select Type: &nbsp;</label>
-            <select th:field="${metric.type}" onchange="subject_enablement()" name="type" id="type">
+            <select th:value="${metric.type}" onchange="subject_enablement()" name="type" id="type">
                 <option value="type">Select an option</option>
                 <option value="evaluative"> Evaluative</option>
                 <option value="informative">Informative</option>
@@ -42,7 +42,7 @@
             <br> <br>
 
             <label for="subject"> Select Subject: &nbsp;</label>
-            <select onchange="teamextension_enablement(); displayDiv()" name="subject" id="subject">
+            <select th:value="${metric.subject}" onchange="teamextension_enablement(); displayDiv()" name="subject" id="subject">
                 <option value="subject">Select an option</option>
                 <option value="individual">Individual</option>
                 <option value="team">Team</option>
@@ -53,7 +53,7 @@
             <br> <br>
 
             <label for="teamextension"> Select Team Extension: &nbsp;</label>
-            <select onchange="displayDiv()" name="teamextension" id="teamextension">
+            <select th:value="${metric.teamextension}" onchange="displayDiv()" name="teamextension" id="teamextension">
                 <option value="teamextension">Select an option</option>
                 <option value="overall">Overall</option>
                 <option value="standard_deviation" >Standard Deviation</option>
@@ -69,7 +69,7 @@
             <textarea id="description_box" readonly class="description" rows="2" type="text" >  </textarea>
             <br> <br>
             <label for="object"> Select Object: &nbsp;</label>
-            <select onchange="modifier_enablement(); count_enablement(); condition_enablement()" name="object" id="object">
+            <select th:value="${metric.object}" onchange="modifier_enablement(); count_enablement(); condition_enablement()" name="object" id="object">
                 <option value="object">Select an option</option>
                 <option value="task">Task</option>
                 <option value="userstory">User Story</option>
@@ -83,7 +83,7 @@
 
             <div class="modifier" id="modifier_div">
                 <label for="modifier"> Select Modifier Type: &nbsp;</label>
-                <select onchange="modifier_expressions()" name="modifier" id="modifier">
+                <select th:value="${metric.modifiers[0].type}" onchange="modifier_expressions()" name="modifier" id="modifier">
                     <option value="modifier">Select an option</option>
                     <option value="none">None</option>
                     <option value="state">State</option>
@@ -96,7 +96,7 @@
                     A sum modifier adds all the values of determined attributes."><i class="fa fa-info-circle "> </i> </abbr>
 
                 <label for="modifier_attribute" id="modifier_attribute_label" class="modifier_attribute_label"> Select Modifier Attribute: &nbsp;</label>
-                <select class="modifier_attribute" id="modifier_attribute">
+                <select th:value="${metric.modifiers[0].modifier_attribute}" class="modifier_attribute" id="modifier_attribute">
                     <option value="modifier_attribute">Select an option</option>
                     <option value="closed">Closed</option>
                     <option value="lines_of_code">Lines of code</option>
@@ -111,7 +111,7 @@
 
             <div class="condition" id="condition_div">
                 <label for="condition"> Select Condition Type: &nbsp;</label>
-                <select onchange="condition_changes()" name="condition" id="condition">
+                <select th:value="${metric.conditions[0].type}" onchange="condition_changes()" name="condition" id="condition">
                     <option value="condition">Select an option</option>
                     <option value="defined">Defined</option>
                     <option value="card">Card</option>
@@ -129,7 +129,7 @@
                     A Not Defined type applies for an attribute that doesn't belong to a metric."><i class="fa fa-info-circle "> </i> </abbr>
 
                 <label for="condition_attribute"> Select Condition Attribute: &nbsp;</label>
-                <select onchange="condition_changes()" name="condition_attribute" id="condition_attribute">
+                <select th:value="${metric.conditions[0].condition_attribute}" onchange="condition_changes()" name="condition_attribute" id="condition_attribute">
                     <option value="condition_attribute">Select an option</option>
                     <option value="estimated_effort">Estimated effort</option>
                     <option value="actual_effort">Actual effort</option>
@@ -152,7 +152,7 @@
 
             <div class="count" id="count_div">
                 <label for="count"> Select Count Type: &nbsp;</label>
-                <select name="count" id="count">
+                <select th:option="${metric.count}" name="count" id="count">
                     <option value="count">Select an option</option>
                     <option value="state">State</option>
                 </select>
@@ -160,7 +160,7 @@
                     A state type is only applied for the boolean attributes of the tasks and user stories. "><i class="fa fa-info-circle "> </i> </abbr>
 
                 <label for="count_attribute"> Select Count Attribute: &nbsp;</label>
-                <select onchange="count_changes()" name="count_attribute" id="count_attribute" th:selected="${metric.count_attribute}">
+                <select th:option="${metric.count_attribute}" onchange="count_changes()" name="count_attribute" id="count_attribute" th:selected="${metric.count_attribute}">
                     <option value="count_attribute">Select an option</option>
                     <option value="closed">Closed</option>
                 </select>

@@ -19,7 +19,7 @@ public interface MetricService {
 
     public String getPropertiesFile(Long metricId) throws Exception;
 
-    public abstract Metric updateMetric(Long metricId, HttpServletRequest request, String name_before) throws ResourceNotFoundException, IOException;
+    public abstract String updateMetric(HttpServletRequest request, String name_before) throws ResourceNotFoundException, IOException;
 
     public String getQueryFile(Long metricId) throws Exception;
 }
